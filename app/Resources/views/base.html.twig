@@ -17,7 +17,7 @@
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body>
+    <body class="{% block bodyClass %}{% endblock %}">
         {% block body %}{% endblock %}
         {% block javascripts %}
             <script src="{{ asset('bundles/app/plugins/jquery-1.8.3.min.js') }}" type="text/javascript"></script>
