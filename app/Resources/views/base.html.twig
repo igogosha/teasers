@@ -19,6 +19,7 @@
     </head>
     <body class="{% block bodyClass %}{% endblock %}">
         {% block body %}{% endblock %}
+
         {% block javascripts %}
             <script src="{{ asset('bundles/app/plugins/jquery-1.8.3.min.js') }}" type="text/javascript"></script>
             <script src="{{ asset('bundles/app/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
@@ -26,6 +27,7 @@
             <script src="{{ asset('bundles/app/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
             <script src="{{ asset('bundles/app/plugins/jquery-lazyload/jquery.lazyload.min.js') }}" type="text/javascript"></script>
             <script src="{{ asset('bundles/app/js/login_v2.js" type="text/javascript') }}"></script>
+            <script src="{{ asset('bundles/app/js/core.js') }}" type="text/javascript"></script>
         {% endblock %}
     </body>
 </html>

@@ -19,26 +19,259 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="tour.html">Tour</a></li>
-                    <li><a href="pricing.html">Pricing</a></li>
-                    <li><a href="portfolio.html">Portfolio</a></li>
-                    <li>
-                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <li><a href="">Home</a></li>
+
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li>
+                            <a type="button" class="disabled">
+                                {{ 'layout.logged_in_as' | trans  }} | {{ app.user.username }}
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ path('fos_user_security_logout') }}">
                                 <i class="fa fa-unlock"></i>&nbsp;&nbsp;{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                             </a>
-                        {% else %}
+                        </li>
+                    {% else %}
+                        <li>
                             <a href="{{ path('fos_user_security_login') }}">
                                 <i class="fa fa-lock"></i>&nbsp;&nbsp;{{ 'layout.login'|trans({}, 'FOSUserBundle') }}
                             </a>
-                        {% endif %}
-                    </li>
+                        </li>
+                    {% endif %}
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
 
+
+        <div class="col-md-12">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Button <span class="semi-bold">Dropdowns</span></h4>
+                    <div class="tools"> <a class="collapse" href="javascript:;"></a> <a class="config" data-toggle="modal" href="#grid-config"></a> <a class="reload" href="javascript:;"></a> <a class="remove" href="javascript:;"></a> </div>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h3>Basic <span class="semi-bold">Dropdowns</span></h3>
+                            <p>We've simplified our dropdown buttons by getting rid of the dedicated dropdown associated with them, this looks more clean and also available in all different colors</p>
+                            <br>
+                            <div class="btn-group"> <a href="#" data-toggle="dropdown" class="btn dropdown-toggle btn-demo-space"> Default <span class="caret"></span> </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group"> <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-demo-space"> Primary <span class="caret"></span> </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group"> <a href="#" data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-demo-space"> Success <span class="caret"></span> </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group"> <a href="#" data-toggle="dropdown" class="btn btn-info dropdown-toggle btn-demo-space"> Info <span class="caret"></span> </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group"> <a href="#" data-toggle="dropdown" class="btn btn-warning dropdown-toggle btn-demo-space"> Warning <span class="caret"></span> </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group"> <a href="#" data-toggle="dropdown" class="btn btn-danger dropdown-toggle btn-demo-space"> Danger <span class="caret"></span> </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group"> <a href="#" data-toggle="dropdown" class="btn btn-white dropdown-toggle btn-demo-space"> White <span class="caret"></span> </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h3>With <span class="semi-bold">Speration</span></h3>
+                            <p>Want to use a different action for each button? this method allows to have two different actions for each button for the drop down and the button.</p>
+                            <br>
+                            <div class="row-fluid">
+                                <div class="btn-group btn-demo-space">
+                                    <button class="btn btn-demo-space">Action</button>
+                                    <button data-toggle="dropdown" class="btn dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group ">
+                                    <button class="btn btn-white btn-demo-space"> Action</button>
+                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="btn-group">
+                                    <button class="btn btn-demo-space">Action</button>
+                                    <button data-toggle="dropdown" class="btn dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-white btn-demo-space"><i class="icon-cog"></i> Action</button>
+                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h3>Size <span class="semi-bold">Options</span></h3>
+                            <p>Like the tradition bootstrap size options theses buttons type also are available on all sizes and they are customized to fit the correct dimension</p>
+                            <br>
+
+                            <div class="btn-group">
+                                <button class="btn btn-large btn-success btn-demo-space">Action</button>
+                                <button data-toggle="dropdown" class="btn btn-large btn-success dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-large btn-white btn-demo-space">Action</button>
+                                <button data-toggle="dropdown" class="btn btn-large btn-white dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="btn-group">
+                                <button class="btn btn-success btn-demo-space">Action</button>
+                                <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-white btn-demo-space">Action</button>
+                                <button data-toggle="dropdown" class="btn btn-white dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-small btn-success btn-demo-space">Action</button>
+                                <button data-toggle="dropdown" class="btn btn-small btn-success dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-small btn-white btn-demo-space">Action</button>
+                                <button data-toggle="dropdown" class="btn btn-small btn-white dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-mini btn-success btn-demo-space">Action</button>
+                                <button data-toggle="dropdown" class="btn btn-mini btn-success dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-mini btn-white btn-demo-space">Action</button>
+                                <button data-toggle="dropdown" class="btn btn-mini btn-white dropdown-toggle btn-demo-space"> <span class="caret"></span> </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div>

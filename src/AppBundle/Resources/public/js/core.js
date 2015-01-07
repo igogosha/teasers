@@ -102,7 +102,7 @@ $(document).ready(function() {
 	}
      var parent = $(this).parent().parent();
 
-            parent.children('li.open').children('a').children('.arrow').removeClass('open');
+		    parent.children('li.open').children('a').children('.arrow').removeClass('open');
             parent.children('li.open').children('.sub-menu').slideUp(200);
             parent.children('li.open').removeClass('open');
 

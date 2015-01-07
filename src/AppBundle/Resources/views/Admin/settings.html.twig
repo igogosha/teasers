@@ -1,0 +1,47 @@
+{% extends 'AppBundle:Admin:index.html.twig' %}
+
+ {% block mainAdminContent %}
+     <div class="page-title">
+         <h3>Settings</h3>
+     </div>
+
+     <div class="row">
+         <div class="col-md-12">
+             <div class="grid simple">
+                 <div class="grid-title no-border">
+                     <h4>Simple <span class="semi-bold">Elemets</span></h4>
+                 </div>
+                 <div class="grid-body no-border"> <br>
+                     <div class="row">
+                         <div class="col-md-8 col-sm-8 col-xs-8">
+
+                             {{ form_start(form) }}
+
+                             <div class="input-group">
+                                 <span class="pull-left">
+                                     {{ form_row(form.name) }}
+                                 </span>
+                                 <span class="pull-left">
+                                     {{ form_row(form.save) }}
+                                 </span>
+                                 <div class="clear clearfix"></div>
+                             </div>
+
+
+
+
+                             {{ form_end(form) }}
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+
+
+ {% endblock %}
+
+{#{% block javascripts %}#}
+    {#{{ parent() }}#}
+{#{% endblock %}#}
