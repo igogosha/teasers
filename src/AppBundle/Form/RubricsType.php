@@ -16,20 +16,11 @@ class RubricsType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                'label' => 'Название',
+                'label' => false,
                 'attr' => array(
-                    'class' => 'form-control input-lg'
+                    'class' => 'form-control',
+                    'placeholder' => 'Название новой рубрики'
                 )
-            ))
-//            ->add('alias')
-//            ->add('groups')
-//            ->add('createdAt')
-//            ->add('user')
-            ->add('save', 'button', array(
-                'label' => 'Save',
-                'attr' => array(
-                    'class' => 'btn btn-lg btn-danger'
-                ),
             ))
         ;
     }
