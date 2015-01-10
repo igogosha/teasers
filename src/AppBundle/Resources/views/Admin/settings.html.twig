@@ -1,37 +1,70 @@
 {% extends 'AppBundle:Admin:index.html.twig' %}
 
  {% block mainAdminContent %}
-     <div class="page-title">
+     <div class="page-title" xmlns="http://www.w3.org/1999/html">
          <h3>Settings</h3>
      </div>
 
      <div class="row">
          <div class="col-md-12">
              <div class="grid simple">
-                 <div class="grid-title no-border">
-                     <h4>Simple <span class="semi-bold">Elemets</span></h4>
-                 </div>
+                 {#<div class="grid-title no-border">#}
+                     {#<h4>{{ "Добавить рубрику" | trans }}</h4>#}
+                 {#</div>#}
+
                  <div class="grid-body no-border"> <br>
                      <div class="row">
-                         <div class="col-md-8 col-sm-8 col-xs-8">
 
-                             {{ form_start(form) }}
-
-                             <div class="input-group">
-                                 <span class="pull-left">
+                         <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 panel">
+                             <form class="form-inline" action="/app_dev.php/add_rubrics" method="post" name="appbundle_rubrics">
+                                 <div class="input-group">
                                      {{ form_row(form.name) }}
-                                 </span>
-                                 <span class="pull-left">
-                                     {{ form_row(form.save) }}
-                                 </span>
-                                 <div class="clear clearfix"></div>
-                             </div>
-
-
-
-
-                             {{ form_end(form) }}
+                                     <span class="input-group-btn">
+                                         <button class="btn btn-lg btn-danger" name="appbundle_rubrics[save]" id="appbundle_rubrics_save" type="button">{{ "Save" | trans }}</button>
+                                     </span>
+                                 </div>
+                             </form>
                          </div>
+                         <div class="clear clearfix"></div>
+
+                         <div class="alert" id="error" style="display: none">
+                             <button data-dismiss="alert" class="close"></button>
+                         </div>
+
+                         <div class="clear clearfix"></div>
+
+
+                         <fieldset>
+                             <legend></legend>
+                                 <table id="rubrics" class="table no-more-tables table-striped">
+                                     <thead>
+                                         <tr>
+                                             <th style="width:25%">{{ "Название" | trans }}</th>
+                                             <th style="width:60%">{{ "Группы" | trans }}</th>
+                                             <th style="width:15%">{{ "Действия" | trans }}</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody>
+                                         {% for rubric in rubrics %}
+                                             <tr id="{{ rubric.id }}">
+                                                 <td class="v-align-middle rName">{{ rubric.name }}</td>
+                                                 <td class="v-align-middle">-</td>
+                                                 <td>
+                                                     <div class="btn-group" role="group">
+                                                         <button type="button" data-id="{{ rubric.id }}" class="btn btn-mini btn-default editRubric">
+                                                             <i class="fa fa-edit"></i>
+                                                         </button>
+                                                         <button type="button" data-id="{{ rubric.id }}" class="btn btn-mini btn-danger deleteRubric">
+                                                             <i class="fa fa-times"></i>
+                                                         </button>
+                                                     </div>
+                                                 </td>
+                                             </tr>
+                                         {% endfor %}
+                                     </tbody>
+                                 </table>
+                         </fieldset>
+
                      </div>
                  </div>
              </div>
@@ -42,6 +75,27 @@
 
  {% endblock %}
 
-{#{% block javascripts %}#}
-    {#{{ parent() }}#}
-{#{% endblock %}#}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var saveRubricsUrl = "{{ path('admin_add_rubrics') }}";
+        var deleteRubricsUrl = "{{ path('admin_delete_rubrics') }}";
+    </script>
+    <script type="text/template" id="tableRowTemplate">
+        <tr id="">
+            <td class="v-align-middle rName"></td>
+            <td class="v-align-middle"></td>
+            <td>
+                <div class="btn-group" role="group">
+                    <button type="button" data-id="" class="btn btn-mini btn-default editRubric">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button type="button" data-id="" class="btn btn-mini btn-danger deleteRubric">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </script>
+    <script type="text/javascript" src="{{ asset('/bundles/app/js/settings/master.js') }}"></script>
+{% endblock %}
