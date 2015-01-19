@@ -19,7 +19,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="">Home</a></li>
+
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li><a href="{{ path('admin_home') }}">{{ "Dashboard" | trans }}</a></li>
+                    {% else %}
+                        <li><a href="{{ path('homepage') }}">Home</a></li>
+                    {% endif %}
 
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li>
