@@ -18,13 +18,13 @@ class TeasersType extends AbstractType
             ->add('user', 'hidden')
             ->add('groups')
             ->add('createdAt', 'hidden')
-            ->add('image', 'file', array(
-                'label' => 'upload',
-                'attr' => array(
-                    'multiple' => true,
-                    'class' => 'btn btn-success btn-cons uploadImages'
-                )
-            ))
+//            ->add('image', 'file', array(
+//                'label' => 'upload',
+//                'attr' => array(
+//                    'multiple' => true,
+//                    'class' => 'btn btn-success btn-cons uploadImages'
+//                )
+//            ))
             ->add('title', 'textarea', array(
                 'attr' => array(
                     'class' => 'form-control groupsDetails',

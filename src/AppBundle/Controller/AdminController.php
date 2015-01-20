@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Rubrics;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
 {
@@ -129,117 +130,66 @@ class AdminController extends Controller
     /**
      * @Route("/upload-files", name="upload_files")
      */
-    public function uploadFilesAction()
+    public function uploadFilesAction(Request $request)
     {
 
+        $files = $request->files->get('pictures');
+
         echo '<pre>';
-        print_r($_FILES['appbundle_teasers']);
+        print_r($files[0]->getFileName());
         exit;
 
-        $basePath = $this->get('kernel')->getRootDir()
+        $target_dir = $this->get('kernel')->getRootDir()
             . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "web"
             . ($viewPath = DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR);
         $data['success'] = 0;
 
-        $view = "image_preview";
-        if ($this->getRequest()->get('view')) {
-            $view = $this->getRequest()->get('view');
-        }
+        $file = $_FILES['pictures'];
+//        echo '<pre>';
+//        print_r($file);
+//        exit;
 
-        if (null !== ($field = $this->getRequest()->get('field'))) {
-            $field = preg_replace("/\[\]/", "", $field);
-            if (null !== ($files = $this->getRequest()->files->get($field))) {
+        $target_file = $target_dir . md5( basename($file["name"][0] . '' ));
+        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 
-                if (!is_array($files)) {
-                    $files = array($files);
-                }
+        $check = getimagesize($file["tmp_name"][0]);
+        if($check !== false) {
 
-                $path = $this->getRequest()->get('path', '');
-                if (!preg_match("/^(.*)\/$/", $path)) {
-                    $path .= DIRECTORY_SEPARATOR;
-                }
-
-                $signRename = $this->getRequest()->get('rename');
-                $signPreview = $this->getRequest()->get('preview', 1);
-
-                foreach ($files as $key => $file) {
-                    $name = $file->getClientOriginalName();
-                    if (null !== $signRename) {
-                        $_fn = pathinfo($name, PATHINFO_FILENAME);
-                        $_ext = pathinfo($name, PATHINFO_EXTENSION);
-                        $name = md5($_fn . 'b1u2z3z3a3a===' . rand(10, 100)) . "." . $_ext;
-                    }
-                    if (file_exists($basePath . $path . $name)) {
-                        if (false) {
-                            /**
-                             * Did not rename the file and return error
-                             */
-                            $data[$key]['error'] = $this->renderView(
-                                'DashboardMainBundle:Upload:upload_failed.html.twig',
-                                array(
-                                    'message' => 'File with name "' . $name . '" already exist!'
-                                )
-                            );
-                        } else {
-                            /**
-                             * Recursive file renaming
-                             *
-                             * @param string $_path
-                             * @param string $file
-                             * @param int $count
-                             * @return string
-                             */
-                            function _checkFile($_path, $file, $count)
-                            {
-                                $fn = pathinfo($file, PATHINFO_FILENAME);
-                                $ext = pathinfo($file, PATHINFO_EXTENSION);
-                                if (!file_exists($_path . ($_n = $fn . "_" . $count . "." . $ext))) {
-                                    return $_n;
-                                }
-                                return _checkFile($_path, $file, ++$count);
-                            }
-
-                            $name = _checkFile($basePath . $path, $name, 1);
-                        }
-                    }
-
-                    if (!isset($data[$key]['error'])) {
-                        if ($file->move($basePath . $path, $name)) {
-                            $data[$key]['success'] = 1;
-                            $data[$key]['name'] = $name;
-                            $data[$key]['path'] = $this->get('templating.helper.assets')->getUrl($viewPath . ($value = $path . $name));
-                            $data[$key]['value'] = $value;
-
-                            if ($signPreview == 1) {
-                                $data[$key]['preview'] = $this->renderView(
-                                    'DashboardMainBundle:Upload:' . $view . '.html.twig',
-                                    array(
-                                        'path' => $data[$key]['path'],
-                                        'value' => $value,
-                                        'name' => $name
-                                    )
-                                );
-                            }
-                        }
-                    }
-                }
+            if (file_exists($target_file)) {
+                $data['msg'] = "exists";
             }
-        }
-
-        if (count($files) == 1) {
-            $data = $data[0];
-
-            if ($data['success'] == 0 && !isset($data['error'])) {
-                $data['error'] = $this->renderView(
-                    'DashboardMainBundle:Upload:upload_failed.html.twig',
-                    array(
-                        'message' => 'Upload failed!'
-                    )
-                );
+            if ($file["size"][0] > 500000) {
+                $data['msg'] = "too large";
             }
+            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                && $imageFileType != "gif" ) {
+                $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            }
+
+            if (move_uploaded_file($file["tmp_name"][0], $target_file)) {
+                $data['msg'] = "The file ". basename( $file["name"][0]). " has been uploaded.";
+            } else {
+                $data['msg'] = "Sorry, there was an error uploading your file.";
+            }
+
         } else {
-            unset($data['success']);
+            $data['msg'] = "not image";
         }
+
+//        if (count($files) == 1) {
+//            $data = $data[0];
+//
+//            if ($data['success'] == 0 && !isset($data['error'])) {
+//                $data['error'] = $this->renderView(
+//                    'DashboardMainBundle:Upload:upload_failed.html.twig',
+//                    array(
+//                        'message' => 'Upload failed!'
+//                    )
+//                );
+//            }
+//        } else {
+//            unset($data['success']);
+//        }
 
         $response = new Response(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');

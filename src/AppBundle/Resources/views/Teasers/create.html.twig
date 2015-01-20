@@ -38,14 +38,19 @@
     <script src="{{ asset('/bundles/app/js/fileupload/jquery.fileupload.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#appbundle_teasers_image').fileupload({
+
+            $('#appbundle_teasers_title').parent()
+                    .before('<input type="file" name="pictures[]" multiple class="btn btn-success btn-cons uploadImages"/>');
+//            $('#appbundle_teasers_image').remove();
+
+            $('.uploadImages').fileupload({
                 dataType: 'json',
                 autoUpload: true,
                 url: '{{ path('upload_files') }}',
-                progress: function (e, data) {
-                    var progress = parseInt(data.loaded / data.total * 100, 10);
-                    console.log(progress);
-                },
+//                progress: function (e, data) {
+//                    var progress = parseInt(data.loaded / data.total * 100, 10);
+//                    console.log(progress);
+//                },
                 done: function (e, data) {
                     $.each(data.result.files, function (index, file) {
                         $('<p/>').text(file.name).appendTo($(this).parent());
