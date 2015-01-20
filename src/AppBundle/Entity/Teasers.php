@@ -1,0 +1,215 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\User;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
+use AppBundle\Entity\Groups;
+
+/**
+ * Teasers
+ *
+ * @ORM\Table(name="teasers")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\TeasersRepository")
+ */
+class Teasers
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ManyToOne(targetEntity="User")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
+     **/
+    private $user;
+
+    /**
+     * @ManyToOne(targetEntity="Groups")
+     * @JoinColumn(name="groups_id", referencedColumnName="id")
+     **/
+    private $groups;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255)
+     */
+    private $image;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="link", type="string", length=255)
+     */
+    private $link;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @return User
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+
+    /**
+     * Set groups
+     *
+     * @return Groups
+     */
+    public function setGroups($groups)
+    {
+        $this->groups = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Get groups
+     *
+     * @return Groups
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Teasers
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Teasers
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Teasers
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set link
+     *
+     * @param string $link
+     * @return Teasers
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get link
+     *
+     * @return string 
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+}
