@@ -9,6 +9,7 @@ use AppBundle\Entity\Rubrics;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminController extends Controller
 {
@@ -132,64 +133,39 @@ class AdminController extends Controller
      */
     public function uploadFilesAction(Request $request)
     {
-
         $files = $request->files->get('pictures');
 
-        echo '<pre>';
-        print_r($files[0]->getFileName());
-        exit;
+        $tempName = $files[0]->getFileName();
+        $tempPath = $files[0]->getPathName();
+        $origName = $files[0]->getClientOriginalName();
+        $curSize = $files[0]->getSize();
+        $mimeType = $files[0]->getMimeType();
+        $error = $files[0]->getError();
+
+        $file = new UploadedFile($tempPath, $origName, $mimeType, $curSize, $error, false);
+        $ext = $file->guessExtension();
+
 
         $target_dir = $this->get('kernel')->getRootDir()
             . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "web"
-            . ($viewPath = DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR);
-        $data['success'] = 0;
+            . ($viewPath = DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "teasers" . DIRECTORY_SEPARATOR . $this->getUser()->getId() . DIRECTORY_SEPARATOR);
 
-        $file = $_FILES['pictures'];
-//        echo '<pre>';
-//        print_r($file);
-//        exit;
+        $type = explode('.', $origName);
+        $imageFileType = $type[1];
+        $target_file = md5( basename($tempName . '' )) . "." . $imageFileType;
 
-        $target_file = $target_dir . md5( basename($file["name"][0] . '' ));
-        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        if ( $file->move($target_dir, $target_file) ) {
 
-        $check = getimagesize($file["tmp_name"][0]);
-        if($check !== false) {
+            $newFile = $target_file;
 
-            if (file_exists($target_file)) {
-                $data['msg'] = "exists";
-            }
-            if ($file["size"][0] > 500000) {
-                $data['msg'] = "too large";
-            }
-            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-                && $imageFileType != "gif" ) {
-                $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-            }
-
-            if (move_uploaded_file($file["tmp_name"][0], $target_file)) {
-                $data['msg'] = "The file ". basename( $file["name"][0]). " has been uploaded.";
-            } else {
-                $data['msg'] = "Sorry, there was an error uploading your file.";
-            }
-
+            $data['msg'] = "success";
+            $data['thumb'] = $this->renderView('AppBundle:Teasers:preview.html.twig', array(
+                'user_id' => $this->getUser()->getId(),
+                'image_src' => $newFile
+            ));
         } else {
-            $data['msg'] = "not image";
+            $data['msg'] = "There was a problem uploading the file";
         }
-
-//        if (count($files) == 1) {
-//            $data = $data[0];
-//
-//            if ($data['success'] == 0 && !isset($data['error'])) {
-//                $data['error'] = $this->renderView(
-//                    'DashboardMainBundle:Upload:upload_failed.html.twig',
-//                    array(
-//                        'message' => 'Upload failed!'
-//                    )
-//                );
-//            }
-//        } else {
-//            unset($data['success']);
-//        }
 
         $response = new Response(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');

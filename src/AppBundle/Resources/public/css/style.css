@@ -7541,3 +7541,21 @@ ul.my-friends li .profile-pic{
 		margin: -55px 5px 0 0px;
 	}	
 }
+
+* {
+	-webkit-border-radius: 0 !important;
+	-moz-border-radius: 0 !important;
+	border-radius: 0 !important;
+}
+
+.imgPreview {
+	margin: 0.3em;
+	overflow-y: hidden;
+}
+
+.imgPreview .img {
+	max-height: 150px;
+}
+.imgPreview .btn {
+	position: absolute;
+}
