@@ -1,8 +1,9 @@
 <div class="col-lg-2 imgPreview">
-    <button type="button" class="btn btn-danger btn-mini removePreview">
+    <button type="button" data-remove="{{ image_src }}" class="btn btn-danger btn-mini removePreview">
         <i class="glyphicon glyphicon-remove"></i>
     </button>
     <img
+        data-name="{{ image_src }}"
         class="img img-thumbnail"
         src="{{ asset('uploads/teasers/') ~ user_id ~ '/' ~ image_src}}"
         >

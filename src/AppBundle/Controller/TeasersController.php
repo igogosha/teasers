@@ -16,7 +16,7 @@ class TeasersController extends Controller
     /**
      * @Route("admin/teasers/create", name="admin_create_group")
      */
-    public function indexAction()
+    public function createAction()
     {
         $teasers = new Teasers();
         $form = $this->createForm(new TeasersType(), $teasers, array(

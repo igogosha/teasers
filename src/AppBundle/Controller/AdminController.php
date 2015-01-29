@@ -173,5 +173,27 @@ class AdminController extends Controller
         return $response;
     }
 
+    /**
+     * @Route("/delete-files", name="delete_files")
+     */
+    public function deleteFilesAction(Request $request)
+    {
+        $data['msg'] = 'error';
+        if ( $request->isXmlHttpRequest() ) {
+
+            $target_dir = $this->get('kernel')->getRootDir()
+                . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "web"
+                . ($viewPath = DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "teasers" . DIRECTORY_SEPARATOR . $this->getUser()->getId() . DIRECTORY_SEPARATOR);
+            $name = $request->request->get('name');
+            if ( $name ) {
+                if( unlink($target_dir . $name) )
+                    $data['msg'] = 'success';
+            }
+
+        }
+
+        return $data;
+    }
+
 
 }

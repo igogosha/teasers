@@ -20,11 +20,27 @@
                          </div>
 
                          {{ form_start(form) }}
-                         {{ form_errors(form) }}
+                         {{ form_errors(form, {'attr' : {'class': 'alert alert-danger'}}) }}
 
-                         <div>
-                             {#{{ form_widget(form.save) }}#}
+
+                         <div class="form-group">
+                             {{ form_label(form.groups) }}
+                             {{ form_errors(form.groups) }}
+                             {{ form_widget(form.groups) }}
                          </div>
+
+                         <div class="form-group" style="position:relative">
+                             {{ form_label(form.title) }}
+                             {{ form_errors(form.title) }}
+                             {{ form_widget(form.title) }}
+                         </div>
+
+                         <div class="form-group">
+                             {{ form_label(form.link) }}
+                             {{ form_errors(form.link) }}
+                             {{ form_widget(form.link) }}
+                         </div>
+
 
                          {{ form_end(form) }}
 
@@ -40,12 +56,17 @@
     <script src="{{ asset('/bundles/app/js/fileupload/jquery.ui.widget.js') }}"></script>
     <script src="{{ asset('/bundles/app/js/fileupload/jquery.iframe-transport.js') }}"></script>
     <script src="{{ asset('/bundles/app/js/fileupload/jquery.fileupload.js') }}"></script>
+    <script src="{{ asset('/bundles/app/js/textarea.js') }}"></script>
     <script type="text/javascript">
+
+        var delete_file = "{{ path('delete_files') }}";
+
         $(document).ready(function() {
 
+
+            $('#appbundle_teasers_title').before('<div class="line-nums"><span>1</span></div>');
             $('#appbundle_teasers_title').parent()
-                    .before('<input type="file" name="pictures[]" multiple class="btn btn-success btn-cons uploadImages"/><div id="img_previews" class="col-lg-12"></div><div class="clearfix"></div> ');
-//            $('#appbundle_teasers_image').remove();
+                    .before('<div class="form-group"><input type="file" name="pictures[]" multiple class="btn btn-success btn-cons uploadImages"/><div id="img_previews" class="col-lg-12"></div><div class="form-group"><div class="clearfix"></div>');
 
             $('.uploadImages').fileupload({
                 dataType: 'json',
@@ -66,8 +87,50 @@
 
             $(document).on('click', '.removePreview', function() {
                 if ( confirm('Remove image?') ) {
+
+                    $.post(delete_file, {name: $(this).data('remove')}, function(r){
+                        console.log(r.msg);
+                    }, 'json');
                     $(this).parent().remove();
                 }
+            });
+
+
+            /*
+             * This hook adds autosizing functionality
+             * to your textarea
+             */
+            BehaveHooks.add(['keydown'], function(data){
+                var numLines = data.lines.total,
+                        fontSize = parseInt( getComputedStyle(data.editor.element)['font-size'] ),
+                        padding = parseInt( getComputedStyle(data.editor.element)['padding'] );
+                data.editor.element.style.height = (((numLines*fontSize)+padding))+'px';
+            });
+
+            /*
+             * This hook adds Line Number Functionality
+             */
+            BehaveHooks.add(['keydown'], function(data){
+                var numLines = data.lines.total,
+                        house = document.getElementsByClassName('line-nums')[0],
+                        html = '',
+                        i;
+                for(i=0; i<numLines; i++){
+                    html += '<div>'+(i+1)+'</div>';
+                }
+                house.innerHTML = html;
+            });
+
+            var editor = new Behave({
+
+                textarea: 		document.getElementById('appbundle_teasers_title'),
+                replaceTab: 	true,
+                softTabs: 		true,
+                tabSize: 		4,
+                autoOpen: 		true,
+                overwrite: 		true,
+                autoStrip: 		true,
+                autoIndent: 	true
             });
 
         });
