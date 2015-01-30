@@ -31,12 +31,35 @@ class PlacesController extends Controller
      */
     public function addPlaceAction()
     {
+        $em = $this->getDoctrine()->getEntityManager();
         $places = new Places();
 
         $places = $this->createForm(new PlacesType(), $places, array(
             'action' => $this->generateUrl('admin_places_add_save'),
             'method' => 'POST',
         ));
+
+        $groups = $em->getRepository('AppBundle:Groups')->findBy(array(
+            'user' => $this->getUser()
+        ));
+        $rubrics = array();
+        foreach( $groups as $k => $g ) {
+            $r_id = $g->getRubrics()->getId();
+
+            $rubrics[$r_id] = array(
+                'id' => $r_id,
+                'rubric_name' => $g->getRubrics()->getName()
+            );
+            $rubrics[$r_id]['groups'][$g->getId()] = array(
+                'id' => $g->getId(),
+                'name' => $g->getTitle()
+            );
+        };
+
+        header('Content-Type: text/html; charset=utf-8');
+        echo '<pre>';
+        print_r($rubrics);
+        exit;
 
         return $this->render('AppBundle:Places:addPlace.html.twig', array(
             'form' => $places->createView()

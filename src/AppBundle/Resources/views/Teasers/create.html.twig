@@ -42,6 +42,8 @@
                          </div>
 
 
+                         <button class="btn btn-success btn-lg" id="saveTeasersButton">Save</button>
+
                          {{ form_end(form) }}
 
                      </div>
@@ -93,6 +95,40 @@
                     }, 'json');
                     $(this).parent().remove();
                 }
+            });
+
+            $(document).on('click', '#saveTeasersButton', function(e){
+                e.preventDefault();
+
+                var data = {};
+                data['group'] = $('form[name="appbundle_teasers"]').find('#appbundle_teasers_groups').val();
+                data['images'] = [];
+                $('input[name="teaser_image[]"]').each(function(){
+                    data['images'].push($(this).val());
+                });
+
+                data['titles'] = [];
+                var titles = $('#appbundle_teasers_title').val();
+                titles = titles.split('\n');
+                titles.forEach(function(v){
+                    data['titles'].push(v);
+                });
+
+                data['links'] = [];
+                var links = $('#appbundle_teasers_link').val();
+                links = links.split('\n');
+                links.forEach(function(v){
+                    data['links'].push(v);
+                });
+
+                // check if number of pictures equals to number of titles and links.
+                var l = data['images'].length;
+                if ( titles.length != l || links.length != l ) {
+                    alert('All fields should be same size!');
+                }
+                $.post("{{ path('save-teasers-path') }}", {data:data}, function(r){
+                    alert(r.msg);
+                }, 'json');
             });
 
 

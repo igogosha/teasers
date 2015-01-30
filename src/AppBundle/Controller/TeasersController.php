@@ -29,4 +29,49 @@ class TeasersController extends Controller
         ));
     }
 
+    /**
+     * @Route("admin/teasers/save", name="save-teasers-path")
+     */
+    public function saveTeasersAction(Request $request)
+    {
+        $response['msg'] = false;
+        if ( $request->isXmlHttpRequest() ) {
+            $data = $request->request->get('data');
+
+            if ( !empty($data) ) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $group = $em->getRepository('AppBundle:Groups')
+                    ->find($data['group']);
+
+                if ( !$group ) {
+                    $response['msg'] = 'No such group';
+                    return new JsonResponse($response);
+                }
+
+                foreach( $data['images'] as $k => $img ) {
+                    $teasers = new Teasers();
+                    $teasers->setUser($this->getUser());
+                    $teasers->setGroups($group);
+
+                    $teasers->setImage($img);
+                    $teasers->setLink($data['links'][$k]);
+                    $teasers->setTitle($data['titles'][$k]);
+                    $teasers->setCreatedAt( new \DateTime('now') );
+
+                    $em->persist($teasers);
+                    $em->flush();
+                    $response['msg'] = 'success';
+
+                }
+
+            }
+        } else {
+            $response['msg'] = 'not ajax';
+        }
+
+        return new JsonResponse($response);
+
+    }
+
+
 }
