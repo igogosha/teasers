@@ -1,6 +1,13 @@
 {% extends 'AppBundle:Admin:index.html.twig' %}
 
  {% block mainAdminContent %}
+
+     <div style="position: fixed; top: 0px; right: 0em; width: 100%; z-index: 999; padding: 0px; height: 0.5em;" class="">
+         <div class="progress" style="height:0.5em">
+             <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-striped active"></div>
+         </div>
+     </div>
+
      <div class="page-title" xmlns="http://www.w3.org/1999/html">
          <h3>{{ "Add news place" | trans }}</h3>
      </div>
@@ -15,9 +22,9 @@
                  <div class="grid-body no-border"> <br>
                      <div class="row">
 
-                         <div class="progress">
-                             <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-                         </div>
+                         {#<div class="progress">#}
+                             {#<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>#}
+                         {#</div>#}
 
                          {{ form_start(form) }}
                          {{ form_errors(form, {'attr' : {'class': 'alert alert-danger'}}) }}
