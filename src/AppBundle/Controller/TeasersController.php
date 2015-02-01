@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Groups;
 use AppBundle\Entity\Teasers;
+use AppBundle\Entity\TeasersSettings;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Form\TeasersType;
@@ -10,8 +12,51 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class TeasersController extends Controller
 {
+
+    /**
+     * @Route("/admin/teasers", name="teasers")
+     */
+    public function listTeasersAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $groups = $em->getRepository("AppBundle:Groups")
+            ->findBy(array(
+                'user' => $this->getUser()
+            ));
+
+
+        $teasers = $em->getRepository("AppBundle:Teasers")
+            ->findBy(array(
+                'user' => $this->getUser()
+            ));
+
+        $teasersArray = array();
+        foreach( $groups as $group ) {
+            $teasersArray[$group->getId()] = array(
+                'group_name' => $group->getTitle(),
+                'rubric_name' => $group->getRubrics()->getName()
+            );
+        }
+
+        foreach( $teasers as $teaser ) {
+            $teasersArray[$teaser->getGroups()->getId()]['teasers'][] = array(
+                'id' => $teaser->getId(),
+                'title' => $teaser->getTitle(),
+                'link' => $teaser->getLink()
+            );
+            $teasersArray[$teaser->getGroups()->getId()]['links'][] = $teaser->getLink();
+            $teasersArray[$teaser->getGroups()->getId()]['ctr'] = 'ctr';
+            $teasersArray[$teaser->getGroups()->getId()]['views'] = 'views';
+        }
+
+        return $this->render('AppBundle:Teasers:list.html.twig', array(
+            'groups' => $teasersArray
+        ));
+    }
 
     /**
      * @Route("admin/teasers/create", name="admin_create_group")
@@ -40,17 +85,28 @@ class TeasersController extends Controller
 
             if ( !empty($data) ) {
                 $em = $this->getDoctrine()->getEntityManager();
-                $group = $em->getRepository('AppBundle:Groups')
-                    ->find($data['group']);
+                $rubrics = $em->getRepository('AppBundle:Rubrics')
+                    ->findOneBy(array(
+                        'id' => $data['rubrics']
+                    ));
 
-                if ( !$group ) {
+                if ( !$rubrics ) {
                     $response['msg'] = 'No such group';
                     return new JsonResponse($response);
                 }
 
+                $groupTitle = $data['name'];
+                $group = new Groups();
+                $group->setTitle($groupTitle);
+                $group->setCreatedAt(new \DateTime('now'));
+                $group->setUser($this->getUser());
+                $em->persist($group);
+                $em->flush();
+
                 foreach( $data['images'] as $k => $img ) {
                     $teasers = new Teasers();
                     $teasers->setUser($this->getUser());
+                    $teasers->setRubrics($rubrics);
                     $teasers->setGroups($group);
 
                     $teasers->setImage($img);

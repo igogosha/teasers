@@ -219,27 +219,4 @@ class Teasers
     {
         return $this->link;
     }
-
-    /**
-     * Set rubrics
-     *
-     * @param \AppBundle\Entity\Rubrics $rubrics
-     * @return Teasers
-     */
-    public function setRubrics(\AppBundle\Entity\Rubrics $rubrics = null)
-    {
-        $this->rubrics = $rubrics;
-
-        return $this;
-    }
-
-    /**
-     * Get rubrics
-     *
-     * @return \AppBundle\Entity\Rubrics 
-     */
-    public function getRubrics()
-    {
-        return $this->rubrics;
-    }
 }

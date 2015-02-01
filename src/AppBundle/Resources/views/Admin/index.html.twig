@@ -123,13 +123,13 @@
             {#<p class="menu-title">BROWSE <span class="pull-right"><a href="javascript:;"><i class="fa fa-refresh"></i></a></span></p>#}
             <p class="menu-title"></p>
             <ul>
-                <li class="start active "> <a href="index.html"> <i class="icon-custom-home"></i> <span class="title">{{ "Главная" | trans }}</span> </a> </li>
+                <li class="start"> <a href="index.html"> <i class="icon-custom-home"></i> <span class="title">{{ "Главная" | trans }}</span> </a> </li>
                 {#<li class=""> <a href="email.html"> <i class="fa fa-envelope"></i> <span class="title">Email</span>  <span class=" badge badge-disable pull-right ">203</span></a> </li>#}
                 {#<li class=""> <a href="../frontend/index.html"> <i class="fa fa-flag"></i>  <span class="title">Frontend</span></a></li>#}
-                <li class=""> <a href="javascript:;"> <i class="icon-custom-ui"></i> <span class="title">{{ "Тизеры" | trans }}</span> <span class="arrow "></span> </a>
+                <li class="{% if (app.request.get('_route') == 'teasers') or (app.request.get('_route') == 'admin_create_group') %}active open{% endif %}"> <a href="javascript:;"> <i class="icon-custom-ui"></i> <span class="title">{{ "Тизеры" | trans }}</span> <span class="arrow "></span> </a>
                     <ul class="sub-menu">
-                        <li> <a href="typography.html"><i class="fa fa-list-ul"></i>{{ "Cписок групп" | trans }}</a> </li>
-                        <li> <a href="{{ path('admin_create_group') }}"><i class="fa fa-plus"></i>{{ "Добавить группу" | trans }}</a> </li>
+                        <li class="{% if app.request.get('_route') == 'teasers' %}active{% endif %}"> <a href="{{ path('teasers') }}"><i class="fa fa-list-ul"></i>{{ "Cписок групп" | trans }}</a> </li>
+                        <li class="{% if app.request.get('_route') == 'admin_create_group' %}active{% endif %}"> <a href="{{ path('admin_create_group') }}"><i class="fa fa-plus"></i>{{ "Добавить группу" | trans }}</a> </li>
                     </ul>
                 </li>
 
@@ -223,5 +223,5 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/app/plugins/jquery-slider/jquery.sidr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/app/js/core.js') }}" type="text/javascript"></script>
+    {#<script src="{{ asset('bundles/app/js/core.js') }}" type="text/javascript"></script>#}
 {% endblock %}

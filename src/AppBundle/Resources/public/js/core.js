@@ -423,7 +423,7 @@ $(document).ready(function() {
 		return false;
     });
 	
-	 $("img").unveil();
+	 //$("img").unveil();
 });
 $( window ).resize(function() {
 	  $.sidr('close', 'sidr');

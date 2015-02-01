@@ -1,7 +1,7 @@
 $(document).ready(function() {	
 	//Accordians
 	$('.panel-group').collapse({
-		toggle: false
+		toggle: true
 	})	
 
 /***** Tabs *****/

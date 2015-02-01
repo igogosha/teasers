@@ -16,7 +16,11 @@ class TeasersType extends AbstractType
     {
         $builder
             ->add('user', 'hidden')
-            ->add('groups')
+//            ->add('name', 'entity', array(
+//                'class' => 'AppBundle:TeasersSettings',
+//                'property' => 'name',
+//            ))
+            ->add('rubrics')
             ->add('createdAt', 'hidden')
 //            ->add('image', 'file', array(
 //                'label' => 'upload',

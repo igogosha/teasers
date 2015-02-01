@@ -1,0 +1,73 @@
+{% extends 'AppBundle:Admin:index.html.twig' %}
+
+ {% block mainAdminContent %}
+     <div class="page-title" xmlns="http://www.w3.org/1999/html">
+         <h3>{{ "Teasers" | trans }}</h3>
+     </div>
+
+     <div class="row">
+         <div class="col-md-12">
+             <div class="grid simple">
+
+                 <div class="grid-body no-border"> <br>
+                     <div class="row">
+
+                         <div data-toggle="collapse" id="accordion" class="panel-group">
+
+                             {% for group in groups %}
+                             <div class="panel panel-default">
+                                 <div class="panel-heading collapsed">
+                                     <h4>{{ group.group_name }}</h4>
+                                     <table class="table">
+                                         <tr>
+                                             <td>
+                                                 <a href="#collapseOne" data-parent="#accordion" data-toggle="collapse" class="collapsed">
+                                                     Показать/Скрыть
+                                                 </a>
+                                             </td>
+                                             <td>
+                                                 <ul class="list-group list-group-sm">
+                                                    {% for link in group.links %}
+                                                        <li class="list-group-item" title="{{ link }}">{{ link }}</li>
+                                                     {% endfor %}
+                                                 </ul>
+                                             </td>
+                                             <td>{{ group.rubric_name }}</td>
+                                             <td>{{ group.ctr }}</td>
+                                             <td>{{ group.views }}</td>
+                                         </tr>
+                                     </table>
+
+                                 </div>
+                                 <div class="panel-collapse collapse" id="collapseOne" style="height: 0px;">
+                                     <div class="panel-body">
+                                         1
+                                     </div>
+                                 </div>
+                             </div>
+                             {% endfor %}
+
+                         </div>
+                         <div class="clearfix clear"></div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="{{ asset('/bundles/app/js/fileupload/jquery.ui.widget.js') }}"></script>#}
+    {#<script src="{{ asset('/bundles/app/js/fileupload/jquery.iframe-transport.js') }}"></script>#}
+    {#<script src="{{ asset('/bundles/app/js/fileupload/jquery.fileupload.js') }}"></script>#}
+    {#<script src="{{ asset('/bundles/app/js/textarea.js') }}"></script>#}
+    {#<script src="{{ asset('/bundles/app/js/tabs_accordian.js') }}"></script>#}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.panel-group').collapse({
+                toggle: false
+            })
+        });
+    </script>
+{% endblock %}

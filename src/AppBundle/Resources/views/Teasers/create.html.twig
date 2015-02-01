@@ -3,13 +3,13 @@
  {% block mainAdminContent %}
 
      <div style="position: fixed; top: 0px; right: 0em; width: 100%; z-index: 999; padding: 0px; height: 0.5em;" class="">
-         <div class="progress" style="height:0.5em">
+         <div class="progress progress-striped active" style="height:0.5em">
              <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-striped active"></div>
          </div>
      </div>
 
      <div class="page-title" xmlns="http://www.w3.org/1999/html">
-         <h3>{{ "Add news place" | trans }}</h3>
+         <h3>{{ "Создать группу тизеров" | trans }}</h3>
      </div>
 
      <div class="row">
@@ -29,11 +29,15 @@
                          {{ form_start(form) }}
                          {{ form_errors(form, {'attr' : {'class': 'alert alert-danger'}}) }}
 
+                         <div class="form-group">
+                             <label for="appbundle_teasers_groups">{{ 'Имя' | trans }}</label>
+                             <input type="text" class="form-control" name="appbundle_teasers_name" id="appbundle_teasers_name" />
+                         </div>
 
                          <div class="form-group">
-                             {{ form_label(form.groups) }}
-                             {{ form_errors(form.groups) }}
-                             {{ form_widget(form.groups) }}
+                             {{ form_label(form.rubrics) }}
+                             {{ form_errors(form.rubrics) }}
+                             {{ form_widget(form.rubrics) }}
                          </div>
 
                          <div class="form-group" style="position:relative">
@@ -108,7 +112,9 @@
                 e.preventDefault();
 
                 var data = {};
-                data['group'] = $('form[name="appbundle_teasers"]').find('#appbundle_teasers_groups').val();
+                data['rubrics'] = $('form[name="appbundle_teasers"]').find('#appbundle_teasers_rubrics').val();
+                data['name'] = $('form[name="appbundle_teasers"]').find('#appbundle_teasers_name').val();
+
                 data['images'] = [];
                 $('input[name="teaser_image[]"]').each(function(){
                     data['images'].push($(this).val());
