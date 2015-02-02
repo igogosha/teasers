@@ -8,21 +8,43 @@
      <div class="row">
          <div class="col-md-12">
              <div class="grid simple">
-                 {#<div class="grid-title no-border">#}
-                 {#<h4>{{ "Добавить рубрику" | trans }}</h4>#}
-                 {#</div>#}
 
                  <div class="grid-body no-border"> <br>
                      <div class="row">
 
                          <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 panel">
                              <form class="form-inline" action="{{ path('admin_places_add_save') }}" method="post" name="appbundle_rubrics">
+
                                  <div class="input-group">
                                      {{ form_row(form.address) }}
                                      <span class="input-group-btn">
                                          <button class="btn btn-lg btn-danger" name="appbundle_place[save]" id="appbundle_place_save" type="button">{{ "Save" | trans }}</button>
                                      </span>
                                  </div>
+
+
+                                 {% for r in rubrics %}
+                                     {% if (r.groups is defined) and (r.groups | length > 0) %}
+                                         <div class="rubricsGroup">
+                                             <div class="checkbox check-success">
+                                                 <input class="rubric" type="checkbox" id="rubric_{{ r.rubric_id }}">
+                                                 <label for="rubric_{{ r.rubric_id }}">{{ r.rubric_name }}</label>
+                                             </div>
+                                             <div class="clearfix"></div>
+                                             <div class="children">
+                                                 {% for g in r.groups %}
+                                                     <div class="checkbox check-success col-lg-offset-1">
+                                                         <input class="group" type="checkbox" id="group_{{ g.id }}">
+                                                         <label for="group_{{ g.id }}">{{ g.name }}</label>
+                                                     </div>
+                                                 {% endfor %}
+                                             </div>
+                                             <div class="clearfix"></div>
+                                         </div>
+                                     {% endif %}
+                                 {% endfor %}
+                                 <div class="clearfix"></div>
+
                              </form>
                          </div>
                          <div class="clear clearfix"></div>
@@ -42,25 +64,26 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {#<script type="text/javascript">#}
-        {#var saveRubricsUrl = "{{ path('admin_add_rubrics') }}";#}
-        {#var deleteRubricsUrl = "{{ path('admin_delete_rubrics') }}";#}
-    {#</script>#}
-    {#<script type="text/template" id="tableRowTemplate">#}
-        {#<tr id="">#}
-            {#<td class="v-align-middle rName"></td>#}
-            {#<td class="v-align-middle"></td>#}
-            {#<td>#}
-                {#<div class="btn-group" role="group">#}
-                    {#<button type="button" data-id="" class="btn btn-mini btn-default editRubric">#}
-                        {#<i class="fa fa-edit"></i>#}
-                    {#</button>#}
-                    {#<button type="button" data-id="" class="btn btn-mini btn-danger deleteRubric">#}
-                        {#<i class="fa fa-times"></i>#}
-                    {#</button>#}
-                {#</div>#}
-            {#</td>#}
-        {#</tr>#}
-    {#</script>#}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(document).on('click', 'input.rubric', function(){
+                if ( $(this).is(':checked') ) {
+                    $(this).parent().parent().find('.children').find('input.group').each(function(){
+                       $(this).attr('checked','checked');
+                       $(this).val(1);
+                    });
+                } else {
+                    $(this).parent().parent().find('.children').find('input.group').each(function(){
+                        $(this).removeAttr('checked');
+                        $(this).val(0);
+                    });
+                }
+            });
+
+            $(document).on('click', 'input.group', function(){
+                //alert( $(this).parent().parent().find('input.group').length ); TODO
+            });
+        });
+    </script>
     {#<script type="text/javascript" src="{{ asset('/bundles/app/js/settings/master.js') }}"></script>#}
 {% endblock %}

@@ -34,35 +34,41 @@ class PlacesController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $places = new Places();
 
-        $places = $this->createForm(new PlacesType(), $places, array(
+        $result = array();
+        $form = $this->createForm(new PlacesType(), $places, array(
             'action' => $this->generateUrl('admin_places_add_save'),
             'method' => 'POST',
         ));
-
         $groups = $em->getRepository('AppBundle:Groups')->findBy(array(
             'user' => $this->getUser()
         ));
-        $rubrics = array();
+        $rubrics = $em->getRepository('AppBundle:Rubrics')->findBy(array(
+            'user' => $this->getUser()
+        ));
+
+        foreach( $rubrics as $r ) {
+            $result[$r->getId()] = array(
+                'rubric_id' => $r->getId(),
+                'rubric_name' => $r->getName()
+            );
+        }
+
         foreach( $groups as $k => $g ) {
             $r_id = $g->getRubrics()->getId();
 
-            $rubrics[$r_id] = array(
-                'id' => $r_id,
-                'rubric_name' => $g->getRubrics()->getName()
-            );
-            $rubrics[$r_id]['groups'][$g->getId()] = array(
-                'id' => $g->getId(),
-                'name' => $g->getTitle()
-            );
+            if ( $g->getId() ) {
+                $result[$r_id]['groups'][$g->getId()] = array(
+                    'id' => $g->getId(),
+                    'name' => $g->getTitle()
+                );
+            } else {
+                $result[$r_id]['groups'] = array();
+            }
         };
 
-        header('Content-Type: text/html; charset=utf-8');
-        echo '<pre>';
-        print_r($rubrics);
-        exit;
-
         return $this->render('AppBundle:Places:addPlace.html.twig', array(
-            'form' => $places->createView()
+            'form' => $form->createView(),
+            'rubrics' => $result
         ));
     }
 

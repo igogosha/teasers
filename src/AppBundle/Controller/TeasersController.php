@@ -100,6 +100,7 @@ class TeasersController extends Controller
                 $group->setTitle($groupTitle);
                 $group->setCreatedAt(new \DateTime('now'));
                 $group->setUser($this->getUser());
+                $group->setRubrics($rubrics);
                 $em->persist($group);
                 $em->flush();
 
