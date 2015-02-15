@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\GroupToPlace;
 use AppBundle\Form\RubricsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Places;
 use AppBundle\Form\PlacesType;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class PlacesController extends Controller
 {
@@ -18,10 +20,28 @@ class PlacesController extends Controller
      */
     public function indexAction()
     {
-        $test = 'test';
+        $groupsPlace = $this->getDoctrine()->getRepository('AppBundle:GroupToPlace')
+            ->findBy(array(
+                'user' => $this->getUser()
+            ));
+
+        $places = array();
+        foreach( $groupsPlace as $gp ) {
+            $places[$gp->getPlaces()->getId()] = array(
+                'name' => $gp->getPlaces()->getName(),
+                'groups' => array(),
+                'rubrics' => array(),
+                'blocks' => array(),
+
+            );
+        }
+
+        echo '<pre>';
+        print_r($places);
+        exit;
 
         return $this->render('AppBundle:Places:index.html.twig', array(
-            'test' => $test
+            'test' => 7
         ));
     }
 
@@ -75,11 +95,55 @@ class PlacesController extends Controller
     /**
      * @Route("/admin/places/add/save", name="admin_places_add_save")
      */
-    public function addSavePlaceAction()
+    public function addSavePlaceAction(Request $request)
     {
-       echo '<pre>';
-        print_r(777);
-        exit;
+        $response = array();
+        if ( $request->isXmlHttpRequest() ) {
+
+            $name = $request->request->get('name');
+
+            if ( empty($name) ) {
+                $response['msg'] = 'error';
+            } else {
+                $rubrics = $request->request->get('rubrics');
+                $em = $this->getDoctrine()->getEntityManager();
+                $place = $this->getDoctrine()->getRepository('AppBundle:Places')
+                    ->findOneBy(array(
+                        'name' => $name
+                    ));
+                if (!$place) {
+                    $place = new Places();
+                    $place->setName($name);
+                    $place->setUser($this->getUser());
+                    $place->setCreatedAt(new \DateTime('now'));
+
+                    $em->persist($place);
+                    $em->flush();
+                }
+
+                foreach ($rubrics as $r) {
+                    foreach ($r as $g) {
+                        $group = $this->getDoctrine()->getRepository('AppBundle:Groups')
+                            ->find($g);
+
+                        $r_to_g = new GroupToPlace();
+                        $r_to_g->setGroups($group);
+                        $r_to_g->setUser($this->getUser());
+                        $r_to_g->setPlaces($place);
+                        $r_to_g->setCreatedAt(new \DateTime('now'));
+
+                        $em->persist($r_to_g);
+                        $em->flush();
+                    }
+                }
+                $response['msg'] = 'success';
+            }
+
+        } else {
+            $response['msg'] = 'not ajax';
+        }
+
+        return new JsonResponse($response);
     }
 
 

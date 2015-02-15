@@ -15,7 +15,7 @@ class PlacesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('address', 'text', array(
+            ->add('name', 'text', array(
                 'label' => false,
                 'attr' => array(
                     'class' => 'form-control',

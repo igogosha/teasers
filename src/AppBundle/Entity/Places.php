@@ -7,6 +7,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Rubrics;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * Places
@@ -28,16 +29,10 @@ class Places
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $address;
+    private $name;
 
-    /**
-     * @var integer
-     * @ManyToOne(targetEntity="Rubrics")
-     * @JoinColumn(name="rubric_id", referencedColumnName="id")
-     */
-    private $rubric;
 
     /**
      * @var integer
@@ -45,6 +40,13 @@ class Places
      * @JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
 
 
     /**
@@ -58,50 +60,28 @@ class Places
     }
 
     /**
-     * Set address
+     * Set name
      *
-     * @param string $address
+     * @param string $name
      * @return Places
      */
-    public function setAddress($address)
+    public function setName($name)
     {
-        $this->address = $address;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get address
+     * Get name
      *
      * @return string 
      */
-    public function getAddress()
+    public function getName()
     {
-        return $this->address;
+        return $this->name;
     }
 
-    /**
-     * Set rubric
-     *
-     * @param integer $rubric
-     * @return Places
-     */
-    public function setRubric($rubric)
-    {
-        $this->rubric = $rubric;
-
-        return $this;
-    }
-
-    /**
-     * Get rubric
-     *
-     * @return integer 
-     */
-    public function getRubric()
-    {
-        return $this->rubric;
-    }
 
     /**
      * Set user
@@ -125,4 +105,28 @@ class Places
     {
         return $this->user;
     }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Places
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
 }

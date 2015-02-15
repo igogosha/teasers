@@ -424,6 +424,8 @@ $(document).ready(function() {
     });
 	
 	 //$("img").unveil();
+
+
 });
 $( window ).resize(function() {
 	  $.sidr('close', 'sidr');
@@ -433,4 +435,11 @@ function calculateHeight(){
 		if(911 > contentHeight){	
 			console.log("Small");
 		}	
-}	
+}
+
+function makeAlert(text) {
+	var modal = $("#myAlert");
+
+	modal.find('.modal-body').text(text);
+	modal.modal('show')
+}

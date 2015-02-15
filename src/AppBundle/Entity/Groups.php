@@ -7,6 +7,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Rubrics;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use AppBundle\Entity\Places;
 
 /**
  * Groups
@@ -36,8 +37,6 @@ class Groups
      * @JoinColumn(name="rubrics_id", referencedColumnName="id")
      **/
     private $rubrics;
-
-
 
     /**
      * @var \DateTime
