@@ -27,21 +27,17 @@ class PlacesController extends Controller
 
         $places = array();
         foreach( $groupsPlace as $gp ) {
-            $places[$gp->getPlaces()->getId()] = array(
-                'name' => $gp->getPlaces()->getName(),
-                'groups' => array(),
-                'rubrics' => array(),
-                'blocks' => array(),
-
+            $places[$gp->getPlaces()->getId()]['name'] = $gp->getPlaces()->getName();
+            $places[$gp->getPlaces()->getId()]['row'][]  = array(
+                'g_id' => $gp->getGroups()->getId(),
+                'g_name' => $gp->getGroups()->getTitle(),
+                'r_id' => $gp->getGroups()->getRubrics()->getId(),
+                'r_name' => $gp->getGroups()->getRubrics()->getName(),
             );
         }
 
-        echo '<pre>';
-        print_r($places);
-        exit;
-
         return $this->render('AppBundle:Places:index.html.twig', array(
-            'test' => 7
+            'places' => $places
         ));
     }
 
