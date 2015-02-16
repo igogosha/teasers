@@ -1,0 +1,92 @@
+{% extends 'AppBundle:Admin:index.html.twig' %}
+
+ {% block mainAdminContent %}
+     <div class="page-title" xmlns="http://www.w3.org/1999/html">
+         <h3>{{ "Teasers" | trans }}</h3>
+     </div>
+
+     <div class="row">
+         <div class="col-md-12">
+             <div class="grid simple">
+
+                 <div class="grid-body no-border"> <br>
+                     <div class="row">
+
+                         {{ form_start(form) }}
+                         <fieldset>
+                             <legend>Основное</legend>
+
+
+                             <div class="col-lg-12">
+                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                     {{ form_label(form.blockName) }}
+                                     {{ form_errors(form.blockName) }}
+                                     {{ form_widget(form.blockName) }}
+                                 </div>
+
+                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                     {{ form_label(form.rows) }}
+                                     {{ form_errors(form.rows) }}
+                                     {{ form_widget(form.rows) }}
+                                 </div>
+
+                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                     {{ form_label(form.cols) }}
+                                     {{ form_errors(form.cols) }}
+                                     {{ form_widget(form.cols) }}
+                                 </div>
+                             </div>
+                             <div class="clearfix"></div>
+                             <div class="col-lg-12">
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.padding) }}
+                                     {{ form_errors(form.padding) }}
+                                     {{ form_widget(form.padding) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.textPosition) }}
+                                     {{ form_errors(form.textPosition) }}
+                                     {{ form_widget(form.textPosition) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.background) }}
+                                     {{ form_errors(form.background) }}
+                                     {{ form_widget(form.background) }}
+                                 </div>
+                             </div>
+
+                         </fieldset>
+
+                         <fieldset>
+                             <legend>Картинки</legend>
+
+
+                         </fieldset>
+
+                         <fieldset>
+                             <legend>Заголовок</legend>
+
+
+                         </fieldset>
+
+                         <fieldset>
+                             <legend>Читать далее</legend>
+
+
+                         </fieldset>
+                         {{ form_end(form) }}
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+    </script>
+{% endblock %}

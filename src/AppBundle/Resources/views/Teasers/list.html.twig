@@ -12,42 +12,46 @@
                  <div class="grid-body no-border"> <br>
                      <div class="row">
 
-                         <div data-toggle="collapse" id="accordion" class="panel-group">
-
+                             <table class="table table-bordered">
+                                 <thead>
+                                     <tr>
+                                         <th>Группы</th>
+                                         <th>Ссылки</th>
+                                         <th>Рубрика</th>
+                                         <th>CTR</th>
+                                         <th>Показов</th>
+                                     </tr>
+                                 </thead>
                              {% for group in groups %}
-                             <div class="panel panel-default">
-                                 <div class="panel-heading collapsed">
-                                     <h4>{{ group.group_name }}</h4>
-                                     <table class="table">
-                                         <tr>
-                                             <td>
-                                                 <a href="#collapseOne" data-parent="#accordion" data-toggle="collapse" class="collapsed">
-                                                     Показать/Скрыть
-                                                 </a>
-                                             </td>
-                                             <td>
-                                                 <ul class="list-group list-group-sm">
-                                                    {% for link in group.links %}
-                                                        <li class="list-group-item" title="{{ link }}">{{ link }}</li>
-                                                     {% endfor %}
-                                                 </ul>
-                                             </td>
-                                             <td>{{ group.rubric_name }}</td>
-                                             <td>{{ group.ctr }}</td>
-                                             <td>{{ group.views }}</td>
-                                         </tr>
-                                     </table>
 
-                                 </div>
-                                 <div class="panel-collapse collapse" id="collapseOne" style="height: 0px;">
-                                     <div class="panel-body">
-                                         1
-                                     </div>
-                                 </div>
-                             </div>
+                                 {#{{ dump(group) }}#}
+
+                                     <tr class="bg-purple" style="color:#fff;">
+                                         <td colspan="5"><h3>{{ group.group_name }}</h3></td>
+                                     </tr>
+
+                                     <tr>
+                                         <td>
+                                             <div data-toggle="buttons-radio" class="btn-group btn-group-sm">
+                                                 <button title="редактировать" class="btn btn-primary"><i class="fa fa-pencil"></i></button>
+                                                 <button title="показать/скрыть" class="btn btn-warning">
+                                                     <i class="fa fa-eye"></i>
+                                                     {{ group.teasers | length }}
+                                                 </button>
+                                             </div>
+                                         </td>
+                                         <td>
+                                             {% for link in group.links %}
+                                                <span title="{{ link }}">{{ link }}</span><br>
+                                             {% endfor %}
+                                         </td>
+                                         <td>{{ group.rubric_name }}</td>
+                                         <td>{{ group.ctr }}</td>
+                                         <td>{{ group.views }}</td>
+                                     </tr>
                              {% endfor %}
+                             </table>
 
-                         </div>
                          <div class="clearfix clear"></div>
                      </div>
                  </div>

@@ -136,11 +136,11 @@
                     <ul class="sub-menu">
                         <li class="{% if app.request.get('_route') == 'admin_places' %}active{% endif %}"> <a href="{{ path('admin_places') }}"><i class="fa fa-list-ul"></i>{{ "Cписок площадок" | trans }}</a> </li>
                         <li class="{% if app.request.get('_route') == 'admin_places_add' %}active{% endif %}"> <a href="{{ path('admin_places_add') }}"><i class="fa fa-plus"></i>{{ "Добавить площадку" | trans }}</a> </li>
-                        <li class="{% if app.request.get('_route') == 'admin_places_add_block' %}active{% endif %}"> <a href="messages_notifications.html"><i class="fa fa-th-large"></i>{{ "Блоки" | trans }}</a> </li>
+                        <li class="{% if app.request.get('_route') == 'admin_places_add_block' %}active{% endif %}"> <a href="{{ path('admin_places_add_block') }}"><i class="fa fa-th-large"></i>{{ "Добавить блок" | trans }}</a> </li>
                     </ul>
                 </li>
                 <li class="">
-                    <a href="javascript:;"> <i class="fa fa-signal"></i> <span class="title">{{ "Статистика" | trans }}</span> </a>
+                    <a href="javascript:;"> <i class="fa fa-bar-chart-o"></i> <span class="title">{{ "Статистика" | trans }}</span> </a>
                 </li>
 
                 <li class=""> <a href="javascript:;"> <i class="fa fa-flask"></i> <span class="title">{{ "Эксперименты" | trans }}</span> <span class="arrow "></span> </a>
