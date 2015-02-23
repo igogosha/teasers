@@ -62,11 +62,121 @@
                          <fieldset>
                              <legend>Картинки</legend>
 
+                             <div class="col-lg-12">
+                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                     {{ form_label(form.pictureSize) }}
+                                     {{ form_errors(form.pictureSize) }}
+                                     {{ form_widget(form.pictureSize) }}
+                                 </div>
 
+                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                     {{ form_label(form.pictureAlignHor) }}
+                                     {{ form_errors(form.pictureAlignHor) }}
+                                     {{ form_widget(form.pictureAlignHor) }}
+                                 </div>
+                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                     {{ form_label(form.pictureAlignVer) }}
+                                     {{ form_errors(form.pictureAlignVer) }}
+                                     {{ form_widget(form.pictureAlignVer) }}
+                                 </div>
+
+                             </div>
+                             <div class="clearfix"></div>
+                             <div class="col-lg-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                     {{ form_label(form.pictureBorderRadius) }}
+                                     {{ form_errors(form.pictureBorderRadius) }}
+                                     {{ form_widget(form.pictureBorderRadius) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.pictureBorderSize) }}
+                                     {{ form_errors(form.pictureBorderSize) }}
+                                     {{ form_widget(form.pictureBorderSize) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.pictureBorderColor) }}
+                                     {{ form_errors(form.pictureBorderColor) }}
+                                     {{ form_widget(form.pictureBorderColor) }}
+                                 </div>
+
+                             </div>
+
+                             <div class="clearfix"></div>
+                             <div class="col-lg-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                     {{ form_label(form.pictureShadowSize) }}
+                                     {{ form_errors(form.pictureShadowSize) }}
+                                     {{ form_widget(form.pictureShadowSize) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.pictureShadowColor) }}
+                                     {{ form_errors(form.pictureShadowColor) }}
+                                     {{ form_widget(form.pictureShadowColor) }}
+                                 </div>
+                             </div>
                          </fieldset>
 
                          <fieldset>
                              <legend>Заголовок</legend>
+
+                             <div class="col-lg-12">
+                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                     {{ form_label(form.headerFontFamily) }}
+                                     {{ form_errors(form.headerFontFamily) }}
+                                     {{ form_widget(form.headerFontFamily) }}
+                                 </div>
+
+                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                     {{ form_label(form.headerFontSize) }}
+                                     {{ form_errors(form.headerFontSize) }}
+                                     {{ form_widget(form.headerFontSize) }}
+                                 </div>
+                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                     {{ form_label(form.headerFontColor) }}
+                                     {{ form_errors(form.headerFontColor) }}
+                                     {{ form_widget(form.headerFontColor) }}
+                                 </div>
+
+                             </div>
+                             <div class="clearfix"></div>
+                             <div class="col-lg-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                     {{ form_label(form.headerAlignHor) }}
+                                     {{ form_errors(form.headerAlignHor) }}
+                                     {{ form_widget(form.headerAlignHor) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.headerAlignVer) }}
+                                     {{ form_errors(form.headerAlignVer) }}
+                                     {{ form_widget(form.headerAlignVer) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.headerFontStyle) }}
+                                     {{ form_errors(form.headerFontStyle) }}
+                                     {{ form_widget(form.headerFontStyle) }}
+                                 </div>
+
+                             </div>
+
+                             <div class="clearfix"></div>
+                             <div class="col-lg-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                     {{ form_label(form.headerFontHoverColor) }}
+                                     {{ form_errors(form.headerFontHoverColor) }}
+                                     {{ form_widget(form.headerFontHoverColor) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.headerFontHoverStyle) }}
+                                     {{ form_errors(form.headerFontHoverStyle) }}
+                                     {{ form_widget(form.headerFontHoverStyle) }}
+                                 </div>
+                             </div>
 
 
                          </fieldset>
@@ -74,6 +184,88 @@
                          <fieldset>
                              <legend>Читать далее</legend>
 
+                             <div class="col-lg-12">
+                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreActive) }}
+                                     {{ form_errors(form.moreActive) }}
+                                     {{ form_widget(form.moreActive) }}
+                                 </div>
+
+                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreType) }}
+                                     {{ form_errors(form.moreType) }}
+                                     {{ form_widget(form.moreType) }}
+                                 </div>
+                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreTxt) }}
+                                     {{ form_errors(form.moreTxt) }}
+                                     {{ form_widget(form.moreTxt) }}
+                                 </div>
+
+                             </div>
+                             <div class="clearfix"></div>
+                             <div class="col-lg-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreImage) }}
+                                     {{ form_errors(form.moreImage) }}
+                                     {{ form_widget(form.moreImage) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.morePosition) }}
+                                     {{ form_errors(form.morePosition) }}
+                                     {{ form_widget(form.morePosition) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreBtnAlignHor) }}
+                                     {{ form_errors(form.moreBtnAlignHor) }}
+                                     {{ form_widget(form.moreBtnAlignHor) }}
+                                 </div>
+
+                             </div>
+
+                             <div class="clearfix"></div>
+                             <div class="col-lg-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreBtnAlignVer) }}
+                                     {{ form_errors(form.moreBtnAlignVer) }}
+                                     {{ form_widget(form.moreBtnAlignVer) }}
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreTxtFont) }}
+                                     {{ form_errors(form.moreTxtFont) }}
+                                     {{ form_widget(form.moreTxtFont) }}
+                                 </div>
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreTxtFontSize) }}
+                                     {{ form_errors(form.moreTxtFontSize) }}
+                                     {{ form_widget(form.moreTxtFontSize) }}
+                                 </div>
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreTxtFontColor) }}
+                                     {{ form_errors(form.moreTxtFontColor) }}
+                                     {{ form_widget(form.moreTxtFontColor) }}
+                                 </div>
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreTxtFontStyle) }}
+                                     {{ form_errors(form.moreTxtFontStyle) }}
+                                     {{ form_widget(form.moreTxtFontStyle) }}
+                                 </div>
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreTxtFontHoverColor) }}
+                                     {{ form_errors(form.moreTxtFontHoverColor) }}
+                                     {{ form_widget(form.moreTxtFontHoverColor) }}
+                                 </div>
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                     {{ form_label(form.moreTxtFontHoverStyle) }}
+                                     {{ form_errors(form.moreTxtFontHoverStyle) }}
+                                     {{ form_widget(form.moreTxtFontHoverStyle) }}
+                                 </div>
+
+
+                             </div>
 
                          </fieldset>
                          {{ form_end(form) }}
@@ -86,7 +278,16 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
 
+    <script src="{{ asset('/bundles/app/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('.colorPicker').each(function(){
+                $(this).before('<a data-colorpicker-guid="1" href="#" class="btn btn-primary color_picker form-control" id="" data-color-format="hex" data-color="">Цвет...</a>');
+            });
+
+            $('.color_picker').colorpicker();
+        });
     </script>
 {% endblock %}
