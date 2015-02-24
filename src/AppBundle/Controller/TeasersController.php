@@ -53,6 +53,10 @@ class TeasersController extends Controller
             $teasersArray[$teaser->getGroups()->getId()]['views'] = 'views';
         }
 
+//        echo '<pre>';
+//        print_r($teasersArray);
+//        exit;
+
         return $this->render('AppBundle:Teasers:list.html.twig', array(
             'groups' => $teasersArray
         ));
