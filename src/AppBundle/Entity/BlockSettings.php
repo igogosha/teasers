@@ -101,6 +101,13 @@ class BlockSettings
     /**
      * @var string
      *
+     * @ORM\Column(name="picture_border_color", type="string", length=255)
+     */
+    private $pictureBorderColor;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="picture_align_hor", type="string", length=255, columnDefinition="enum('left', 'center', 'right')")
      */
     private $pictureAlignHor;
@@ -521,6 +528,29 @@ class BlockSettings
     public function getPictureBorderSize()
     {
         return $this->pictureBorderSize;
+    }
+
+    /**
+     * Set pictureBorderColor
+     *
+     * @param string $pictureBorderColor
+     * @return BlockSettings
+     */
+    public function setPictureBorderColor($pictureBorderColor)
+    {
+        $this->pictureBorderColor = $pictureBorderColor;
+
+        return $this;
+    }
+
+    /**
+     * Get pictureBorderColor
+     *
+     * @return string
+     */
+    public function getPictureBorderColor()
+    {
+        return $this->pictureBorderColor;
     }
 
     /**

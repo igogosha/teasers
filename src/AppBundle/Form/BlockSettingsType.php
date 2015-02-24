@@ -38,7 +38,11 @@ class BlockSettingsType extends AbstractType
                 'label' => 'Положение текста',
                 'choices'   => array('top' => 'Сверху', 'bottom' => 'Снизу', 'left' => 'Слева', 'right' => 'Справа')
             ))
-            ->add('background', 'hidden')
+            ->add('background', 'hidden', array(
+                'attr' => array(
+                    'class' => 'colorPicker'
+                )
+            ))
             ->add('padding', 'number', array(
                 'label' => 'Расстояние от текста до краев',
                 'attr' => array(
@@ -46,34 +50,209 @@ class BlockSettingsType extends AbstractType
                 )
             ))
 
-            ->add('pictureSize')
-            ->add('pictureBorderRadius')
-            ->add('pictureShadowSize')
-            ->add('pictureShadowColor')
-            ->add('pictureBorderSize')
-            ->add('pictureAlignHor')
-            ->add('pictureAlignVer')
-            ->add('headerFontFamily')
-            ->add('headerFontSize')
-            ->add('headerFontColor')
-            ->add('headerAlignHor')
-            ->add('headerAlignVer')
-            ->add('headerFontStyle')
-            ->add('headerFontHoverColor')
-            ->add('headerFontHoverStyle')
-            ->add('moreActive')
-            ->add('moreType')
-            ->add('moreTxt')
+            ->add('pictureSize', 'hidden', array(
+                'label' => 'Размер картинки',
+                'attr' => array(
+                    'class' => 'slider'
+                )
+            ))
+            ->add('pictureBorderRadius', 'number', array(
+                'label' => 'Закругление краев',
+                'attr' => array(
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('pictureShadowSize', 'hidden', array(
+                'label' => 'Размер тени',
+                'attr' => array(
+                    'class' => 'slider'
+                )
+            ))
+            ->add('pictureShadowColor', 'hidden', array(
+                'label' => 'Цвет тени',
+                'attr' => array(
+                    'class' => 'colorPicker'
+                )
+            ))
+            ->add('pictureBorderSize', 'hidden', array(
+                'label' => 'Размер рамки',
+                'attr' => array(
+                    'class' => 'slider'
+                )
+            ))
+            ->add('pictureBorderColor', 'hidden', array(
+                'label' => 'Цвет рамки',
+                'attr' => array(
+                    'class' => 'colorPicker'
+                )
+            ))
+            ->add('pictureAlignHor', 'choice', array(
+                'label' => 'Горизонтально',
+                'choices' => array(
+                    'left' => 'Слева',
+                    'center' => 'По центру',
+                    'right' => 'Справа',
+                )
+            ))
+            ->add('pictureAlignVer', 'choice', array(
+                'label' => 'Вертикально',
+                'choices' => array(
+                    'top' => 'Сверху',
+                    'middle' => 'По центру',
+                    'bottom' => 'Снизу',
+                )
+            ))
+
+            ->add('headerFontFamily', 'choice', array(
+                'label' => 'Шрифт для заголовка',
+                'choices' => array(
+                    'Arial' => 'Arial',
+                    'Times New Roman' => 'Times New Roman',
+                    'Verdana' => 'Verdana',
+                    'serif' => 'serif',
+                    'Tahoma' => 'Tahoma'
+                )
+            ))
+            ->add('headerFontSize', 'hidden', array(
+                'label' => 'Размер заголовка',
+                'attr' => array(
+                    'class' => 'slider'
+                )
+            ))
+            ->add('headerFontColor', 'hidden', array(
+                'attr' => array(
+                    'class' => 'colorPicker'
+                )
+            ))
+            ->add('headerAlignHor', 'choice', array(
+                'label' => 'Горизонтально',
+                'choices' => array(
+                    'left' => 'Слева',
+                    'center' => 'По центру',
+                    'right' => 'Справа',
+                )
+            ))
+            ->add('headerAlignVer', 'choice', array(
+                'label' => 'Вертикально',
+                'choices' => array(
+                    'top' => 'Сверху',
+                    'middle' => 'По центру',
+                    'bottom' => 'Снизу',
+                )
+            ))
+            ->add('headerFontStyle', 'choice', array(
+                'label' => 'Стиль заголовка',
+                'choices' => array(
+                    'underline' => 'Подчеркнутый',
+                    'bold' => 'Жирный',
+                    'italic' => 'Курсив',
+                )
+            ))
+            ->add('headerFontHoverColor', 'hidden', array(
+                'attr' => array(
+                    'class' => 'colorPicker'
+                )
+            ))
+            ->add('headerFontHoverStyle', 'choice', array(
+                'label' => 'Стиль активного заголовка',
+                'choices' => array(
+                    'underline' => 'Подчеркнутый',
+                    'bold' => 'Жирный',
+                    'italic' => 'Курсив',
+                )
+            ))
+
+            ->add('moreActive', 'hidden', array(
+                'label' => 'Активна',
+                'attr' => array(
+                    'class' => 'switch'
+                )
+            ))
+            ->add('moreType', 'choice', array(
+                'label' => 'Положение текста',
+                'choices'   => array(
+                    'txt' => 'Текст',
+                    'btn' => 'Кнопка',
+                )
+            ))
+            ->add('moreTxt', 'text', array(
+                'label' => 'Текст',
+                'attr' => array(
+                    'class' => 'form-control'
+                )
+            ))
             ->add('moreImage')
-            ->add('morePosition')
-            ->add('moreBtnAlignHor')
-            ->add('moreBtnAlignVer')
-            ->add('moreTxtFont')
-            ->add('moreTxtFontSize')
-            ->add('moreTxtFontColor')
-            ->add('moreTxtFontStyle')
-            ->add('moreTxtFontHoverColor')
-            ->add('moreTxtFontHoverStyle')
+            ->add('morePosition', 'choice', array(
+                'label' => 'Положение текста',
+                'choices'   => array(
+                    'up' => 'Сверху',
+                    'down' => 'Снизу',
+                    'img_up' => 'Под картинкой',
+                    'img_down' => 'Над картинкой',
+                    'left_up' => 'Слева-сверху',
+                    'left_down' => 'Слува-снизу',
+                    'right_up' => 'Справа-сверху',
+                    'right_down' => 'Справа-снизу',
+                )
+            ))
+            ->add('moreBtnAlignHor', 'choice', array(
+                'label' => 'Горизонтально',
+                'choices' => array(
+                    'left' => 'Слева',
+                    'center' => 'По центру',
+                    'right' => 'Справа',
+                )
+            ))
+            ->add('moreBtnAlignVer', 'choice', array(
+                'label' => 'Вертикально',
+                'choices' => array(
+                    'top' => 'Сверху',
+                    'middle' => 'По центру',
+                    'bottom' => 'Снизу',
+                )
+            ))
+            ->add('moreTxtFont', 'choice', array(
+                'label' => 'Шрифт для заголовка',
+                'choices' => array(
+                    'Arial' => 'Arial',
+                    'Times New Roman' => 'Times New Roman',
+                    'Verdana' => 'Verdana',
+                    'serif' => 'serif',
+                    'Tahoma' => 'Tahoma'
+                )
+            ))
+            ->add('moreTxtFontSize', 'hidden', array(
+                'label' => 'Размер шрифта',
+                'attr' => array(
+                    'class' => 'slider'
+                )
+            ))
+            ->add('moreTxtFontColor', 'hidden', array(
+                'attr' => array(
+                    'class' => 'colorPicker'
+                )
+            ))
+            ->add('moreTxtFontStyle', 'choice', array(
+                'label' => 'Стиль текста',
+                'choices' => array(
+                    'underline' => 'Подчеркнутый',
+                    'bold' => 'Жирный',
+                    'italic' => 'Курсив',
+                )
+            ))
+            ->add('moreTxtFontHoverColor', 'hidden', array(
+                'attr' => array(
+                    'class' => 'colorPicker'
+                )
+            ))
+            ->add('moreTxtFontHoverStyle', 'choice', array(
+                'label' => 'Стиль активного текста',
+                'choices' => array(
+                    'underline' => 'Подчеркнутый',
+                    'bold' => 'Жирный',
+                    'italic' => 'Курсив',
+                )
+            ))
         ;
     }
     
