@@ -284,10 +284,13 @@
         $(document).ready(function(){
 
             $('.colorPicker').each(function(){
-                $(this).before('<a data-colorpicker-guid="1" href="#" class="btn btn-primary color_picker form-control" id="" data-color-format="hex" data-color="">Цвет...</a>');
+                //$(this).before('<a data-colorpicker-guid="1" href="#" class="btn btn-primary color_picker form-control" id="" data-color-format="hex" data-color="">Цвет...</a>');
+                $(this).before('<input type="color" name="rubbish">');
             });
 
-            $('.color_picker').colorpicker();
+            $('input[type="color"]').on('change', function(){
+                $(this).parent().find('.colorPicker').val($(this).val());
+            });
         });
     </script>
 {% endblock %}
