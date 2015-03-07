@@ -22,16 +22,30 @@ class BlockSettingsType extends AbstractType
                     'placeholder' => 'Название блока'
                 )
             ))
-            ->add('rows', 'number', array(
+            ->add('rows', 'text', array(
                 'label' => 'Количество строк',
                 'attr' => array(
-                    'class' => 'form-control'
+                    'class' => 'slider_input',
+                    'data-slider-min' => 1,
+                    'data-slider-max' => 10,
+                    'data-slider-step' => 1,
+                    'data-slider-value' => 1,
+                    'data-slider-orientation' => 'horizontal',
+                    'data-slider-selection' => 'after',
+                    'value' => ''
                 )
             ))
-            ->add('cols', 'number', array(
+            ->add('cols', 'text', array(
                 'label' => 'Количество столбцов',
                 'attr' => array(
-                    'class' => 'form-control'
+                    'class' => 'slider_input',
+                    'data-slider-min' => 1,
+                    'data-slider-max' => 10,
+                    'data-slider-step' => 1,
+                    'data-slider-value' => 2,
+                    'data-slider-orientation' => 'horizontal',
+                    'data-slider-selection' => 'after',
+                    'value' => ''
                 )
             ))
             ->add('textPosition', 'choice', array(
@@ -46,26 +60,54 @@ class BlockSettingsType extends AbstractType
             ->add('padding', 'number', array(
                 'label' => 'Расстояние от текста до краев',
                 'attr' => array(
-                    'class' => 'form-control'
+                    'class' => 'slider_input',
+                    'data-slider-min' => 0,
+                    'data-slider-max' => 10,
+                    'data-slider-step' => 1,
+                    'data-slider-value' => 1,
+                    'data-slider-orientation' => 'horizontal',
+                    'data-slider-selection' => 'after',
+                    'value' => ''
                 )
             ))
 
-            ->add('pictureSize', 'hidden', array(
-                'label' => 'Размер картинки',
+            ->add('pictureSize', 'text', array(
+                'label' => 'Размер картинок',
                 'attr' => array(
-                    'class' => 'slider'
+                    'class' => 'slider_input',
+                    'data-slider-min' => 50,
+                    'data-slider-max' => 200,
+                    'data-slider-step' => 10,
+                    'data-slider-value' => 100,
+                    'data-slider-orientation' => 'horizontal',
+                    'data-slider-selection' => 'after',
+                    'value' => ''
                 )
             ))
-            ->add('pictureBorderRadius', 'number', array(
+            ->add('pictureBorderRadius', 'text', array(
                 'label' => 'Закругление краев',
                 'attr' => array(
-                    'class' => 'form-control'
+                    'class' => 'slider_input',
+                    'data-slider-min' => 0,
+                    'data-slider-max' => 50,
+                    'data-slider-step' => 1,
+                    'data-slider-value' => 1,
+                    'data-slider-orientation' => 'horizontal',
+                    'data-slider-selection' => 'after',
+                    'value' => ''
                 )
             ))
-            ->add('pictureShadowSize', 'hidden', array(
+            ->add('pictureShadowSize', 'text', array(
                 'label' => 'Размер тени',
                 'attr' => array(
-                    'class' => 'slider'
+                    'class' => 'slider_input',
+                    'data-slider-min' => 0,
+                    'data-slider-max' => 10,
+                    'data-slider-step' => 1,
+                    'data-slider-value' => 1,
+                    'data-slider-orientation' => 'horizontal',
+                    'data-slider-selection' => 'after',
+                    'value' => ''
                 )
             ))
             ->add('pictureShadowColor', 'hidden', array(
@@ -74,10 +116,17 @@ class BlockSettingsType extends AbstractType
                     'class' => 'colorPicker'
                 )
             ))
-            ->add('pictureBorderSize', 'hidden', array(
+            ->add('pictureBorderSize', 'text', array(
                 'label' => 'Размер рамки',
                 'attr' => array(
-                    'class' => 'slider'
+                    'class' => 'slider_input',
+                    'data-slider-min' => 0,
+                    'data-slider-max' => 10,
+                    'data-slider-step' => 1,
+                    'data-slider-value' => 1,
+                    'data-slider-orientation' => 'horizontal',
+                    'data-slider-selection' => 'after',
+                    'value' => ''
                 )
             ))
             ->add('pictureBorderColor', 'hidden', array(
@@ -113,10 +162,17 @@ class BlockSettingsType extends AbstractType
                     'Tahoma' => 'Tahoma'
                 )
             ))
-            ->add('headerFontSize', 'hidden', array(
+            ->add('headerFontSize', 'text', array(
                 'label' => 'Размер заголовка',
                 'attr' => array(
-                    'class' => 'slider'
+                    'class' => 'slider_input',
+                    'data-slider-min' => 10,
+                    'data-slider-max' => 24,
+                    'data-slider-step' => 1,
+                    'data-slider-value' => 16,
+                    'data-slider-orientation' => 'horizontal',
+                    'data-slider-selection' => 'after',
+                    'value' => ''
                 )
             ))
             ->add('headerFontColor', 'hidden', array(
@@ -162,14 +218,15 @@ class BlockSettingsType extends AbstractType
                 )
             ))
 
-            ->add('moreActive', 'hidden', array(
+            ->add('moreActive', 'checkbox', array(
                 'label' => 'Активна',
                 'attr' => array(
-                    'class' => 'switch'
+                    'class' => 'ios',
+                    'value' => 0
                 )
             ))
             ->add('moreType', 'choice', array(
-                'label' => 'Положение текста',
+                'label' => 'Тип',
                 'choices'   => array(
                     'txt' => 'Текст',
                     'btn' => 'Кнопка',
@@ -221,10 +278,17 @@ class BlockSettingsType extends AbstractType
                     'Tahoma' => 'Tahoma'
                 )
             ))
-            ->add('moreTxtFontSize', 'hidden', array(
+            ->add('moreTxtFontSize', 'text', array(
                 'label' => 'Размер шрифта',
                 'attr' => array(
-                    'class' => 'slider'
+                    'class' => 'slider_input',
+                    'data-slider-min' => 10,
+                    'data-slider-max' => 24,
+                    'data-slider-step' => 1,
+                    'data-slider-value' => 16,
+                    'data-slider-orientation' => 'horizontal',
+                    'data-slider-selection' => 'after',
+                    'value' => ''
                 )
             ))
             ->add('moreTxtFontColor', 'hidden', array(
