@@ -359,12 +359,11 @@
 
 
             $('.colorPicker').each(function(){
-                //$(this).before('<a data-colorpicker-guid="1" href="#" class="btn btn-primary color_picker form-control" id="" data-color-format="hex" data-color="">Цвет...</a>');
-                $(this).before('<input type="color" name="rubbish">');
+                $(this).before('<input type="color" value="#57a7ef" name="rubbish">');
+                $(this).remove();
             });
-
             $('input[type="color"]').on('change', function(){
-                $(this).parent().find('.colorPicker').val($(this).val());
+                $(this).attr('value', $(this).val() );
             });
         });
     </script>
