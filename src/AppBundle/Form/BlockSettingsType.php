@@ -220,7 +220,10 @@ class BlockSettingsType extends AbstractType
             ))
 
             ->add('moreActive', 'checkbox', array(
-                'label' => 'Активна',
+                'label' => 'Неактивна',
+                'label_attr' => array(
+                    'class' => 'text-error'
+                ),
                 'attr' => array(
                     'class' => 'ios',
                     'value' => 0
