@@ -12,7 +12,8 @@
                  <div class="grid-body no-border"> <br>
                      <div class="row">
 
-                         {{ form_start(form) }}
+                         {% set urlSave = path('admin_places_save_block') %}
+                         {{ form_start(form, {action: urlSave}) }}
                          <fieldset>
                              <legend>Основное</legend>
 
@@ -301,6 +302,8 @@
                                  </div>
 
                              </div>
+                             <div class="clearfix"></div>
+                             {{ form_widget(form) }}
 
                          </fieldset>
                          {{ form_end(form) }}
@@ -327,8 +330,6 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-
-
             $('.slider_input').slider().on('slide', function(ev) {
                 val = ev.value;
                 $(this).parent().parent().find('.current_value').text(val);
@@ -352,15 +353,15 @@
 
                 if ( val == '1' ) {
                     $('label[for="appbundle_blocksettings_moreActive"]').attr('class', 'text-success').text('Активна');
+                    $('#appbundle_blocksettings_moreActive').val(1);
                 } else {
                     $('label[for="appbundle_blocksettings_moreActive"]').attr('class', 'text-error').text('Неактивна');
+                    $('#appbundle_blocksettings_moreActive').val(0);
                 }
-
             }, true);
 
-
             $('.colorPicker').each(function(){
-                $(this).before('<input type="color" value="#57a7ef" name="rubbish">');
+                $(this).before('<input type="color" value="#57a7ef" id="'+$(this).attr('id')+'" name="'+$(this).attr('name')+'">');
                 $(this).remove();
             });
             $('input[type="color"]').on('change', function(){

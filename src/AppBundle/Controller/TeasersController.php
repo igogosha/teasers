@@ -79,6 +79,31 @@ class TeasersController extends Controller
     }
 
     /**
+     * @Route("admin/teasers/edit/{id}", name="admin_edit_group")
+     */
+    public function editAction($id)
+    {
+        //$teasers = new Teasers();
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $teasers = $em->getRepository('AppBundle:Teasers')
+            ->findOneBy(array(
+                'id' => $id
+            ));
+
+        exit;
+
+        $form = $this->createForm(new TeasersType(), $teasers, array(
+            'action' => $this->generateUrl('homepage'),
+            'method' => 'Post',
+        ));
+
+        return $this->render('AppBundle:Teasers:create.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
      * @Route("admin/teasers/save", name="save-teasers-path")
      */
     public function saveTeasersAction(Request $request)

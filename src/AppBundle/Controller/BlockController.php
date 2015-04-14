@@ -28,20 +28,42 @@ class BlockController extends Controller
         ));
     }
 
+    /**
+     * @Route("/admin/block/edit/{id}", name="admin_places_edit_block")
+     */
+    public function editAction($id)
+    {
+        //$block = new BlockSettings();
+        $em = $this->getDoctrine()->getManager();
+        $block = $em->getRepository("AppBundle:BlockSettings")
+            ->find($id);
+
+        $form = $this->createForm(new BlockSettingsType(), $block, array(
+            'action' => $this->generateUrl('admin_places_save_block'),
+            'method' => 'POST',
+        ));
+
+        return $this->render('AppBundle:Blocks:add.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
 
     /**
      * @Route("/admin/block/save", name="admin_places_save_block")
      */
     public function saveBlockAction(Request $request)
     {
-        $result = array();
-        if ( $request->isXmlHttpRequest() ) {
+        $block = new BlockSettings();
+        $form = $this->createForm(new BlockSettingsType(), $block);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($block);
+            $em->flush();
 
-            $result['msg'] = 'success';
-
+            return $this->redirectToRoute('admin_places_add_block');
         }
-
-        return new JsonResponse($result);
 
     }
 

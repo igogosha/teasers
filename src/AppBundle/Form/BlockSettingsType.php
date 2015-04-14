@@ -321,6 +321,12 @@ class BlockSettingsType extends AbstractType
                     'italic' => 'Курсив',
                 )
             ))
+            ->add('button', 'submit', array(
+                'label' => 'Добавить',
+                'attr' => array(
+                    'class' => 'btn btn-default',
+                )
+            ))
         ;
     }
     

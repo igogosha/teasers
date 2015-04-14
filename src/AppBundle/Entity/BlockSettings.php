@@ -177,9 +177,9 @@ class BlockSettings
     private $headerFontHoverStyle;
 
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(name="more_active", type="integer")
+     * @ORM\Column(name="more_active", type="boolean")
      */
     private $moreActive;
 
@@ -787,7 +787,7 @@ class BlockSettings
     /**
      * Set moreActive
      *
-     * @param integer $moreActive
+     * @param boolean $moreActive
      * @return BlockSettings
      */
     public function setMoreActive($moreActive)
@@ -800,7 +800,7 @@ class BlockSettings
     /**
      * Get moreActive
      *
-     * @return integer 
+     * @return boolean
      */
     public function getMoreActive()
     {
