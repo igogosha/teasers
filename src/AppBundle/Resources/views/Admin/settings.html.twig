@@ -131,8 +131,8 @@
 
                 myModal.show();
                 $('#myAlert').on('shown.bs.modal', function () {
-                    $(document).find('#newRubricName').attr('value', rName);
-                    $(document).find('#newRubricName').focus().select();
+                    $(document).find('#newRubricName').attr('value', rName).focus().select();
+//                    $(document).find('#newRubricName');
                 });
 
             });
