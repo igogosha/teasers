@@ -35,11 +35,11 @@
                                             <td>
                                                 <div class="btn-group btn-group-sm">
                                                     <a href="{{ path('admin_edit_group', {id: r.g_id}) }}" title="Редактировать" class="btn"><i class="fa fa-pencil"></i></a>
-                                                    <a href="" title="Получить код для вставки" class="btn btn-warning"><i class="fa fa-cogs"></i></a>
+                                                    <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Получить код для вставки" class="btn btn-warning getEmbedCodeBtn"><i class="fa fa-cogs"></i></a>
                                                     <a href="" title="Клонировать" class="btn btn-primary"><i class="fa fa-files-o"></i></a>
                                                     <a href="" title="Статистика" class="btn btn-default"><i class="fa fa-bar-chart-o"></i></a>
                                                     <a href="" title="Удалить" class="btn btn-danger"><i class="fa fa-remove"></i></a>
-                                                    <a href="" title="Открыть в новой вкладке" class="btn btn-default"><i class="fa fa-folder-o"></i></a>
+                                                    <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-default"><i class="fa fa-folder-o"></i></a>
                                                 </div>
                                             </td>
                                             <td>-</td>
@@ -48,7 +48,6 @@
                                 {% endfor %}
                              </tbody>
                          </table>
-
                          <div class="clear clearfix"></div>
                      </div>
                  </div>
@@ -59,25 +58,33 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {#<script type="text/javascript">#}
-        {#var saveRubricsUrl = "{{ path('admin_add_rubrics') }}";#}
-        {#var deleteRubricsUrl = "{{ path('admin_delete_rubrics') }}";#}
-    {#</script>#}
-    {#<script type="text/template" id="tableRowTemplate">#}
-        {#<tr id="">#}
-            {#<td class="v-align-middle rName"></td>#}
-            {#<td class="v-align-middle"></td>#}
-            {#<td>#}
-                {#<div class="btn-group" role="group">#}
-                    {#<button type="button" data-id="" class="btn btn-mini btn-default editRubric">#}
-                        {#<i class="fa fa-edit"></i>#}
-                    {#</button>#}
-                    {#<button type="button" data-id="" class="btn btn-mini btn-danger deleteRubric">#}
-                        {#<i class="fa fa-times"></i>#}
-                    {#</button>#}
-                {#</div>#}
-            {#</td>#}
-        {#</tr>#}
-    {#</script>#}
-    {#<script type="text/javascript" src="{{ asset('/bundles/app/js/settings/master.js') }}"></script>#}
+    <script type="text/javascript">
+        var saveRubricsUrl = "{{ path('admin_add_rubrics') }}";
+        var deleteRubricsUrl = "{{ path('admin_delete_rubrics') }}";
+        var getEmbedCodeUrl = "{{ path('admin_places_get_embed_code') }}";
+
+        $(document).ready(function(){
+            $('a.getEmbedCodeBtn').on('click', function(e){
+                e.preventDefault();
+
+                var gid = $(this).data('gid')-0;
+                var rid = $(this).data('rid')-0;
+                var pid = $(this).data('pid')-0;
+
+                $.post(getEmbedCodeUrl, {
+                    gid: gid,
+                    rid: rid,
+                    pid: pid
+                }, function(r){
+                    if ( r.msg == 'success' ){
+                        var modal = new MyAlert( "{{ 'Embed code' | trans }}", r.content );
+                        modal.show();
+                    }
+                }, 'json');
+                return false;
+            });
+        });
+
+    </script>
+    <script type="text/javascript" src="{{ asset('/bundles/app/js/settings/master.js') }}"></script>
 {% endblock %}

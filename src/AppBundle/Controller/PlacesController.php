@@ -143,5 +143,32 @@ class PlacesController extends Controller
         return new JsonResponse($response);
     }
 
+    /**
+     * @Route("/admin/places/get-embed-code", name="admin_places_get_embed_code")
+     */
+    public function getEmbedCodeAction(Request $request)
+    {
+        $resp = array();
+
+        if ( $request->isXmlHttpRequest() ) {
+            $data = $request->request->all();
+
+            $template = $this->renderView('AppBundle:Places:embedCode.html.twig');
+
+            $resp['content'] = $template;
+            $resp['msg'] = 'success';
+
+
+//            echo '<pre>';
+//            print_r($data);
+//            exit;
+
+        } else {
+            $resp['msg'] = 'not ajax';
+        }
+
+        return new JsonResponse($resp);
+    }
+
 
 }

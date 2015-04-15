@@ -23,6 +23,23 @@
 
         {% block javascripts %}
 
+            <script type="text/javascript">
+            var MyAlert = function(title, message) {
+                this.elem = $("#myAlert");
+
+                this.show = function() {
+                    this.elem.find('#myModalLabel').text(title);
+                    this.elem.find('.modal-body').html(message);
+                    this.elem.modal('show');
+                };
+
+                this.hide = function() {
+                    this.elem.find('#myModalLabel').text('');
+                    this.elem.find('.modal-body').html('');
+                    this.elem.modal('hide');
+                };
+            }
+            </script>
 
             <script src="{{ asset('bundles/app/plugins/jquery-1.8.3.min.js') }}" type="text/javascript"></script>
             <script src="{{ asset('bundles/app/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js') }}" type="text/javascript"></script>

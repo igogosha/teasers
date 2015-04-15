@@ -80,6 +80,60 @@
     <script type="text/javascript">
         var saveRubricsUrl = "{{ path('admin_add_rubrics') }}";
         var deleteRubricsUrl = "{{ path('admin_delete_rubrics') }}";
+
+        $(document).ready(function(){
+            $(document).on('click', '#appbundle_rubrics_save', function(e){
+                e.preventDefault();
+
+                var newRubric = $('#appbundle_rubrics_name').val();
+                if ( newRubric ) {
+                    $.post( saveRubricsUrl, {newRubricName: newRubric}, function(e){
+                        if ( e.msg != 'exists' ) {
+                            var clone = $('#tableRowTemplate').clone();
+                            $('#rubrics tbody').append(clone.html());
+                            $('#rubrics tbody').find('tr:last .rName').text(e.msg);
+                            $('#rubrics tbody').find('tr:last').attr('id', e.id);
+                            $('#rubrics tbody').find('tr:last .btn').each(function(){
+                                $(this).attr('data-id', e.id);
+                            });
+                        } else {
+                            $('#error').append('Рубрика с таким названием существует');
+                            $('#error').slideDown().delay(5000).slideUp();
+                        }
+                    }, 'json' );
+                }
+            });
+
+            $(document).on('click', '.deleteRubric', function(e) {
+                e.preventDefault();
+                var id = $(this).attr('data-id')-0;
+                var name = $('#rubrics tbody').find('tr#'+id+' .rName').text();
+                if ( confirm('Delete "'+name+'"? ') ) {
+                    $.post( deleteRubricsUrl, {id: id}, function(e) {
+                        if (e.msg == 'deleted' ) {
+                            $('#rubrics tbody').find('tr#'+id+'').remove();
+                        }
+                    });
+                }
+            });
+
+            $(document).on('click', '.editRubric', function(e){
+                e.preventDefault();
+                var rid = $(this).data('id');
+                var rName = $('#rubrics tbody').find('tr#'+rid+' .rName').text();
+
+                $("#newRubricNameTemplate").find('input#newRubricName').val(rName);
+                var newRubricNameTemplate = $("#newRubricNameTemplate").clone();
+
+                var myModal = new MyAlert(
+                        "{{ 'Enter new name for ' | trans }}\"" + rName + "\"",
+                        newRubricNameTemplate.html()
+                );
+                myModal.show();
+
+            });
+        });
+
     </script>
     <script type="text/template" id="tableRowTemplate">
         <tr id="">
@@ -97,5 +151,14 @@
             </td>
         </tr>
     </script>
-    <script type="text/javascript" src="{{ asset('/bundles/app/js/settings/master.js') }}"></script>
+    <script type="text/template" id="newRubricNameTemplate">
+        <div class="input-group">
+            <div>
+                <input type="text" class="form-control" value="" id="newRubricName"></div>
+                <span class="input-group-btn">
+                    <button type="button" id="newRubricNameBtn" class="btn btn-lg btn-danger">Save</button>
+                </span>
+            </div>
+    </script>
+    {#<script type="text/javascript" src="{{ asset('/bundles/app/js/settings/master.js') }}"></script>#}
 {% endblock %}
