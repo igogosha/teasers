@@ -122,14 +122,18 @@
                 var rid = $(this).data('id');
                 var rName = $('#rubrics tbody').find('tr#'+rid+' .rName').text();
 
-                $("#newRubricNameTemplate").find('input#newRubricName').val(rName);
-                var newRubricNameTemplate = $("#newRubricNameTemplate").clone();
+                var newRubricNameTemplate = $("#newRubricNameTemplate").last().clone();
 
                 var myModal = new MyAlert(
                         "{{ 'Enter new name for ' | trans }}\"" + rName + "\"",
                         newRubricNameTemplate.html()
                 );
+
                 myModal.show();
+                $('#myAlert').on('shown.bs.modal', function () {
+                    $(document).find('#newRubricName').attr('value', rName);
+                    $(document).find('#newRubricName').focus().select();
+                });
 
             });
         });
@@ -154,7 +158,7 @@
     <script type="text/template" id="newRubricNameTemplate">
         <div class="input-group">
             <div>
-                <input type="text" class="form-control" value="" id="newRubricName"></div>
+                <input type="text" class="form-control newRubricName" value="" id="newRubricName"></div>
                 <span class="input-group-btn">
                     <button type="button" id="newRubricNameBtn" class="btn btn-lg btn-danger">Save</button>
                 </span>
