@@ -15,16 +15,9 @@
      <div class="row">
          <div class="col-md-12">
              <div class="grid simple">
-                 {#<div class="grid-title no-border">#}
-                 {#<h4>{{ "Добавить рубрику" | trans }}</h4>#}
-                 {#</div>#}
 
                  <div class="grid-body no-border"> <br>
                      <div class="row">
-
-                         {#<div class="progress">#}
-                             {#<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>#}
-                         {#</div>#}
 
                          {{ form_start(form) }}
                          {{ form_errors(form, {'attr' : {'class': 'alert alert-danger'}}) }}
@@ -138,10 +131,13 @@
                 var l = data['images'].length;
                 if ( titles.length != l || links.length != l ) {
                     alert('All fields should be same size!');
+                } else {
+                    var $btn = $(this).button('loading');
+                    $.post("{{ path('save-teasers-path') }}", {data:data}, function(r){
+                        $btn.button('reset');
+                        window.location.replace("{{ path('teasers') }}");
+                    }, 'json');
                 }
-                $.post("{{ path('save-teasers-path') }}", {data:data}, function(r){
-                    alert(r.msg);
-                }, 'json');
             });
 
 

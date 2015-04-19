@@ -34,15 +34,35 @@ class AdminController extends Controller
             'method' => 'POST',
         ));
 
-        $allRubrics = $rubric = $this->getDoctrine()
+        $allRubrics = $this->getDoctrine()
             ->getRepository('AppBundle:Rubrics')
             ->findBy(array(
                 'user' => $this->getUser()
             ));
 
+        $r = array();
+        foreach( $allRubrics as $rubric ) {
+            $r[$rubric->getId()] = array(
+                'id' => $rubric->getId(),
+                'name' => $rubric->getName(),
+                'groups' => array()
+            );
+        }
+
+        $allGroups = $this->getDoctrine()
+            ->getRepository('AppBundle:Groups')
+            ->findBy(array(
+                'user' => $this->getUser(),
+                'rubrics' => array_keys($r)
+            ));
+
+        foreach( $allGroups as $group ) {
+            $r[$group->getRubrics()->getId()]['groups'][] = $group->getTitle();
+        }
+
         return $this->render('AppBundle:Admin:settings.html.twig', array(
             'form' => $form->createView(),
-            'rubrics' => $allRubrics
+            'rubrics' => $r
         ));
     }
 
@@ -88,6 +108,38 @@ class AdminController extends Controller
             //return $this->redirect($this->generateUrl('your_route'));
         }
 
+    }
+
+    /**
+     * @Route("/rename-rubrics", name="admin_update_rubrics_name")
+     */
+    public function renameRubricsAction(Request $request)
+    {
+        $result = array();
+        if ($request->isXmlHttpRequest()) {
+            $id = $request->request->get('id');
+            $newName = $request->request->get('newName');
+            $em = $this->getDoctrine()->getEntityManager();
+
+            $rubric = $this->getDoctrine()
+                ->getRepository('AppBundle:Rubrics')
+                ->find($id);
+
+            if ( $rubric ) {
+                $rubric->setName($newName);
+                $em->persist($rubric);
+                $em->flush();
+
+                $result['msg'] = 'success';
+            } else {
+                $result['msg'] = 'error';
+            }
+
+        } else {
+            $result['msg'] = 'not ajax';
+        }
+
+        return new JsonResponse($result);
     }
 
     /**

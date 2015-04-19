@@ -44,39 +44,39 @@
                 <!-- END TOP NAVIGATION MENU -->
                 <!-- BEGIN CHAT TOGGLER -->
                 <div class="pull-right">
-                    <div class="chat-toggler">
-                        <a href="#" class="dropdown-toggle" id="my-task-list" data-placement="bottom"  data-content='' data-toggle="dropdown" data-original-title="">
-                            <div class="user-details">
-                                <div class="username">
-                                    {#<span class="badge badge-important">3</span>#}
-                                    {{ app.user.username }}
-                                </div>
-                            </div>
-                            <div class="iconset top-down-arrow"></div>
-                        </a>
-                        <div id="notification-list" style="display:none">
-                            <div style="width:300px">
-                                <a href="{{ path('fos_user_security_logout') }}" class="">{{ "Logout" | trans }}</a>
-                            </div>
-                        </div>
-                        <div cla ss="profile-pic">
-                            <img src="{{ asset('bundles/app/img/profiles/avatar_small.jpg') }}"  alt="" data-src="{{ asset('bundles/app/img/profiles/avatar_small.jpg') }}" data-src-retina="{{ asset('bundles/app/img/profiles/avatar_small2x.jpg') }}" width="35" height="35" />
-                        </div>
-                    </div>
+                    {#<div class="chat-toggler">#}
+                        {#<a href="#" class="dropdown-toggle" id="my-task-list" data-placement="bottom"  data-content='' data-toggle="dropdown" data-original-title="">#}
+                            {#<div class="user-details">#}
+                                {#<div class="username">#}
+                                    {#&#123;&#35;<span class="badge badge-important">3</span>&#35;&#125;#}
+                                    {#{{ app.user.username }}#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#<div class="iconset top-down-arrow"></div>#}
+                        {#</a>#}
+                        {#<div id="notification-list" style="display:none">#}
+                            {#<div style="width:300px">#}
+                                {#<a href="{{ path('fos_user_security_logout') }}" class="">{{ "Logout" | trans }}</a>#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div cla ss="profile-pic">#}
+                            {#<img src="{{ asset('bundles/app/img/profiles/avatar_small.jpg') }}"  alt="" data-src="{{ asset('bundles/app/img/profiles/avatar_small.jpg') }}" data-src-retina="{{ asset('bundles/app/img/profiles/avatar_small2x.jpg') }}" width="35" height="35" />#}
+                        {#</div>#}
+                    {#</div>#}
                     <ul class="nav quick-section ">
                         <li class="quicklinks">
                             <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
-                                <div class="iconset top-settings-dark "></div>
+                                <div class="fa fa-user fa-2x "></div>
                             </a>
                             <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
-                                <li><a href="user-profile.html"> My Account</a>
+                                <li><a href=""> My Account</a>
                                 </li>
-                                <li><a href="calender.html">My Calendar</a>
-                                </li>
-                                <li><a href="email.html"> My Inbox&nbsp;&nbsp;<span class="badge badge-important animated bounceIn">2</span></a>
-                                </li>
+                                {#<li><a href="calender.html">My Calendar</a>#}
+                                {#</li>#}
+                                {#<li><a href="email.html"> My Inbox&nbsp;&nbsp;<span class="badge badge-important animated bounceIn">2</span></a>#}
+                                {#</li>#}
                                 <li class="divider"></li>
-                                <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+                                <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
                             </ul>
                         </li>
                         {#<li class="quicklinks"> <span class="h-seperate"></span></li>#}

@@ -48,7 +48,14 @@
                                          {% for rubric in rubrics %}
                                              <tr id="{{ rubric.id }}">
                                                  <td class="v-align-middle rName">{{ rubric.name }}</td>
-                                                 <td class="v-align-middle">-</td>
+                                                 <td class="v-align-middle">
+                                                     {% for groupKey, group in rubric.groups if rubric.groups | length > 0 %}
+                                                        <span class="label label-success">{{ group }}</span>
+                                                     {% endfor %}
+                                                     {% if rubric.groups | length == 0 %}
+                                                         <span class="label label-warning">Нет групп</span>
+                                                     {% endif %}
+                                                 </td>
                                                  <td>
                                                      <div class="btn-group" role="group">
                                                          <button type="button" data-id="{{ rubric.id }}" class="btn btn-mini btn-default editRubric">
@@ -80,6 +87,7 @@
     <script type="text/javascript">
         var saveRubricsUrl = "{{ path('admin_add_rubrics') }}";
         var deleteRubricsUrl = "{{ path('admin_delete_rubrics') }}";
+        var updateRubricsNameUrl = "{{ path('admin_update_rubrics_name') }}";
 
         $(document).ready(function(){
             $(document).on('click', '#appbundle_rubrics_save', function(e){
@@ -87,6 +95,9 @@
 
                 var newRubric = $('#appbundle_rubrics_name').val();
                 if ( newRubric ) {
+
+                    var $btn = $(this).button('loading');
+
                     $.post( saveRubricsUrl, {newRubricName: newRubric}, function(e){
                         if ( e.msg != 'exists' ) {
                             var clone = $('#tableRowTemplate').clone();
@@ -100,6 +111,7 @@
                             $('#error').append('Рубрика с таким названием существует');
                             $('#error').slideDown().delay(5000).slideUp();
                         }
+                        $btn.button('reset');
                     }, 'json' );
                 }
             });
@@ -132,6 +144,23 @@
                 myModal.show();
                 $('#myAlert').on('shown.bs.modal', function () {
                     $(document).find('#newRubricName').attr('value', rName).focus().select();
+                    $(document).find('#newRubricId').attr('value', rid);
+
+                    $(document).find('#newRubricNameBtn').on('click', function(){
+                        var newName = $(this).parent().parent().find('#newRubricName').val().trim();
+                        var id = rid;
+
+                        var $btn = $(this).button('loading');
+
+                        $.post(updateRubricsNameUrl, {newName: newName, id: id }, function(r){
+                            if(r.msg == 'success' ) {
+                                $btn.button('reset');
+                                myModal.hide();
+                                $('#rubrics').find('tr#'+rid).find('.rName').text(newName);
+                            }
+                        }, 'json')
+                    });
+
                 });
 
             });
@@ -141,7 +170,7 @@
     <script type="text/template" id="tableRowTemplate">
         <tr id="">
             <td class="v-align-middle rName"></td>
-            <td class="v-align-middle"></td>
+            <td class="v-align-middle"><span class="label label-warning">Нет групп</span></td>
             <td>
                 <div class="btn-group" role="group">
                     <button type="button" data-id="" class="btn btn-mini btn-default editRubric">
@@ -157,7 +186,8 @@
     <script type="text/template" id="newRubricNameTemplate">
         <div class="input-group">
             <div>
-                <input type="text" class="form-control newRubricName" value="" id="newRubricName"></div>
+                <input type="hidden" name="newRubricId" id="newRubricId" value="" />
+                <input type="text" class="form-control newRubricName" name="newRubricName" value="" id="newRubricName"></div>
                 <span class="input-group-btn">
                     <button type="button" id="newRubricNameBtn" class="btn btn-lg btn-danger">Save</button>
                 </span>
