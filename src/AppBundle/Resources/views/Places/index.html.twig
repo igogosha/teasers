@@ -17,9 +17,9 @@
                                  <tr>
                                     <th>Группы</th>
                                     <th>Рубрики</th>
-                                    <th>Блоки</th>
-                                    <th>Действия</th>
-                                    <th>CTR</th>
+                                    <th>Блоки / Действия / CTR</th>
+                                    {#<th>Действия</th>#}
+                                    {#<th>CTR</th>#}
                                  </tr>
                              </thead>
                              <tbody>
@@ -39,22 +39,33 @@
                                         <tr>
                                             <td data-id="{{ r.g_id }}">{{ r.g_name }}</td>
                                             <td data-id="{{ r.r_id }}">{{ r.r_name }}</td>
-                                            <td class="pBlocks">
-                                                <button class="btn btn-warning btn-mini" id="addBlockToPlace" data-for="{{ place.name }}" data-pid="{{ placeId }}">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
+                                            <td style="padding:0 !important">
+
+                                                <ul class="list-group">
+
+                                                    {% for i in 0..4 %}
+                                                    <li class="list-group-item">
+
+                                                        {% for i in 0..4 %}
+                                                            <span class="label">Блок {{ i }}</span>
+                                                        {% endfor %}
+
+                                                        <span class="panel pull-right">
+                                                            <span class="btn btn-success disabled">{{ 125 }}%</span>
+                                                        </span>
+
+                                                        <div class="btn-group btn-group-sm pull-right">
+                                                            <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Добавить блок" class="btn btn-warning addBlockToPlace"><i class="fa fa-plus"></i></a>
+                                                            <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Получить код для вставки" class="btn btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>
+                                                            <a href="" title="Статистика" class="btn btn-default"><i class="fa fa-bar-chart-o"></i></a>
+                                                            <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-default"><i class="fa fa-folder-o"></i></a>
+                                                            <a href="" title="Удалить" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                                        </div>
+                                                        <div class="clear clearfix"></div>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
                                             </td>
-                                            <td>
-                                                <div class="btn-group btn-group-sm">
-                                                    {#<a href="{{ path('admin_edit_group', {id: r.g_id}) }}" title="Редактировать" class="btn"><i class="fa fa-pencil"></i></a>#}
-                                                    <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Получить код для вставки" class="btn btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>
-                                                    {#<a href="" title="Клонировать" class="btn btn-primary"><i class="fa fa-files-o"></i></a>#}
-                                                    <a href="" title="Статистика" class="btn btn-default"><i class="fa fa-bar-chart-o"></i></a>
-                                                    <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-default"><i class="fa fa-folder-o"></i></a>
-                                                    <a href="" title="Удалить" class="btn btn-danger"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </td>
-                                            <td>-</td>
                                         </tr>
                                     {% endfor %}
                                 {% endfor %}
