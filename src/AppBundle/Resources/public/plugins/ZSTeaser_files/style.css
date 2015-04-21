@@ -7566,7 +7566,7 @@ ul.my-friends li .profile-pic{
 	background: #fff;
 	position: absolute;
 	width: 20px;
-	left: -20px;
+	left: 0px;
 	bottom: 0;
 	top: 0;
 	text-align: right;
