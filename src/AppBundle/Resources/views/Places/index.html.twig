@@ -43,18 +43,13 @@
 
                                                 <ul class="list-group">
 
-                                                    {% for i in 0..4 %}
+                                                    {% for i in 0..2 %}
                                                     <li class="list-group-item">
-
-                                                        {% for i in 0..4 %}
-                                                            <span class="label">Блок {{ i }}</span>
-                                                        {% endfor %}
-
-                                                        <span class="panel pull-right">
-                                                            <span class="btn btn-success disabled">{{ 125 }}%</span>
+                                                        <span class="label">Блок {{ i }}</span>
+                                                        <span class="pull-right" style="margin-left:1em">
+                                                            <span class="btn btn-success disabled">{{ 90 }}%</span>
                                                         </span>
-
-                                                        <div class="btn-group btn-group-sm pull-right">
+                                                        <div class="btn-group btn-group-mini pull-right">
                                                             <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Добавить блок" class="btn btn-warning addBlockToPlace"><i class="fa fa-plus"></i></a>
                                                             <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Получить код для вставки" class="btn btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>
                                                             <a href="" title="Статистика" class="btn btn-default"><i class="fa fa-bar-chart-o"></i></a>

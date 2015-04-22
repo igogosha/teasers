@@ -7597,5 +7597,5 @@ input[type="color"] {
 }
 
 .list-group-item {
-	border: none !important;
+	border-bottom: thin dotted #ddd !important;
 }
