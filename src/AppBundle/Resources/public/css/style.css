@@ -7590,3 +7590,12 @@ input[type="color"] {
 .slider-handle.round {
 	border-radius: 20px !important;
 }
+
+.list-group {
+	border-radius: 0 !important;
+	box-shadow: none !important;
+}
+
+.list-group-item {
+	border-bottom: thin dotted #ddd !important;
+}
