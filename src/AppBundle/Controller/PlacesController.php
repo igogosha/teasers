@@ -37,8 +37,14 @@ class PlacesController extends Controller
             );
         }
 
+        $blocks = $this->getDoctrine()->getRepository('AppBundle:BlockSettings')
+            ->findBy(array(
+                'user' => $this->getUser()
+            ));
+
         return $this->render('AppBundle:Places:index.html.twig', array(
-            'places' => $places
+            'places' => $places,
+            'blocks' => $blocks
         ));
     }
 

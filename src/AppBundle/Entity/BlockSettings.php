@@ -3,6 +3,11 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Rubrics;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * BlockSettings
@@ -21,6 +26,13 @@ class BlockSettings
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var integer
+     * @ManyToOne(targetEntity="User")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
 
     /**
      * @var string
@@ -1082,4 +1094,35 @@ class BlockSettings
     {
         return $this->moreTxtFontHoverStyle;
     }
+
+
+    /**
+     * Set user
+     *
+     * @param integer $user
+     * @return Places
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return integer
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Places
+     */
 }

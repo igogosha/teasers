@@ -29,7 +29,8 @@
                                             <h3>
                                                 <div class="btn-group btn-group-sm">
                                                     <button title="Редактировать" class="btn"><i class="fa fa-pencil"></i></button>
-                                                    <button title="Клонировать" class="btn btn-primary"><i class="fa fa-files-o"></i></button>
+                                                    {#<button title="Клонировать" class="btn btn-primary"><i class="fa fa-files-o"></i></button>#}
+                                                    <button onclick="window.open('{{ place.name }}', '_blank')" title="Посмотреть сайт в новом окне" class="btn btn-success"><i class="fa fa-external-link"></i></button>
                                                 </div>
                                                 {{ place.name }}
                                             </h3>
@@ -98,33 +99,43 @@
 
             $(document).on('click', '#addBlockToPlace', function(){
                 var placeName = $(this).data('for');
-                var addBlockToPlaceTemplae = $('#addBlockToPlaceTemplate').clone();
+                var placeId = $(this).data('pid');
+
+                var addBlockToPlaceTemplate = $('#addBlockToPlaceTemplate').html();
+                $('#addBlockToPlaceTemplate').first().find();
+
+                $('.modal-body').find('#blockForPlaceId').attr('value', placeId);
 
                 var myModal = new MyAlert(
                         "{{ 'Add block for ' | trans }}\"" + placeName + "\"",
-                        'test'
+                        addBlockToPlaceTemplate
                 );
                 myModal.show();
 
-                $('#myAlert').on('shown.bs.modal', function () {
-                    // -- set template here
-                });
-
             });
-        });
+            $('#myAlert').on('shown.bs.modal', function () {
+                $(document).on('click', '#addBlockButton', function(){
+                    var blockId = $(this).parent().find('input[name="block"]:checked').val();
+                    var placeId = $(this).parent().find('#blockForPlaceId').val();
 
+                    alert(blockId + " - " + placeId);
+                });
+            });
+
+        });
     </script>
 
     <script type="text/template" id="addBlockToPlaceTemplate">
-        <div>
-            <input type="hidden" name="newRubricId" id="newRubricId" value="" />
-            <label for="addBlockToPlace">
-                <span>{{ "Select block" | trans }}</span>
-            </label>
-            <input type="text" class="form-control addBlockToPlace" name="addBlockToPlace" value="" id="addBlockToPlace"></div>
-            <span class="input-group-btn">
-                <button type="button" id="addBlockToPlaceBtn" class="btn btn-lg btn-danger">Save</button>
-            </span>
+        <div id="addBlockToPlaceDiv">
+        <input type="hidden" id="blockForPlaceId" value="" />
+        {% for block in blocks %}
+            <div class="radio radio-primary radio-circle">
+                <input name="block" type="radio" value="{{ block.id }}" id="{{ block.id }}">
+                <label for="{{ block.id }}">{{ block.blockName }}</label>
+            </div>
+        {% endfor %}
+        <div class="clearfix clear"></div>
+        <button class="btn btn-primary col-lg-12" id="addBlockButton">{{ "Save" | trans }}</button>
         </div>
     </script>
 
