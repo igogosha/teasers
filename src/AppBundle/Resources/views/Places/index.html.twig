@@ -82,8 +82,157 @@
         var deleteRubricsUrl = "{{ path('admin_delete_rubrics') }}";
         var getEmbedCodeUrl = "{{ path('admin_places_get_embed_code') }}";
 
+        $(document).ready(function(){{% extends 'AppBundle:Admin:index.html.twig' %}
+
+        {% block mainAdminContent %}
+        <div class="page-title" xmlns="http://www.w3.org/1999/html">
+        <h3>{{ "Список площадок" | trans }}</h3>
+        </div>
+
+        <div class="row">
+        <div class="col-md-12">
+        <div class="grid simple">
+
+        <div class="grid-body no-border"> <br>
+        <div class="row">
+
+        <table class="table table-bordered">
+        <thead>
+        <tr>
+        <th>Группы</th>
+        <th>Рубрики</th>
+        <th>Блоки / Действия / CTR</th>
+        {#<th>Действия</th>#}
+        {#<th>CTR</th>#}
+        </tr>
+        </thead>
+        <tbody>
+        {% for placeId, place in places %}
+        <tr class="" style="color:#fff;border-top:2px solid #cc0000">
+        <td colspan="5" data-id="{{ placeId }}">
+        <h3>
+        <div class="btn-group btn-group-sm">
+        <button title="Редактировать" class="btn"><i class="fa fa-pencil"></i></button>
+        {#<button title="Клонировать" class="btn btn-primary"><i class="fa fa-files-o"></i></button>#}
+        <button onclick="window.open('{{ place.name }}', '_blank')" title="Посмотреть сайт в новом окне" class="btn btn-success"><i class="fa fa-external-link"></i></button>
+        </div>
+        {{ place.name }}
+        </h3>
+        </td>
+        </tr>
+        {% for r in place.row %}
+        <tr>
+        <td data-id="{{ r.g_id }}">{{ r.g_name }}</td>
+        <td data-id="{{ r.r_id }}">{{ r.r_name }}</td>
+        <td style="padding:0 !important">
+
+        <ul class="list-group">
+
+        {% for i in 0..2 %}
+        <li class="list-group-item">
+        <span class="label">Блок {{ i }}</span>
+        <span class="pull-right" style="margin-left:1em">
+        <span class="btn btn-success disabled">{{ 90 }}%</span>
+        </span>
+        <div class="btn-group btn-group-mini pull-right">
+        <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Добавить блок" class="btn btn-warning addBlockToPlace"><i class="fa fa-plus"></i></a>
+        <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Получить код для вставки" class="btn btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>
+        <a href="" title="Статистика" class="btn btn-default"><i class="fa fa-bar-chart-o"></i></a>
+        <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-default"><i class="fa fa-folder-o"></i></a>
+        <a href="" title="Удалить" class="btn btn-danger"><i class="fa fa-times"></i></a>
+        </div>
+        <div class="clear clearfix"></div>
+        </li>
+        {% endfor %}
+        </ul>
+        </td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+        </tbody>
+        </table>
+        <div class="clear clearfix"></div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        {% endblock %}
+
+        {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript">
+        var saveRubricsUrl = "{{ path('admin_add_rubrics') }}";
+        var deleteRubricsUrl = "{{ path('admin_delete_rubrics') }}";
+        var getEmbedCodeUrl = "{{ path('admin_places_get_embed_code') }}";
+
         $(document).ready(function(){
             $('a.getEmbedCodeBtn').on('click', function(e){
+                e.preventDefault();
+
+                var gid = $(this).data('gid')-0;
+                var rid = $(this).data('rid')-0;
+                var pid = $(this).data('pid')-0;
+
+                $.post(getEmbedCodeUrl, {
+                    gid: gid,
+                    rid: rid,
+                    pid: pid
+                }, function(r){
+                    if ( r.msg == 'success' ){
+                        var modal = new MyAlert( "{{ 'Embed code' | trans }}", r.content );
+                        modal.show();
+                    }
+                }, 'json');
+                return false;
+            });
+
+            $(document).on('click', '#addBlockToPlace', function(){
+                var placeName = $(this).data('for');
+                var placeId = $(this).data('pid');
+
+                var addBlockToPlaceTemplate = $('#addBlockToPlaceTemplate').html();
+                $('#addBlockToPlaceTemplate').first().find();
+
+                $('.modal-body').find('#blockForPlaceId').attr('value', placeId);
+
+                var myModal = new MyAlert(
+                        "{{ 'Add block for ' | trans }}\"" + placeName + "\"",
+                        addBlockToPlaceTemplate
+                );
+                myModal.show();
+
+            });
+            $('#myAlert').on('shown.bs.modal', function () {
+                $(document).on('click', '#addBlockButton', function(){
+                    var blockId = $(this).parent().find('input[name="block"]:checked').val();
+                    var placeId = $(this).parent().find('#blockForPlaceId').val();
+
+                    alert(blockId + " - " + placeId);
+                });
+            });
+
+        });
+    </script>
+
+    <script type="text/template" id="addBlockToPlaceTemplate">
+        <div id="addBlockToPlaceDiv">
+            <input type="hidden" id="blockForPlaceId" value="" />
+            {% for block in blocks %}
+                <div class="radio radio-primary radio-circle">
+                    <input name="block" type="radio" value="{{ block.id }}" id="{{ block.id }}">
+                    <label for="{{ block.id }}">{{ block.blockName }}</label>
+                </div>
+            {% endfor %}
+            <div class="clearfix clear"></div>
+            <button class="btn btn-primary col-lg-12" id="addBlockButton">{{ "Save" | trans }}</button>
+        </div>
+    </script>
+
+    <script type="text/javascript" src="{{ asset('/bundles/app/js/settings/master.js') }}"></script>
+{% endblock %}
+
+$('a.getEmbedCodeBtn').on('click', function(e){
                 e.preventDefault();
 
                 var gid = $(this).data('gid')-0;
