@@ -73,10 +73,26 @@
              </div>
          </div>
      </div>
+
  {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script type="text/template" id="addBlockToPlaceTemplate">
+        <div id="addBlockToPlaceDiv">
+            <input type="hidden" id="blockForPlaceId" value="" />
+            {% for block in blocks %}
+                <div class="radio radio-primary radio-circle">
+                    <input name="block" type="radio" value="{{ block.id }}" id="{{ block.id }}">
+                    <label for="{{ block.id }}">{{ block.blockName }}</label>
+                </div>
+            {% endfor %}
+            <div class="clearfix clear"></div>
+            <button class="btn btn-primary col-lg-12" id="addBlockButton">{{ "Save" | trans }}</button>
+        </div>
+    </script>
+
     <script type="text/javascript">
         var saveRubricsUrl = "{{ path('admin_add_rubrics') }}";
         var deleteRubricsUrl = "{{ path('admin_delete_rubrics') }}";
@@ -103,12 +119,14 @@
                 return false;
             });
 
-            $(document).on('click', '#addBlockToPlace', function(){
+            $('.addBlockToPlace').on('click', function(e){
+                e.preventDefault();
+
                 var placeName = $(this).data('for');
                 var placeId = $(this).data('pid');
 
                 var addBlockToPlaceTemplate = $('#addBlockToPlaceTemplate').html();
-                $('#addBlockToPlaceTemplate').first().find();
+//                $('#addBlockToPlaceTemplate').first().find();
 
                 $('.modal-body').find('#blockForPlaceId').attr('value', placeId);
 
@@ -129,20 +147,6 @@
             });
 
         });
-    </script>
-
-    <script type="text/template" id="addBlockToPlaceTemplate">
-        <div id="addBlockToPlaceDiv">
-            <input type="hidden" id="blockForPlaceId" value="" />
-            {% for block in blocks %}
-                <div class="radio radio-primary radio-circle">
-                    <input name="block" type="radio" value="{{ block.id }}" id="{{ block.id }}">
-                    <label for="{{ block.id }}">{{ block.blockName }}</label>
-                </div>
-            {% endfor %}
-            <div class="clearfix clear"></div>
-            <button class="btn btn-primary col-lg-12" id="addBlockButton">{{ "Save" | trans }}</button>
-        </div>
     </script>
 
     <script type="text/javascript" src="{{ asset('/bundles/app/js/settings/master.js') }}"></script>
