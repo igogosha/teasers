@@ -47,21 +47,23 @@
 
                                              <ul class="list-group">
 
-                                                 {% for i in 0..2 %} {#add blocks for place TODO#}
-                                                     <li class="list-group-item">
-                                                         <span class="label">Блок {{ i }}</span>
-                                                         <span class="pull-right" style="margin-left:1em">
-                                                             <span class="btn btn-success disabled">{{ "-" }}%</span>
-                                                         </span>
-                                                         <div class="btn-group btn-group-mini pull-right">
-                                                             <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Получить код для вставки" class="btn btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>
-                                                             <a href="" title="Статистика" class="btn btn-default"><i class="fa fa-bar-chart-o"></i></a>
-                                                             <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-default"><i class="fa fa-folder-o"></i></a>
-                                                             <a href="" title="Удалить" class="btn btn-danger"><i class="fa fa-times"></i></a>
-                                                         </div>
-                                                         <div class="clear clearfix"></div>
-                                                     </li>
-                                                 {% endfor %}
+                                                 {{ dump(places) }}
+
+                                                 {#{% for block in places.blocks %} &#123;&#35;add blocks for place TODO&#35;&#125;#}
+                                                     {#<li data-block-id="{{ block.id }}" class="list-group-item">#}
+                                                         {#<span class="label">{{ block.name }}</span>#}
+                                                         {#<span class="pull-right" style="margin-left:1em">#}
+                                                             {#<span class="btn btn-success disabled">{{ "-" }}%</span>#}
+                                                         {#</span>#}
+                                                         {#<div class="btn-group btn-group-mini pull-right">#}
+                                                             {#<a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Получить код для вставки" class="btn btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>#}
+                                                             {#<a href="" title="Статистика" class="btn btn-default"><i class="fa fa-bar-chart-o"></i></a>#}
+                                                             {#<a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-default"><i class="fa fa-folder-o"></i></a>#}
+                                                             {#<a href="" title="Удалить" class="btn btn-danger"><i class="fa fa-times"></i></a>#}
+                                                         {#</div>#}
+                                                         {#<div class="clear clearfix"></div>#}
+                                                     {#</li>#}
+                                                 {#{% endfor %}#}
                                              </ul>
                                          </td>
                                      </tr>
@@ -83,8 +85,14 @@
 
     <script type="text/template" id="addBlockToPlaceTemplate">
         <div id="addBlockToPlaceDiv">
-            <span style="display: none" class="placeId"></span>
-            {% for block in blocks %}
+
+            <div class="panel-danger error" style="display: none">
+                Нужно что-то выбрать!
+            </div>
+
+            <input type="hidden" class="placeid" value="{0}" />
+            {% if blocks %}
+            {% for block in blocks if blocks %}
                 <div class="radio radio-primary radio-circle">
                     <input name="block" type="radio" value="{{ block.id }}" id="{{ block.id }}">
                     <label for="{{ block.id }}">{{ block.blockName }}</label>
@@ -92,11 +100,15 @@
             {% endfor %}
             <div class="clearfix clear"></div>
             <button class="btn btn-primary col-lg-12" id="addBlockButton">{{ "Save" | trans }}</button>
+            {% else %}
+                <span class="panel panel-warning">No blocks here. <a class="btn btn-primary btn-mini" href="{{ path('admin_places_add_block') }}">Create one now</a></span>
+            {% endif %}
         </div>
     </script>
 
     <script type="text/javascript">
         var saveRubricsUrl = "{{ path('admin_add_rubrics') }}";
+        var addBlockToPlaceUrl = "{{ path('admin_add_block_to_place') }}";
         var deleteRubricsUrl = "{{ path('admin_delete_rubrics') }}";
         var getEmbedCodeUrl = "{{ path('admin_places_get_embed_code') }}";
 
@@ -127,11 +139,10 @@
                 var placeName = $(this).data('for');
                 var placeId = $(this).data('pid');
 
-                $('#addBlockToPlaceTemplate').find('.placeId').text(placeId);
+//                $('#addBlockToPlaceTemplate').find('.placeId').attr('value',placeId);
 
                 var addBlockToPlaceTemplate = $('#addBlockToPlaceTemplate').html();
-
-                $('.modal-body').find('#blockForPlaceId').attr('value', placeId);
+                addBlockToPlaceTemplate = addBlockToPlaceTemplate.replace('{0}', placeId);
 
                 var myModal = new MyAlert(
                         "{{ 'Add block for ' | trans }}\"" + placeName + "\"",
@@ -142,10 +153,23 @@
             });
             $('#myAlert').on('shown.bs.modal', function () {
                 $(document).on('click', '.modal-body #addBlockButton', function(){
-                    var blockId = $(this).parent().find('input[name="block"]:checked').val();
-                    var placeId = $(this).parent().find('.placeId').text()-0;
 
-                    alert(blockId + " - " + placeId);
+                    var blockId = $(this).parent().find('input[name="block"]:checked').val();
+                    var placeId = $(this).parent().find('.placeid').val();
+
+                    if ( typeof blockId == 'undefined' || typeof placeId == 'undefined' ) {
+                        $(this).parent().find('.error').slideDown().delay(2000).slideUp();
+                        return false;
+                    }
+
+                    $.post(addBlockToPlaceUrl, {
+                        blockId: blockId,
+                        placeId: placeId
+                    }, function(r){
+                        if(r.msg == 'success') {
+
+                        }
+                    }, 'json');
                 });
             });
 

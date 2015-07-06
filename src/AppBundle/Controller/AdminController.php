@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use AppBundle\Entity\BlockToPlace;
+use AppBundle\Entity\BlockToPlaceRepository;
 
 class AdminController extends Controller
 {
@@ -107,6 +109,49 @@ class AdminController extends Controller
         } else {
             //return $this->redirect($this->generateUrl('your_route'));
         }
+
+    }
+
+    /**
+     * @Route("/add_block_to_place", name="admin_add_block_to_place")
+     */
+    public function addBlockToPlaceAction(Request $request)
+    {
+        $resp = array();
+        if ($request->isXmlHttpRequest()) {
+
+            $data = $request->request->all();
+
+            $blockToPlace = $this->getDoctrine()
+                ->getRepository('AppBundle:BlockToPlace')
+                ->findOneBy(array(
+                    'block' => $data['blockId'],
+                    'place' => $data['placeId']
+                ));
+
+            if ( !$blockToPlace ) {
+                $blockToPlace = new BlockToPlace();
+                $blockToPlace->setBlock($data['blockId']);
+                $blockToPlace->setPlace($data['placeId']);
+                $blockToPlace->getCreatedAt(new \DateTime('now'));
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($blockToPlace);
+                $em->flush();
+            }
+
+            $block = $this->getDoctrine()
+                ->getRepository('AppBundle:BlockSettings')
+                ->find($data['blockId']);
+
+
+            $resp['msg'] = 'success';
+            $resp['blockName'] = $block->getName();
+        } else {
+            $resp['msg'] = 'Not ajax!';
+        }
+
+        return new JsonResponse($resp);
 
     }
 

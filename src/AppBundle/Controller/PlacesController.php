@@ -27,7 +27,11 @@ class PlacesController extends Controller
             ));
 
         $places = array();
+        $placesIds = array();
         foreach( $groupsPlace as $gp ) {
+
+            $placesIds[] = $gp->getPlaces()->getId();
+
             $places[$gp->getPlaces()->getId()]['name'] = $gp->getPlaces()->getName();
             $places[$gp->getPlaces()->getId()]['row'][]  = array(
                 'g_id' => $gp->getGroups()->getId(),
@@ -41,6 +45,18 @@ class PlacesController extends Controller
             ->findBy(array(
                 'user' => $this->getUser()
             ));
+
+        $blocksToPlaces = $this->getDoctrine()->getRepository('AppBundle:BlockToPlace')
+            ->findBy(array(
+                'place' => $placesIds
+            ));
+
+        foreach($blocksToPlaces as $block) {
+            $places[$block->getPlace()->getId()]['blocks'][] = array(
+               'id' =>  $block->getId(),
+                'name' => $block->getBlock()->getBlockName()
+            );
+        }
 
         return $this->render('AppBundle:Places:index.html.twig', array(
             'places' => $places,
