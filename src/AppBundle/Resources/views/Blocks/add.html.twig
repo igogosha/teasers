@@ -214,95 +214,101 @@
                                          {{ form_widget(form.moreActive) }}
                                      </div>
                                  </div>
-                                 <div class="clearfix"></div>
-
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreType) }}
-                                     {{ form_errors(form.moreType) }}
-                                     {{ form_widget(form.moreType) }}
-                                 </div>
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreTxt) }}
-                                     {{ form_errors(form.moreTxt) }}
-                                     {{ form_widget(form.moreTxt) }}
-                                 </div>
-
                              </div>
                              <div class="clearfix"></div>
-                             <div class="col-lg-12">
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreImage) }}
-                                     {{ form_errors(form.moreImage) }}
-                                     {{ form_widget(form.moreImage) }}
-                                 </div>
 
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.morePosition) }}
-                                     {{ form_errors(form.morePosition) }}
-                                     {{ form_widget(form.morePosition) }}
-                                 </div>
+                             <div class="moreBlock" style="display: none;">
 
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreBtnAlignHor) }}
-                                     {{ form_errors(form.moreBtnAlignHor) }}
-                                     {{ form_widget(form.moreBtnAlignHor) }}
-                                 </div>
+                                 <div class="col-lg-12">
 
-                             </div>
-
-                             <div class="clearfix"></div>
-                             <div class="col-lg-12">
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreBtnAlignVer) }}
-                                     {{ form_errors(form.moreBtnAlignVer) }}
-                                     {{ form_widget(form.moreBtnAlignVer) }}
-                                 </div>
-
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreTxtFont) }}
-                                     {{ form_errors(form.moreTxtFont) }}
-                                     {{ form_widget(form.moreTxtFont) }}
-                                 </div>
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreTxtFontSize) }}
-                                     {{ form_errors(form.moreTxtFontSize) }}
-                                     <div class="slider danger">
-                                         <span class="current_value label">1</span>&nbsp;&nbsp;{{ form_widget(form.moreTxtFontSize) }}
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreType) }}
+                                         {{ form_errors(form.moreType) }}
+                                         {{ form_widget(form.moreType) }}
                                      </div>
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreTxt) }}
+                                         {{ form_errors(form.moreTxt) }}
+                                         {{ form_widget(form.moreTxt) }}
+                                     </div>
+
+                                 </div>
+                                 <div class="clearfix"></div>
+                                 <div class="col-lg-12">
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreImage) }}
+                                         {{ form_errors(form.moreImage) }}
+                                         {{ form_widget(form.moreImage) }}
+                                     </div>
+
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.morePosition) }}
+                                         {{ form_errors(form.morePosition) }}
+                                         {{ form_widget(form.morePosition) }}
+                                     </div>
+
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreBtnAlignHor) }}
+                                         {{ form_errors(form.moreBtnAlignHor) }}
+                                         {{ form_widget(form.moreBtnAlignHor) }}
+                                     </div>
+
                                  </div>
 
+                                 <div class="clearfix"></div>
+                                 <div class="col-lg-12">
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreBtnAlignVer) }}
+                                         {{ form_errors(form.moreBtnAlignVer) }}
+                                         {{ form_widget(form.moreBtnAlignVer) }}
+                                     </div>
+
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreTxtFont) }}
+                                         {{ form_errors(form.moreTxtFont) }}
+                                         {{ form_widget(form.moreTxtFont) }}
+                                     </div>
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreTxtFontSize) }}
+                                         {{ form_errors(form.moreTxtFontSize) }}
+                                         <div class="slider danger">
+                                             <span class="current_value label">1</span>&nbsp;&nbsp;{{ form_widget(form.moreTxtFontSize) }}
+                                         </div>
+                                     </div>
+
+                                 </div>
+                                 <div class="clearfix"></div>
+                                 <div class="col-lg-12">
+
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreTxtFontColor) }}
+                                         {{ form_errors(form.moreTxtFontColor) }}
+                                         {{ form_widget(form.moreTxtFontColor) }}
+                                     </div>
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreTxtFontStyle) }}
+                                         {{ form_errors(form.moreTxtFontStyle) }}
+                                         {{ form_widget(form.moreTxtFontStyle) }}
+                                     </div>
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreTxtFontHoverColor) }}
+                                         {{ form_errors(form.moreTxtFontHoverColor) }}
+                                         {{ form_widget(form.moreTxtFontHoverColor) }}
+                                     </div>
+
+                                 </div>
+                                 <div class="clearfix"></div>
+                                 <div class="col-lg-12">
+
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                         {{ form_label(form.moreTxtFontHoverStyle) }}
+                                         {{ form_errors(form.moreTxtFontHoverStyle) }}
+                                         {{ form_widget(form.moreTxtFontHoverStyle) }}
+                                     </div>
+
+                                 </div>
+                                 <div class="clearfix"></div>
                              </div>
-                             <div class="clearfix"></div>
-                             <div class="col-lg-12">
-
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreTxtFontColor) }}
-                                     {{ form_errors(form.moreTxtFontColor) }}
-                                     {{ form_widget(form.moreTxtFontColor) }}
-                                 </div>
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreTxtFontStyle) }}
-                                     {{ form_errors(form.moreTxtFontStyle) }}
-                                     {{ form_widget(form.moreTxtFontStyle) }}
-                                 </div>
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreTxtFontHoverColor) }}
-                                     {{ form_errors(form.moreTxtFontHoverColor) }}
-                                     {{ form_widget(form.moreTxtFontHoverColor) }}
-                                 </div>
-
-                             </div>
-                             <div class="clearfix"></div>
-                             <div class="col-lg-12">
-
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.moreTxtFontHoverStyle) }}
-                                     {{ form_errors(form.moreTxtFontHoverStyle) }}
-                                     {{ form_widget(form.moreTxtFontHoverStyle) }}
-                                 </div>
-
-                             </div>
-                             <div class="clearfix"></div>
                              {{ form_widget(form) }}
 
                          </fieldset>
@@ -354,9 +360,11 @@
                 if ( val == '1' ) {
                     $('label[for="appbundle_blocksettings_moreActive"]').attr('class', 'text-success').text('Активна');
                     $('#appbundle_blocksettings_moreActive').val(1);
+                    $('.moreBlock').slideDown();
                 } else {
                     $('label[for="appbundle_blocksettings_moreActive"]').attr('class', 'text-error').text('Неактивна');
                     $('#appbundle_blocksettings_moreActive').val(0);
+                    $('.moreBlock').slideUp();
                 }
             }, true);
 

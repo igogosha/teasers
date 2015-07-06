@@ -6,9 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use AppBundle\Entity\BlockSettings;
+use AppBundle\Entity\User;
 
 class BlockSettingsType extends AbstractType
 {
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options

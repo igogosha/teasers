@@ -55,9 +55,13 @@ class BlockController extends Controller
     public function saveBlockAction(Request $request)
     {
         $block = new BlockSettings();
+
         $form = $this->createForm(new BlockSettingsType(), $block);
         $form->handleRequest($request);
         if ($form->isValid()) {
+
+            $block->setUser($this->getUser());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($block);
             $em->flush();
