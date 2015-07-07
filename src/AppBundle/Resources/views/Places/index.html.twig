@@ -12,7 +12,7 @@
                  <div class="grid-body no-border"> <br>
                      <div class="row">
 
-                         <table class="table table-bordered">
+                         <table class="table table-bordered places">
                              <thead>
                              <tr>
                                  <th>Группы</th>
@@ -37,7 +37,7 @@
                                      </td>
                                  </tr>
                                  {% for r in place.row %}
-                                     <tr>
+                                     <tr id="{{ placeId }}-{{ r.g_id }}-{{ r.r_id }}">
                                          <td data-id="{{ r.g_id }}">{{ r.g_name }}</td>
                                          <td data-id="{{ r.r_id }}">
                                              {{ r.r_name }}
@@ -45,9 +45,9 @@
                                          </td>
                                          <td style="padding:0 !important">
 
-                                             <ul class="list-group">
+                                             <ul class="list-group blocks">
 
-                                                 {{ dump(places) }}
+                                                 {#{{ dump(places[placeId].blocks) }}#}
 
                                                  {#{% for block in places.blocks %} &#123;&#35;add blocks for place TODO&#35;&#125;#}
                                                      {#<li data-block-id="{{ block.id }}" class="list-group-item">#}
@@ -91,6 +91,8 @@
             </div>
 
             <input type="hidden" class="placeid" value="{0}" />
+            <input type="hidden" class="rid" value="{1}" />
+            <input type="hidden" class="gid" value="{2}" />
             {% if blocks %}
             {% for block in blocks if blocks %}
                 <div class="radio radio-primary radio-circle">
@@ -138,11 +140,15 @@
 
                 var placeName = $(this).data('for');
                 var placeId = $(this).data('pid');
+                var rId = $(this).data('rid');
+                var gId = $(this).data('gid');
 
 //                $('#addBlockToPlaceTemplate').find('.placeId').attr('value',placeId);
 
                 var addBlockToPlaceTemplate = $('#addBlockToPlaceTemplate').html();
                 addBlockToPlaceTemplate = addBlockToPlaceTemplate.replace('{0}', placeId);
+                addBlockToPlaceTemplate = addBlockToPlaceTemplate.replace('{1}', rId);
+                addBlockToPlaceTemplate = addBlockToPlaceTemplate.replace('{2}', gId);
 
                 var myModal = new MyAlert(
                         "{{ 'Add block for ' | trans }}\"" + placeName + "\"",
@@ -156,6 +162,8 @@
 
                     var blockId = $(this).parent().find('input[name="block"]:checked').val();
                     var placeId = $(this).parent().find('.placeid').val();
+                    var rId = $(this).parent().find('.rid').val();
+                    var gId = $(this).parent().find('.gid').val();
 
                     if ( typeof blockId == 'undefined' || typeof placeId == 'undefined' ) {
                         $(this).parent().find('.error').slideDown().delay(2000).slideUp();
@@ -164,10 +172,14 @@
 
                     $.post(addBlockToPlaceUrl, {
                         blockId: blockId,
-                        placeId: placeId
+                        placeId: placeId,
+                        rId: rId,
+                        gId: gId
                     }, function(r){
                         if(r.msg == 'success') {
-
+                            $('table.places').find('tr#'+ r.tr).find('ul.blocks')
+                                    .append(r.blockName);
+                            $('.close').click();
                         }
                     }, 'json');
                 });

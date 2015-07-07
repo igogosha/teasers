@@ -122,31 +122,45 @@ class AdminController extends Controller
 
             $data = $request->request->all();
 
+            $block = $this->getDoctrine()
+                ->getRepository('AppBundle:BlockSettings')
+                ->find((int)$data['blockId']);
+            $place = $this->getDoctrine()
+                ->getRepository('AppBundle:Places')
+                ->find((int)$data['placeId']);
+            $group = $this->getDoctrine()
+                ->getRepository('AppBundle:Groups')
+                ->find((int)$data['gId']);
+            $rubric = $this->getDoctrine()
+                ->getRepository('AppBundle:Rubrics')
+                ->find((int)$data['rId']);
+
             $blockToPlace = $this->getDoctrine()
                 ->getRepository('AppBundle:BlockToPlace')
                 ->findOneBy(array(
-                    'block' => $data['blockId'],
-                    'place' => $data['placeId']
+                    'block' => $block,
+                    'place' => $place,
+                    'rubric' => $rubric,
+                    'group' => $group,
                 ));
 
             if ( !$blockToPlace ) {
                 $blockToPlace = new BlockToPlace();
-                $blockToPlace->setBlock($data['blockId']);
-                $blockToPlace->setPlace($data['placeId']);
-                $blockToPlace->getCreatedAt(new \DateTime('now'));
+                $blockToPlace->setBlock($block);
+                $blockToPlace->setPlace($place);
+                $blockToPlace->setGroup($group);
+                $blockToPlace->setRubric($rubric);
+                $blockToPlace->setCreatedAt(new \DateTime('now'));
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($blockToPlace);
                 $em->flush();
             }
 
-            $block = $this->getDoctrine()
-                ->getRepository('AppBundle:BlockSettings')
-                ->find($data['blockId']);
-
 
             $resp['msg'] = 'success';
-            $resp['blockName'] = $block->getName();
+            $resp['tr'] = $place->getId() . '-' . $group->getId() . '-' . $rubric->getId();
+            $resp['blockName'] = $block->getBlockName();
         } else {
             $resp['msg'] = 'Not ajax!';
         }
