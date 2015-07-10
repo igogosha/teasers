@@ -37,7 +37,7 @@
                                      </td>
                                  </tr>
                                  {% for r in place.row %}
-                                     <tr id="{{ placeId }}-{{ r.g_id }}-{{ r.r_id }}">
+                                     <tr id="tr-{{ placeId }}-{{ r.g_id }}-{{ r.r_id }}">
                                          <td data-id="{{ r.g_id }}">{{ r.g_name }}</td>
                                          <td data-id="{{ r.r_id }}">
                                              <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Добавить блок" class="btn btn-warning btn-mini addBlockToPlace" data-for="{{ r.g_name ~ '/' ~ r.r_name }}"><i class="fa fa-plus"></i></a>
@@ -45,11 +45,12 @@
                                          </td>
                                          <td style="padding:0 !important">
 
-                                             <table class="table blocks" style="width:100%">
+                                             <table class="table blocks" style="width:100%;margin:0">
 
                                                  {#{{ dump(places[placeId].blocks) }}#}
 
-                                                 {#{% for block in places.blocks %} &#123;&#35;add blocks for place TODO&#35;&#125;#}
+                                                 {% for block in places[placeId].blocks %}
+
                                                      <tr data-block-id="">
                                                          <td>
                                                              <span class="btn btn-mini disabled" style="margin-right:1em">РРР</span>
@@ -62,27 +63,10 @@
                                                                  <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-mini btn-default"><i class="fa fa-folder-o"></i></a>
                                                                  <a href="" title="Удалить" class="btn btn-mini btn-danger"><i class="fa fa-times"></i></a>
                                                              </div>
-                                                             {#<div class="clear clearfix"></div>#}
-                                                         </td>
-                                                     </tr>
-                                                     <tr data-block-id="">
-                                                         <td>
-                                                             <span class="btn btn-mini disabled" style="margin-right:1em">РРР</span>
-                                                                 <span class="pull-right" style="margin-left:1em">
-                                                                     <span class="btn btn-mini btn-success disabled">{{ "-" }}%</span>
-                                                                 </span>
-
-                                                                 <div class="btn-group btn-group-mini pull-right">
-                                                                     <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Получить код для вставки" class="btn btn-mini btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>
-                                                                     <a href="" title="Статистика" class="btn btn-mini btn-default"><i class="fa fa-bar-chart-o"></i></a>
-                                                                     <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-mini btn-default"><i class="fa fa-folder-o"></i></a>
-                                                                     <a href="" title="Удалить" class="btn btn-mini btn-danger"><i class="fa fa-times"></i></a>
-                                                                 </div>
-                                                             {#<div class="clear clearfix"></div>#}
                                                          </td>
                                                      </tr>
 
-                                                 {#{% endfor %}#}
+                                                 {% endfor %}
                                              </table>
                                          </td>
                                      </tr>
@@ -101,6 +85,24 @@
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script type="text/template" id="blockTrTemplate">
+        <tr data-block-id="{bId}">
+            <td>
+                <span class="btn btn-mini disabled" style="margin-right:1em">{bName}</span>
+                                                             <span class="pull-right" style="margin-left:1em">
+                                                                 <span class="btn btn-mini btn-success disabled">{{ "-" }}%</span>
+                                                             </span>
+                <div class="btn-group btn-group-mini pull-right">
+                    <a href="" data-pid="{pId}" data-rid="{rId}" data-gid="{gId}" title="Получить код для вставки" class="btn btn-mini btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>
+                    <a href="" title="Статистика" class="btn btn-mini btn-default"><i class="fa fa-bar-chart-o"></i></a>
+                    <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-mini btn-default"><i class="fa fa-folder-o"></i></a>
+                    <a href="" title="Удалить" class="btn btn-mini btn-danger"><i class="fa fa-times"></i></a>
+                </div>
+                {#<div class="clear clearfix"></div>#}
+            </td>
+        </tr>
+    </script>
 
     <script type="text/template" id="addBlockToPlaceTemplate">
         <div id="addBlockToPlaceDiv">
@@ -176,32 +178,38 @@
                 myModal.show();
 
             });
-            $('#myAlert').on('shown.bs.modal', function () {
-                $(document).on('click', '.modal-body #addBlockButton', function(){
+            $(document).on('click', '.modal-body #addBlockButton', function() {
 
-                    var blockId = $(this).parent().find('input[name="block"]:checked').val();
-                    var placeId = $(this).parent().find('.placeid').val();
-                    var rId = $(this).parent().find('.rid').val();
-                    var gId = $(this).parent().find('.gid').val();
+                var blockId = $(this).parent().find('input[name="block"]:checked').val();
+                var placeId = $(this).parent().find('.placeid').val();
+                var rId = $(this).parent().find('.rid').val();
+                var gId = $(this).parent().find('.gid').val();
 
-                    if ( typeof blockId == 'undefined' || typeof placeId == 'undefined' ) {
-                        $(this).parent().find('.error').slideDown().delay(2000).slideUp();
-                        return false;
+                if ( typeof blockId == 'undefined' || typeof placeId == 'undefined' ) {
+                    $(this).parent().find('.error').slideDown().delay(2000).slideUp();
+                    return false;
+                }
+
+                $.post(addBlockToPlaceUrl, {
+                    blockId: blockId,
+                    placeId: placeId,
+                    rId: rId,
+                    gId: gId
+                }, function(r){
+                    if(r.msg == 'success') {
+
+                        var trTemplate = $('#blockTrTemplate').html();
+                        trTemplate = trTemplate.replace('{bId}', r.bId);
+                        trTemplate = trTemplate.replace('{rId}', r.rId);
+                        trTemplate = trTemplate.replace('{gId}', r.gId);
+                        trTemplate = trTemplate.replace('{pId}', r.pId);
+                        trTemplate = trTemplate.replace('{bName}', r.blockName);
+
+                        $('table.places').find('#tr-'+ r.tr).find('table.blocks')
+                                .append(trTemplate);
+                        $('.close').click();
                     }
-
-                    $.post(addBlockToPlaceUrl, {
-                        blockId: blockId,
-                        placeId: placeId,
-                        rId: rId,
-                        gId: gId
-                    }, function(r){
-                        if(r.msg == 'success') {
-                            $('table.places').find('tr#'+ r.tr).find('ul.blocks')
-                                    .append(r.blockName);
-                            $('.close').click();
-                        }
-                    }, 'json');
-                });
+                }, 'json');
             });
 
         });

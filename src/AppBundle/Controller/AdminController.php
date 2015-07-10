@@ -157,8 +157,11 @@ class AdminController extends Controller
                 $em->flush();
             }
 
-
             $resp['msg'] = 'success';
+            $resp['bId'] = $block->getId();
+            $resp['rId'] = $rubric->getId();
+            $resp['gId'] = $group->getId();
+            $resp['pId'] = $place->getId();
             $resp['tr'] = $place->getId() . '-' . $group->getId() . '-' . $rubric->getId();
             $resp['blockName'] = $block->getBlockName();
         } else {

@@ -52,11 +52,15 @@ class PlacesController extends Controller
             ));
 
         foreach($blocksToPlaces as $block) {
-            $places[$block->getPlace()->getId()]['blocks'][] = array(
+            $places[$block->getPlace()->getId()]['blocks'][$block->getGroup()->getId()][$block->getRubric()->getId()] = array(
                'id' =>  $block->getId(),
                 'name' => $block->getBlock()->getBlockName()
             );
         }
+
+//        echo '<pre>';
+//        print_r($places);
+//        exit;
 
         return $this->render('AppBundle:Places:index.html.twig', array(
             'places' => $places,
