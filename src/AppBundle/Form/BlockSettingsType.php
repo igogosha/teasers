@@ -236,12 +236,15 @@ class BlockSettingsType extends AbstractType
                 'choices'   => array(
                     'txt' => 'Текст',
                     'btn' => 'Кнопка',
+                ),
+                'attr' => array(
+                    'class' => 'moreType'
                 )
             ))
             ->add('moreTxt', 'text', array(
                 'label' => 'Текст',
                 'attr' => array(
-                    'class' => 'form-control'
+                    'class' => 'form-control ifText'
                 )
             ))
             ->add('moreImage')
