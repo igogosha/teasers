@@ -234,6 +234,7 @@ class BlockSettingsType extends AbstractType
             ->add('moreType', 'choice', array(
                 'label' => 'Тип',
                 'choices'   => array(
+                    'default' => 'Выберите тип',
                     'txt' => 'Текст',
                     'btn' => 'Кнопка',
                 ),
@@ -247,18 +248,25 @@ class BlockSettingsType extends AbstractType
                     'class' => 'form-control ifText'
                 )
             ))
-            ->add('moreImage')
+            ->add('moreImage', 'file', array(
+                'attr' => array(
+                    'class' => 'ifBtn'
+                )
+            ))
             ->add('morePosition', 'choice', array(
-                'label' => 'Положение текста',
+                'label' => 'Положение',
                 'choices'   => array(
                     'up' => 'Сверху',
                     'down' => 'Снизу',
                     'img_up' => 'Под картинкой',
                     'img_down' => 'Над картинкой',
                     'left_up' => 'Слева-сверху',
-                    'left_down' => 'Слува-снизу',
+                    'left_down' => 'Слева-снизу',
                     'right_up' => 'Справа-сверху',
                     'right_down' => 'Справа-снизу',
+                ),
+                'attr' => array(
+                    'style' => 'display:none'
                 )
             ))
             ->add('moreBtnAlignHor', 'choice', array(
@@ -285,12 +293,15 @@ class BlockSettingsType extends AbstractType
                     'Verdana' => 'Verdana',
                     'serif' => 'serif',
                     'Tahoma' => 'Tahoma'
+                ),
+                'attr' => array(
+                    'class' => 'form-control ifText'
                 )
             ))
             ->add('moreTxtFontSize', 'text', array(
                 'label' => 'Размер шрифта',
                 'attr' => array(
-                    'class' => 'slider_input',
+                    'class' => 'slider_input ifText',
                     'data-slider-min' => 10,
                     'data-slider-max' => 24,
                     'data-slider-step' => 1,
@@ -302,7 +313,7 @@ class BlockSettingsType extends AbstractType
             ))
             ->add('moreTxtFontColor', 'hidden', array(
                 'attr' => array(
-                    'class' => 'colorPicker'
+                    'class' => 'colorPicker ifText'
                 )
             ))
             ->add('moreTxtFontStyle', 'choice', array(
@@ -311,11 +322,14 @@ class BlockSettingsType extends AbstractType
                     'underline' => 'Подчеркнутый',
                     'bold' => 'Жирный',
                     'italic' => 'Курсив',
+                ),
+                'attr' => array(
+                    'class' => 'form-control ifText'
                 )
             ))
             ->add('moreTxtFontHoverColor', 'hidden', array(
                 'attr' => array(
-                    'class' => 'colorPicker'
+                    'class' => 'colorPicker ifText'
                 )
             ))
             ->add('moreTxtFontHoverStyle', 'choice', array(
@@ -324,12 +338,15 @@ class BlockSettingsType extends AbstractType
                     'underline' => 'Подчеркнутый',
                     'bold' => 'Жирный',
                     'italic' => 'Курсив',
+                ),
+                'attr' => array(
+                    'class' => 'form-control ifText'
                 )
             ))
             ->add('button', 'submit', array(
                 'label' => 'Добавить',
                 'attr' => array(
-                    'class' => 'btn btn-default',
+                    'class' => 'btn btn-default col-lg-12',
                 )
             ))
         ;

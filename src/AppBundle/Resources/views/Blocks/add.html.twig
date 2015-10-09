@@ -375,6 +375,20 @@
             $('input[type="color"]').on('change', function(){
                 $(this).attr('value', $(this).val() );
             });
+
+            $('.ifText, .ifBtn').each(function(){
+                $(this).parent().hide();
+            });
+            $('#appbundle_blocksettings_moreType').on('change', function(){
+                if ( $(this).val() == 'btn' ) {
+                    $('.ifBtn').parent().show();
+                    $('.ifText').parent().hide();
+                } else {
+                    $('.ifBtn').parent().hide();
+                    $('.ifText').parent().show();
+                }
+            });
+
         });
     </script>
 {% endblock %}
