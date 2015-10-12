@@ -179,7 +179,14 @@ class PlacesController extends Controller
         if ( $request->isXmlHttpRequest() ) {
             $data = $request->request->all();
 
-            $template = $this->renderView('AppBundle:Places:embedCode.html.twig');
+            $gid = $data['gid'];
+            $rid = $data['rid'];
+            $pid = $data['pid'];
+            $template = $this->renderView('AppBundle:Places:embedCode.html.twig', array(
+                'gid' => $gid,
+                'rid' => $rid,
+                'pid' => $pid,
+            ));
 
             $resp['content'] = $template;
             $resp['msg'] = 'success';
