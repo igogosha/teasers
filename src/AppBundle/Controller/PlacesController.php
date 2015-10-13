@@ -61,7 +61,6 @@ class PlacesController extends Controller
 //        echo '<pre>';
 //        print_r($places);
 //        exit;
-
         return $this->render('AppBundle:Places:index.html.twig', array(
             'places' => $places,
             'blocks' => $blocks
