@@ -42,14 +42,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/getTeasers/{id}", name="getTeasers")
+     * @Route("/get-teasers.js", name="getTeasers")
      */
-    public function createTeaserBlockAction($id)
+    public function createTeaserBlockAction(Request $request)
     {
-        $response = new Response($this->renderView('AppBundle:Default:teaserBlock.html.twig', array(
-            'id' => $id
-        )));
-        $response->headers->set('Content-Type', 'application/javascript');
-        return $response;
+
+        $rid = $request->query->get('r');
+        $gid = $request->query->get('g');
+        $pid = $request->query->get('p');
+
+        $this->getDoctrine()->getEntityManager();
+
+        return $this->render('AppBundle:Default:teaserBlock.js.twig', array(
+            'id' => $request->query->get('$rid')
+        ));
     }
 }
