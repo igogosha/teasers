@@ -383,9 +383,12 @@
                 if ( $(this).val() == 'btn' ) {
                     $('.ifBtn').parent().show();
                     $('.ifText').parent().hide();
-                } else {
+                } else if ( $(this).val() == 'txt' ) {
                     $('.ifBtn').parent().hide();
                     $('.ifText').parent().show();
+                } else {
+                    $('.ifBtn').parent().hide();
+                    $('.ifText').parent().hide();
                 }
             });
 
