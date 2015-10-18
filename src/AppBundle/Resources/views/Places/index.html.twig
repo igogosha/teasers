@@ -49,24 +49,26 @@
 
                                                  {#{{ dump(places[placeId].blocks) }}#}
 
-                                                 {% for block in places[placeId].blocks %}
+                                                 {% if places[placeId].blocks[r.g_id][r.r_id] is defined %}
+                                                     {% for block in places[placeId].blocks[r.g_id][r.r_id] %}
 
-                                                     <tr data-block-id="">
-                                                         <td>
-                                                             <span class="btn btn-mini disabled" style="margin-right:1em">РРР</span>
-                                                             <span class="pull-right" style="margin-left:1em">
-                                                                 <span class="btn btn-mini btn-success disabled">{{ "-" }}%</span>
-                                                             </span>
-                                                             <div class="btn-group btn-group-mini pull-right">
-                                                                 <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" title="Получить код для вставки" class="btn btn-mini btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>
-                                                                 <a href="" title="Статистика" class="btn btn-mini btn-default"><i class="fa fa-bar-chart-o"></i></a>
-                                                                 <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-mini btn-default"><i class="fa fa-folder-o"></i></a>
-                                                                 <a href="" title="Удалить" class="btn btn-mini btn-danger"><i class="fa fa-times"></i></a>
-                                                             </div>
-                                                         </td>
-                                                     </tr>
+                                                         <tr data-block-id="">
+                                                             <td>
+                                                                 <span class="btn btn-mini disabled" style="margin-right:1em">{{ block.name }}</span>
+                                                                 <span class="pull-right" style="margin-left:1em">
+                                                                     <span class="btn btn-mini btn-success disabled">{{ "-" }}%</span>
+                                                                 </span>
+                                                                 <div class="btn-group btn-group-mini pull-right">
+                                                                     <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" data-bid="{{ block.id }}" title="Получить код для вставки" class="btn btn-mini btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>
+                                                                     <a href="" title="Статистика" class="btn btn-mini btn-default"><i class="fa fa-bar-chart-o"></i></a>
+                                                                     <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-mini btn-default"><i class="fa fa-folder-o"></i></a>
+                                                                     <a href="" title="Удалить" data-bid="{{ block.id }}" class="btn btn-mini btn-danger"><i class="fa fa-times"></i></a>
+                                                                 </div>
+                                                             </td>
+                                                         </tr>
 
-                                                 {% endfor %}
+                                                     {% endfor %}
+                                                 {% endif %}
                                              </table>
                                          </td>
                                      </tr>
@@ -142,11 +144,13 @@
                 var gid = $(this).data('gid')-0;
                 var rid = $(this).data('rid')-0;
                 var pid = $(this).data('pid')-0;
+                var bid = $(this).data('bid')-0;
 
                 $.post(getEmbedCodeUrl, {
                     gid: gid,
                     rid: rid,
-                    pid: pid
+                    pid: pid,
+                    bid: bid
                 }, function(r){
                     if ( r.msg == 'success' ){
                         var modal = new MyAlert( "{{ 'Embed code' | trans }}", r.content );
@@ -198,16 +202,17 @@
                 }, function(r){
                     if(r.msg == 'success') {
 
-                        var trTemplate = $('#blockTrTemplate').html();
-                        trTemplate = trTemplate.replace('{bId}', r.bId);
-                        trTemplate = trTemplate.replace('{rId}', r.rId);
-                        trTemplate = trTemplate.replace('{gId}', r.gId);
-                        trTemplate = trTemplate.replace('{pId}', r.pId);
-                        trTemplate = trTemplate.replace('{bName}', r.blockName);
-
-                        $('table.places').find('#tr-'+ r.tr).find('table.blocks')
-                                .append(trTemplate);
-                        $('.close').click();
+//                        var trTemplate = $('#blockTrTemplate').html();
+//                        trTemplate = trTemplate.replace('{bId}', r.bId);
+//                        trTemplate = trTemplate.replace('{rId}', r.rId);
+//                        trTemplate = trTemplate.replace('{gId}', r.gId);
+//                        trTemplate = trTemplate.replace('{pId}', r.pId);
+//                        trTemplate = trTemplate.replace('{bName}', r.blockName);
+//
+//                        $('table.places').find('#tr-'+ r.tr).find('table.blocks')
+//                                .append(trTemplate);
+//                        $('.close').click();
+                        window.location.assign(r.redirectTo);
                     }
                 }, 'json');
             });
