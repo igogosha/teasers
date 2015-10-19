@@ -52,7 +52,7 @@ class PlacesController extends Controller
             ));
 
         foreach($blocksToPlaces as $block) {
-            $places[$block->getPlace()->getId()]['blocks'][$block->getGroup()->getId()][$block->getRubric()->getId()] = array(
+            $places[$block->getPlace()->getId()]['blocks'][$block->getGroup()->getId()][$block->getRubric()->getId()][] = array(
                'id' =>  $block->getId(),
                 'name' => $block->getBlock()->getBlockName()
             );
@@ -181,10 +181,12 @@ class PlacesController extends Controller
             $gid = $data['gid'];
             $rid = $data['rid'];
             $pid = $data['pid'];
+            $bid = $data['bid'];
             $template = $this->renderView('AppBundle:Places:embedCode.html.twig', array(
                 'gid' => $gid,
                 'rid' => $rid,
                 'pid' => $pid,
+                'bid' => $bid,
             ));
 
             $resp['content'] = $template;

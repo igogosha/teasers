@@ -11,5 +11,6 @@
 /vendor/
 /bin/
 /composer.phar
+/web/SQLyogTunnel.php
 
 .idea

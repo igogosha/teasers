@@ -164,6 +164,8 @@ class AdminController extends Controller
             $resp['pId'] = $place->getId();
             $resp['tr'] = $place->getId() . '-' . $group->getId() . '-' . $rubric->getId();
             $resp['blockName'] = $block->getBlockName();
+            $resp['redirectTo'] = $this->generateUrl('admin_places');
+
         } else {
             $resp['msg'] = 'Not ajax!';
         }

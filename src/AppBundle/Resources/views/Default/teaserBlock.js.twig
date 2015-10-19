@@ -1,3 +1,29 @@
 <script type="text/javascript">
-    document.write('Hello from .js file');
+    var html = "<div style='background-color: {{ settings.background }}'>";
+
+    {% for teaser in teasers %}
+    html += "<div style='{% if loop.index < settings.cols %}float:left{% endif %}; padding:{{ settings.padding }};'>";
+    html += "<img src='{{ asset('uploads/teasers/', absolute=true) }}/{{ rid }}/{{ teaser.image }}' style='" +
+            "width:{{ settings.pictureSize }}px;" +
+            "height:{{ settings.pictureSize }}px; " +
+            "border-radius: {{ settings.pictureBorderRadius }}px;" +
+            "border: {{ settings.pictureBorderSize }}px solid {{ settings.pictureBorderColor }};" +
+            "box-shadow: 0px 0px {{ settings.pictureShadowSize }} {{ settings.pictureShadowColor }};" +
+            "' />";
+    html += "<p style='" +
+            "font: {{ settings.headerFontSize }}px {{ settings.headerFontFamily }}, sans-serif;" +
+            "color: {{ settings.headerFontColor }};" +
+            "text-decoration: {{ settings.headerFontStyle }};" +
+            "" +
+            "'" +
+            "onmouseover='this.style.color=\"{{ settings.headerFontHoverColor }}\";this.style.textDecoration=\"{{ settings.headerFontHoverStyle }}\"'" +
+            "onmouseout='this.style.color=\"{{ settings.headerFontColor }}\";this.style.textDecoration=\"{{ settings.headerFontStyle }}\"'" +
+            ">{{ teaser.title }}</p>";
+    html += "<p><a href='{{ teaser.link }}' target='_blank'>Read more...</a></p>";
+    html += "</div>";
+    {% endfor %}
+
+    html += "</div>";
+
+    document.write(html);
 </script>

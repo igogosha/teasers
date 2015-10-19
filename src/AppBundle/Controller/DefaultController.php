@@ -50,11 +50,26 @@ class DefaultController extends Controller
         $rid = $request->query->get('r');
         $gid = $request->query->get('g');
         $pid = $request->query->get('p');
+        $bid = $request->query->get('b');
 
-        $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $settings = $em->getRepository('AppBundle:BlockSettings')
+            ->find($bid);
+        $limit = $settings->getRows() * $settings->getCols();
+
+        $teasers = $em->getRepository('AppBundle:Teasers')
+            ->findBy(array(
+                'groups' => $gid
+            ), array(), $limit);
 
         return $this->render('AppBundle:Default:teaserBlock.js.twig', array(
-            'id' => $request->query->get('$rid')
+            'rid' => $rid,
+            'gid' => $gid,
+            'pid' => $pid,
+            'bid' => $bid,
+            'teasers' => $teasers,
+            'settings' => $settings
         ));
     }
 }
