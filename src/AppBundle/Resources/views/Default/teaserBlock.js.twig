@@ -1,25 +1,41 @@
 <script type="text/javascript">
-    var html = "<div style='background-color: {{ settings.background }}'>";
+    var html = "<div style='background-color: {{ settings.background }}; width: 300px'>";
 
     {% for teaser in teasers %}
-    html += "<div style='{% if loop.index < settings.cols %}float:left{% endif %}; padding:{{ settings.padding }};'>";
-    html += "<img src='{{ asset('uploads/teasers/', absolute=true) }}/{{ rid }}/{{ teaser.image }}' style='" +
-            "width:{{ settings.pictureSize }}px;" +
-            "height:{{ settings.pictureSize }}px; " +
-            "border-radius: {{ settings.pictureBorderRadius }}px;" +
-            "border: {{ settings.pictureBorderSize }}px solid {{ settings.pictureBorderColor }};" +
-            "box-shadow: 0px 0px {{ settings.pictureShadowSize }} {{ settings.pictureShadowColor }};" +
-            "' />";
-    html += "<p style='" +
-            "font: {{ settings.headerFontSize }}px {{ settings.headerFontFamily }}, sans-serif;" +
-            "color: {{ settings.headerFontColor }};" +
-            "text-decoration: {{ settings.headerFontStyle }};" +
-            "" +
-            "'" +
-            "onmouseover='this.style.color=\"{{ settings.headerFontHoverColor }}\";this.style.textDecoration=\"{{ settings.headerFontHoverStyle }}\"'" +
-            "onmouseout='this.style.color=\"{{ settings.headerFontColor }}\";this.style.textDecoration=\"{{ settings.headerFontStyle }}\"'" +
-            ">{{ teaser.title }}</p>";
-    html += "<p><a href='{{ teaser.link }}' target='_blank'>Read more...</a></p>";
+    html += "<div style='{% if loop.index < settings.cols and settings.textPosition != 'left' and settings.textPosition != 'right' %}float:left{% endif %}; padding:{{ settings.padding }};'>";
+
+    {% if settings.textPosition == 'bottom' %}
+        {% include("AppBundle:Default:_image_template.js.twig") %}
+        {% include("AppBundle:Default:_title_template.js.twig") %}
+        {% if settings.moreActive %}
+            {% include("AppBundle:Default:_more_template.js.twig") %}
+        {% endif %}
+
+    {% elseif settings.textPosition == 'top' %}
+        {% include("AppBundle:Default:_title_template.js.twig") %}
+        {% include("AppBundle:Default:_image_template.js.twig") %}
+        {% if settings.moreActive %}
+            {% include("AppBundle:Default:_more_template.js.twig") %}
+        {% endif %}
+
+    {% elseif settings.textPosition == 'left' %}
+        {% include("AppBundle:Default:_title_template.js.twig") %}
+        {% include("AppBundle:Default:_image_template.js.twig") %}
+        {% if settings.moreActive %}
+            {% include("AppBundle:Default:_more_template.js.twig") %}
+        {% endif %}
+
+    {% elseif settings.textPosition == 'right' %}
+        {% include("AppBundle:Default:_image_template.js.twig") %}
+        {% include("AppBundle:Default:_title_template.js.twig") %}
+        {% if settings.moreActive %}
+            {% include("AppBundle:Default:_more_template.js.twig") %}
+        {% endif %}
+    {% endif %}
+
+
+
+    html += "<div style='clear:both;'></div>";
     html += "</div>";
     {% endfor %}
 

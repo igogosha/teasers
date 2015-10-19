@@ -1,0 +1,11 @@
+{% if settings.moreType == 'txt' %}
+    html += "<p><a style='" +
+            "font: {{ settings.moreTxtFontSize }}px {{ settings.moreTxtFont }}, sans-serif;" +
+            "color: {{ settings.moreTxtFontColor }}" +
+            "text-decoration: {{ settings.moreTxtFontStyle }};" +
+            "onmouseover='this.style.color=\"{{ settings.moreTxtFontHoverColor }}\";this.style.textDecoration=\"{{ settings.moreTxtFontHoverStyle }}\"'" +
+    "onmouseout='this.style.color=\"{{ settings.moreTxtFontColor }}\";this.style.textDecoration=\"{{ settings.moreTxtFontStyle }}\"'" +
+    "' href='{{ teaser.link }}' target='_blank'>{{ settings.moreTxt }}</a></p>";
+{% else %}
+    html += "<img onclick='window.location.href=\"{{ teaser.link }}\"' src='{{ settings.moreImage }}' />";
+{% endif %}

@@ -1,0 +1,9 @@
+html += "<p style='" +
+        "font: {{ settings.headerFontSize }}px {{ settings.headerFontFamily }}, sans-serif;" +
+        "color: {{ settings.headerFontColor }};" +
+        "text-decoration: {{ settings.headerFontStyle }};" +
+        "" +
+        "'" +
+        "onmouseover='this.style.color=\"{{ settings.headerFontHoverColor }}\";this.style.textDecoration=\"{{ settings.headerFontHoverStyle }}\"'" +
+        "onmouseout='this.style.color=\"{{ settings.headerFontColor }}\";this.style.textDecoration=\"{{ settings.headerFontStyle }}\"'" +
+        ">{{ teaser.title }}</p>";
