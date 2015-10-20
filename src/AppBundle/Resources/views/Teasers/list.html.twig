@@ -36,18 +36,22 @@
                                                  <button title="редактировать" class="btn btn-primary"><i class="fa fa-pencil"></i></button>
                                                  <button title="показать/скрыть" class="btn btn-warning">
                                                      <i class="fa fa-eye"></i>
-                                                     {{ group['teasers'] | length }}
+                                                     {% if group['teasers'] is defined %}
+                                                         {{ group['teasers'] | length }}
+                                                     {% endif %}
                                                  </button>
                                              </div>
                                          </td>
                                          <td>
-                                             {% for link in group.links %}
-                                                <span title="{{ link }}">{{ link }}</span><br>
-                                             {% endfor %}
+                                             {% if group.links is defined %}
+                                                 {% for link in group.links %}
+                                                    <span title="{{ link }}">{{ link }}</span><br>
+                                                 {% endfor %}
+                                             {% endif %}
                                          </td>
                                          <td>{{ group.rubric_name }}</td>
-                                         <td>{{ group.ctr }}</td>
-                                         <td>{{ group.views }}</td>
+                                         <td>30%</td>
+                                         <td>142</td>
                                      </tr>
                              {% endfor %}
                              </table>

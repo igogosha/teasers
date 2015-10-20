@@ -2,9 +2,10 @@
     var html = "<div style='background-color: {{ settings.background }}; width: 300px'>";
 
     {% for teaser in teasers %}
-    html += "<div style='{% if loop.index < settings.cols and settings.textPosition != 'left' and settings.textPosition != 'right' %}float:left{% endif %}; padding:{{ settings.padding }};'>";
+    html += "<div style='{% if loop.index+1 is divisible by(settings.cols) and settings.textPosition != 'left' and settings.textPosition != 'right' %}float:left{% endif %}; padding:{{ settings.padding }};'>";
 
     {% if settings.textPosition == 'bottom' %}
+
         {% include("AppBundle:Default:_image_template.js.twig") %}
         {% include("AppBundle:Default:_title_template.js.twig") %}
         {% if settings.moreActive %}

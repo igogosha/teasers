@@ -53,7 +53,7 @@ class PlacesController extends Controller
 
         foreach($blocksToPlaces as $block) {
             $places[$block->getPlace()->getId()]['blocks'][$block->getGroup()->getId()][$block->getRubric()->getId()][] = array(
-               'id' =>  $block->getId(),
+               'id' =>  $block->getBlock()->getId(),
                 'name' => $block->getBlock()->getBlockName()
             );
         }
