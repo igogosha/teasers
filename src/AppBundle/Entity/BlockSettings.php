@@ -18,6 +18,11 @@ use Doctrine\ORM\Mapping\OneToMany;
 class BlockSettings
 {
 
+    const POSITION_TITLE = 1;
+    const POSITION_IMAGE = 2;
+    const POSITION_LINK = 3;
+
+
     /**
      * @var integer
      *

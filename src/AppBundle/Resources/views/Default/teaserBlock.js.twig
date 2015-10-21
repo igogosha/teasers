@@ -1,44 +1,30 @@
 <script type="text/javascript">
-    var html = "<div style='background-color: {{ settings.background }}; width: 300px'>";
+    var html = "<div style='background-color: {{ settings.background }};'>";
 
     {% for teaser in teasers %}
-    html += "<div style='{% if loop.index < settings.cols and settings.textPosition != 'left' and settings.textPosition != 'right' %}float:left{% endif %}; padding:{{ settings.padding }};'>";
+        html += "<div onclick='window.open(\"{{ teaser.link }}\", \"_blank\")' style='cursor:pointer;float:left;padding:{{ settings.padding }};'>";
 
-    {% if settings.textPosition == 'bottom' %}
-        {% include("AppBundle:Default:_image_template.js.twig") %}
-        {% include("AppBundle:Default:_title_template.js.twig") %}
-        {% if settings.moreActive %}
-            {% include("AppBundle:Default:_more_template.js.twig") %}
+        {% for key, order in orderArray %}
+        {% set pos = loop.index %}
+            {% if order == 1 %}
+                {{ include("AppBundle:Default:_title_template.js.twig", {pos: pos}) }}
+            {% elseif order == 2 %}
+                {{ include("AppBundle:Default:_image_template.js.twig", {pos: pos}) }}
+            {% else %}
+                {% if settings.moreActive %}
+                    {{ include("AppBundle:Default:_more_template.js.twig", {pos: pos}) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        html += "<div style='clear:both;'></div>";
+        html += "</div>";
+        {% if loop.index is divisible by(settings.cols) %}
+            html += "<div style='clear:both;'></div>";
         {% endif %}
-
-    {% elseif settings.textPosition == 'top' %}
-        {% include("AppBundle:Default:_title_template.js.twig") %}
-        {% include("AppBundle:Default:_image_template.js.twig") %}
-        {% if settings.moreActive %}
-            {% include("AppBundle:Default:_more_template.js.twig") %}
-        {% endif %}
-
-    {% elseif settings.textPosition == 'left' %}
-        {% include("AppBundle:Default:_title_template.js.twig") %}
-        {% include("AppBundle:Default:_image_template.js.twig") %}
-        {% if settings.moreActive %}
-            {% include("AppBundle:Default:_more_template.js.twig") %}
-        {% endif %}
-
-    {% elseif settings.textPosition == 'right' %}
-        {% include("AppBundle:Default:_image_template.js.twig") %}
-        {% include("AppBundle:Default:_title_template.js.twig") %}
-        {% if settings.moreActive %}
-            {% include("AppBundle:Default:_more_template.js.twig") %}
-        {% endif %}
-    {% endif %}
-
-
-
-    html += "<div style='clear:both;'></div>";
-    html += "</div>";
     {% endfor %}
 
+    html += "<div style='clear:both;'></div>";
     html += "</div>";
 
     document.write(html);

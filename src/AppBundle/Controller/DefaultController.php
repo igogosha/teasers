@@ -63,13 +63,39 @@ class DefaultController extends Controller
                 'groups' => $gid
             ), array(), $limit);
 
+        $orderArray = array();
+        $textPosition = $settings->getTextPosition();
+        //$imagePosition = $settings->getTextPosition();
+        $morePosition = $settings->getMorePosition();
+
+        $moreLast = array('down', 'right_down','right_up','img_down');
+        $moreSecond = array('img_up', 'left_up','left_down');
+        $titleUp = array('up', 'left');
+        if ( in_array($morePosition, $moreLast) ) {
+            if ( $textPosition == 'up' ) {
+                $orderArray = array(1,2,3);
+            } else {
+                $orderArray = array(2,1,3);
+            }
+        } elseif ( in_array($moreSecond, $moreLast) ) {
+            if ( in_array($textPosition, $titleUp) ) {
+                $orderArray = array(1,3,2);
+            } else {
+                $orderArray = array(2,3,1);
+            }
+        } else {
+            $orderArray = array(3,2,1);
+        }
+
+
         return $this->render('AppBundle:Default:teaserBlock.js.twig', array(
             'rid' => $rid,
             'gid' => $gid,
             'pid' => $pid,
             'bid' => $bid,
             'teasers' => $teasers,
-            'settings' => $settings
+            'settings' => $settings,
+            'orderArray' => $orderArray
         ));
     }
 }
