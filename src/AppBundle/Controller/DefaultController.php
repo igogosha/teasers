@@ -2,11 +2,20 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\BlockSettings;
+use AppBundle\Entity\Places;
+use AppBundle\Entity\Rubrics;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+use AppBundle\Entity\Stat;
+use AppBundle\Entity\StatDaily;
+use AppBundle\Entity\StatWeekly;
+use AppBundle\Entity\StatMonthly;
+
 
 class DefaultController extends Controller
 {
@@ -18,28 +27,6 @@ class DefaultController extends Controller
         return $this->render('default/index.html.twig');
     }
 
-    /**
-     * @Route("/getAdsArr", name="getAdsArr")
-     */
-    public function getAdsArrAction()
-    {
-
-        $r = array(
-            "one",
-            "two",
-            "three"
-        );
-
-        return new JsonResponse($r);
-    }
-
-    /**
-     * @Route("/getAdsStr", name="getAdsStr")
-     */
-    public function getAdsStrAction()
-    {
-        return new Response("returned string");
-    }
 
     /**
      * @Route("/get-teasers.js", name="getTeasers")
@@ -98,4 +85,54 @@ class DefaultController extends Controller
             'orderArray' => $orderArray
         ));
     }
+
+
+
+    /**
+     * @Route("/stats/{place_id}/{rubric_id}/{block_settings_id}/{url}", name="redirect_to_url")
+     */
+    public function getAdsArrAction(Places $place_id, Rubrics $rubric_id, BlockSettings $block_settings_id, $url, Request $request)
+    {
+
+        // writing statistics;
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $stat = $em->getRepository("AppBundle:Stat")->findBy(array(
+            'place' => $place_id,
+            'rubric' => $rubric_id,
+            'blockSettings' => $block_settings_id
+        ));
+        if ( $stat ) {
+            $stat->setPlace($place_id);
+            $stat->setRubric($rubric_id);
+            $stat->setBlockSettings($block_settings_id);
+            $stat->setClicks( $stat->getClicks() + 1 );
+
+            $em->persist($stat);
+            $em->flush();
+        }
+
+
+        $statDaily = $em->getRepository("AppBundle:StatDaily")->findBy(array(
+            'place' => $place_id,
+            'rubric' => $rubric_id,
+            'blockSettings' => $block_settings_id
+        ));
+        if ( $stat ) {
+            $stat->setPlace($place_id);
+            $stat->setRubric($rubric_id);
+            $stat->setBlockSettings($block_settings_id);
+            $stat->setClicks( $stat->getClicks() + 1 );
+
+            $em->persist($stat);
+            $em->flush();
+        }
+
+
+
+
+        return new JsonResponse($r);
+    }
+
+
 }

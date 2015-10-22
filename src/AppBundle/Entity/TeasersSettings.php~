@@ -160,4 +160,27 @@ class TeasersSettings
     {
         return $this->active;
     }
+
+    /**
+     * Set teaser
+     *
+     * @param \AppBundle\Entity\Teasers $teaser
+     * @return TeasersSettings
+     */
+    public function setTeaser(Teasers $teaser = null)
+    {
+        $this->teaser = $teaser;
+
+        return $this;
+    }
+
+    /**
+     * Get teaser
+     *
+     * @return \AppBundle\Entity\Teasers 
+     */
+    public function getTeaser()
+    {
+        return $this->teaser;
+    }
 }

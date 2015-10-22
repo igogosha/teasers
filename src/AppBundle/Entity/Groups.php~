@@ -4,18 +4,18 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
-use AppBundle\Entity\Groups;
 use AppBundle\Entity\Rubrics;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use AppBundle\Entity\Places;
 
 /**
- * Teasers
+ * Groups
  *
- * @ORM\Table(name="teasers")
- * @ORM\Entity(repositoryClass="AppBundle\Entity\TeasersRepository")
+ * @ORM\Table(name="groups")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\GroupsRepository")
  */
-class Teasers
+class Groups
 {
     /**
      * @var integer
@@ -33,12 +33,6 @@ class Teasers
     private $user;
 
     /**
-     * @ManyToOne(targetEntity="Groups")
-     * @JoinColumn(name="groups_id", referencedColumnName="id")
-     **/
-    private $groups;
-
-    /**
      * @ManyToOne(targetEntity="Rubrics")
      * @JoinColumn(name="rubrics_id", referencedColumnName="id")
      **/
@@ -54,23 +48,9 @@ class Teasers
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255)
-     */
-    private $image;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="link", type="string", length=255)
-     */
-    private $link;
 
 
     /**
@@ -82,6 +62,7 @@ class Teasers
     {
         return $this->id;
     }
+
 
     /**
      * Set user
@@ -107,32 +88,32 @@ class Teasers
 
 
     /**
-     * Set groups
+     * Set rubrics
      *
      * @return Groups
      */
-    public function setGroups($groups)
+    public function setRubrics($rubrics)
     {
-        $this->groups = $groups;
+        $this->rubrics = $rubrics;
 
         return $this;
     }
 
     /**
-     * Get groups
+     * Get rubrics
      *
-     * @return Groups
+     * @return Rubrics
      */
-    public function getGroups()
+    public function getRubrics()
     {
-        return $this->groups;
+        return $this->rubrics;
     }
 
     /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Teasers
+     * @return Groups
      */
     public function setCreatedAt($createdAt)
     {
@@ -152,33 +133,10 @@ class Teasers
     }
 
     /**
-     * Set image
-     *
-     * @param string $image
-     * @return Teasers
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return string 
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
      * Set title
      *
      * @param string $title
-     * @return Teasers
+     * @return Groups
      */
     public function setTitle($title)
     {
@@ -197,49 +155,8 @@ class Teasers
         return $this->title;
     }
 
-    /**
-     * Set link
-     *
-     * @param string $link
-     * @return Teasers
-     */
-    public function setLink($link)
+    public function __toString()
     {
-        $this->link = $link;
-
-        return $this;
-    }
-
-    /**
-     * Get link
-     *
-     * @return string 
-     */
-    public function getLink()
-    {
-        return $this->link;
-    }
-
-    /**
-     * Set rubrics
-     *
-     * @param \AppBundle\Entity\Rubrics $rubrics
-     * @return Teasers
-     */
-    public function setRubrics(\AppBundle\Entity\Rubrics $rubrics = null)
-    {
-        $this->rubrics = $rubrics;
-
-        return $this;
-    }
-
-    /**
-     * Get rubrics
-     *
-     * @return \AppBundle\Entity\Rubrics 
-     */
-    public function getRubrics()
-    {
-        return $this->rubrics;
+        return $this->title;
     }
 }
