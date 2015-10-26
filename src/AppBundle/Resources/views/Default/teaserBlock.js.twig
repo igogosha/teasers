@@ -2,17 +2,17 @@
     var html = "<div style='background-color: {{ settings.background }};'>";
 
     {% for teaser in teasers %}
-    html += "<div onclick='window.open(\"{{ teaser.link }}\", \"_blank\")' style='cursor:pointer;float:left;padding:{{ settings.padding }};'>";
+    html += "<div onclick='window.open(\"{{ url('redirect_to_url', {place_id: pid, rubric_id: rid, block_settings_id: bid, url: teaser.link}) }}\", \"_blank\")' style='cursor:pointer;float:left;padding:{{ settings.padding }};'>";
 
     {% for key, order in orderArray %}
     {% set pos = loop.index %}
     {% if order == 1 %}
-    {{ include("AppBundle:Default:_title_template.js.twig", {pos: pos}) }}
+        {{ include("AppBundle:Default:_title_template.js.twig", {position: pos}) }}
     {% elseif order == 2 %}
-    {{ include("AppBundle:Default:_image_template.js.twig", {pos: pos}) }}
+        {{ include("AppBundle:Default:_image_template.js.twig", {position: pos}) }}
     {% else %}
     {% if settings.moreActive %}
-    {{ include("AppBundle:Default:_more_template.js.twig", {pos: pos}) }}
+        {{ include("AppBundle:Default:_more_template.js.twig", {position: pos}) }}
     {% endif %}
     {% endif %}
     {% endfor %}

@@ -75,6 +75,29 @@ class DefaultController extends Controller
         }
 
 
+        $place = $em->getRepository("AppBundle:Places")->find($pid);
+        $rubric = $em->getRepository("AppBundle:Rubrics")->find($rid);
+        $block = $em->getRepository("AppBundle:BlockSettings")->find($bid);
+
+        $stat = $em->getRepository("AppBundle:Stat")->findOneBy(array(
+            'place' => $pid,
+            'rubric' => $rid,
+            'blockSettings' => $bid
+        ));
+        if ( !$stat ) {
+            $stat = new Stat();
+            $stat->setPlace($place);
+            $stat->setRubric($rubric);
+            $stat->setBlockSettings($block);
+            $stat->setClicks(0);
+            $stat->setViews(1);
+        } else {
+            $stat->setViews( $stat->getViews() + 1);
+        }
+        $em->persist($stat);
+        $em->flush();
+
+
         return $this->render('AppBundle:Default:teaserBlock.js.twig', array(
             'rid' => $rid,
             'gid' => $gid,
@@ -97,7 +120,7 @@ class DefaultController extends Controller
         // writing statistics;
         $em = $this->getDoctrine()->getEntityManager();
 
-        $stat = $em->getRepository("AppBundle:Stat")->findBy(array(
+        $stat = $em->getRepository("AppBundle:Stat")->findOneBy(array(
             'place' => $place_id,
             'rubric' => $rubric_id,
             'blockSettings' => $block_settings_id
@@ -112,26 +135,7 @@ class DefaultController extends Controller
             $em->flush();
         }
 
-
-        $statDaily = $em->getRepository("AppBundle:StatDaily")->findBy(array(
-            'place' => $place_id,
-            'rubric' => $rubric_id,
-            'blockSettings' => $block_settings_id
-        ));
-        if ( $stat ) {
-            $stat->setPlace($place_id);
-            $stat->setRubric($rubric_id);
-            $stat->setBlockSettings($block_settings_id);
-            $stat->setClicks( $stat->getClicks() + 1 );
-
-            $em->persist($stat);
-            $em->flush();
-        }
-
-
-
-
-        return new JsonResponse($r);
+        return $this->redirect($url);
     }
 
 

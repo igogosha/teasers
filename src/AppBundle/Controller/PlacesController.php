@@ -54,13 +54,11 @@ class PlacesController extends Controller
         foreach($blocksToPlaces as $block) {
             $places[$block->getPlace()->getId()]['blocks'][$block->getGroup()->getId()][$block->getRubric()->getId()][] = array(
                'id' =>  $block->getBlock()->getId(),
-                'name' => $block->getBlock()->getBlockName()
+                'name' => $block->getBlock()->getBlockName(),
+                'ctr' => 5 * $block->getId()
             );
         }
 
-//        echo '<pre>';
-//        print_r($places);
-//        exit;
         return $this->render('AppBundle:Places:index.html.twig', array(
             'places' => $places,
             'blocks' => $blocks
@@ -196,6 +194,39 @@ class PlacesController extends Controller
 //            echo '<pre>';
 //            print_r($data);
 //            exit;
+
+        } else {
+            $resp['msg'] = 'not ajax';
+        }
+
+        return new JsonResponse($resp);
+    }
+
+    /**
+     * @Route("/admin/places/rename", name="admin_places_rename")
+     */
+    public function renamePlaceAction(Request $request)
+    {
+        $resp = array();
+        if ( $request->isXmlHttpRequest() ) {
+            $id = $request->request->getInt('id');
+            $name = $request->request->get('name');
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $place = $em->getRepository("AppBundle:Places")->find($id);
+
+            if ( $place ) {
+                $place->setName($name);
+
+                $em->persist($place);
+                $em->flush();
+
+                $resp['success'] = true;
+
+            } else {
+                $resp['success'] = false;
+                $resp['msg'] = 'nothing found by id';
+            }
 
         } else {
             $resp['msg'] = 'not ajax';

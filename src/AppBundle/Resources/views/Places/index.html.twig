@@ -25,14 +25,14 @@
                              <tbody>
                              {% for placeId, place in places %}
                                  <tr class="" style="color:#fff;border-top:2px solid #cc0000">
-                                     <td colspan="5" data-id="{{ placeId }}" class="placeId">
+                                     <td colspan="5" data-id="{{ placeId }}" id="{{ placeId }}" class="placeId">
                                          <h3>
                                              <div class="btn-group btn-group-sm">
-                                                 <button title="Редактировать" class="btn"><i class="fa fa-pencil"></i></button>
-                                                 {#<button title="Клонировать" class="btn btn-primary"><i class="fa fa-files-o"></i></button>#}
-                                                 <button onclick="window.open('{{ place.name }}', '_blank')" title="Посмотреть сайт в новом окне" class="btn btn-success"><i class="fa fa-external-link"></i></button>
+                                                 <a title="Редактировать" class="btn editPlaceName" data-id="{{ placeId }}"><i class="fa fa-pencil"></i></a>
+                                                 {#<a title="Клонировать" class="btn btn-primary"><i class="fa fa-files-o"></i></button>#}
+                                                 <a onclick="window.open('http://{{ place.name }}', '_blank')" title="Посмотреть сайт в новом окне" class="btn btn-success"><i class="fa fa-external-link"></i></a>
                                              </div>
-                                             {{ place.name }}
+                                             <span class="placeName">{{ place.name }}</span>
                                          </h3>
                                      </td>
                                  </tr>
@@ -56,13 +56,13 @@
                                                              <td>
                                                                  <span class="btn btn-mini disabled" style="margin-right:1em">{{ block.name }}</span>
                                                                  <span class="pull-right" style="margin-left:1em">
-                                                                     <span class="btn btn-mini btn-success disabled">{{ "-" }}%</span>
+                                                                     <span class="btn btn-mini btn-success disabled">{{ block.ctr }}%</span>
                                                                  </span>
                                                                  <div class="btn-group btn-group-mini pull-right">
                                                                      <a href="" data-pid="{{ placeId }}" data-rid="{{ r.r_id }}" data-gid="{{ r.g_id }}" data-bid="{{ block.id }}" title="Получить код для вставки" class="btn btn-mini btn-success getEmbedCodeBtn"><i class="fa fa-code"></i></a>
-                                                                     <a href="" title="Статистика" class="btn btn-mini btn-default"><i class="fa fa-bar-chart-o"></i></a>
-                                                                     <a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-mini btn-default"><i class="fa fa-folder-o"></i></a>
-                                                                     <a href="" title="Удалить" data-bid="{{ block.id }}" class="btn btn-mini btn-danger"><i class="fa fa-times"></i></a>
+                                                                     <a href="" title="Статистика" class="btn btn-mini btn-default disabled"><i class="fa fa-bar-chart-o"></i></a>
+                                                                     {#<a href="" target="_blank" title="Открыть в новой вкладке" class="btn btn-mini btn-default"><i class="fa fa-folder-o"></i></a>#}
+                                                                     <a href="" title="Удалить" data-bid="{{ block.id }}" class="btn btn-mini btn-danger disabled"><i class="fa fa-times"></i></a>
                                                                  </div>
                                                              </td>
                                                          </tr>
@@ -201,20 +201,38 @@
                     gId: gId
                 }, function(r){
                     if(r.msg == 'success') {
-
-//                        var trTemplate = $('#blockTrTemplate').html();
-//                        trTemplate = trTemplate.replace('{bId}', r.bId);
-//                        trTemplate = trTemplate.replace('{rId}', r.rId);
-//                        trTemplate = trTemplate.replace('{gId}', r.gId);
-//                        trTemplate = trTemplate.replace('{pId}', r.pId);
-//                        trTemplate = trTemplate.replace('{bName}', r.blockName);
-//
-//                        $('table.places').find('#tr-'+ r.tr).find('table.blocks')
-//                                .append(trTemplate);
-//                        $('.close').click();
                         window.location.assign(r.redirectTo);
                     }
                 }, 'json');
+            });
+
+            var renamePlacePath = "{{ path('admin_places_rename') }}";
+            $(document).on('click', '.editPlaceName', function(){
+                var that = $(this);
+                var id = $(this).data('id');
+                var currentName = $(this).parent().parent().find('.placeName').text();
+
+                $('#myModalLabel').html(currentName);
+                $('.myModalBody').html('<div class="input-group">'+
+                        '<div><input type="text" value="'+currentName+'" class="form-control" id="placeNewName"></div>'+
+                        '<span class="input-group-btn">'+
+                        '<button type="button" id="placeNewNameSave" name="placeNewNameSave" class="btn btn-lg btn-danger">Rename</button>'+
+                        '</span>'+
+                        '</div>');
+
+                $('#myAlert').modal('show');
+
+                $(document).on('click', '#placeNewNameSave', function(){
+                    var newName = $(this).parent().parent().find('#placeNewName').val();
+
+                    $.post(renamePlacePath, {id:id, name:newName}, function(r){
+                        if (r.success ){
+                            that.parent().parent().find('.placeName').text(newName);
+
+                            $('#myAlert').modal('hide');
+                        }
+                    }, 'json');
+                });
             });
 
         });
