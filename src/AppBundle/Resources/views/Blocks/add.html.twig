@@ -339,7 +339,7 @@
         $(document).ready(function(){
 
             $('.slider_input').slider().on('slide', function(ev) {
-                val = ev.value;
+                var val = ev.value;
                 $(this).parent().parent().find('.current_value').text(val);
                 $(this).attr('value', val);
             });

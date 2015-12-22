@@ -22,31 +22,34 @@
                          {{ form_start(form) }}
                          {{ form_errors(form, {'attr' : {'class': 'alert alert-danger'}}) }}
 
-                         <div class="form-group">
+                         <div class="form-group col-lg-12">
                              <label for="appbundle_teasers_groups">{{ 'Имя' | trans }}</label>
                              <input type="text" class="form-control" name="appbundle_teasers_name" id="appbundle_teasers_name" />
                          </div>
 
-                         <div class="form-group">
+                         <div class="form-group col-lg-12">
                              {{ form_label(form.rubrics) }}
                              {{ form_errors(form.rubrics) }}
                              {{ form_widget(form.rubrics) }}
                          </div>
 
-                         <div class="form-group" style="position:relative">
+                         <div class="form-group col-lg-12" style="position:relative">
                              {{ form_label(form.title) }}
                              {{ form_errors(form.title) }}
                              {{ form_widget(form.title) }}
                          </div>
+                         <div class="clear clearfix"></div>
 
-                         <div class="form-group" style="position:relative">
+                         <div class="form-group col-lg-12" style="position:relative">
                              {{ form_label(form.link) }}
                              {{ form_errors(form.link) }}
                              {{ form_widget(form.link) }}
                          </div>
+                         <div class="clear clearfix"></div>
 
-
-                         <button class="btn btn-success btn-lg" id="saveTeasersButton">Save</button>
+                         <div class="col-lg-12">
+                             <button class="btn btn-success btn-lg" id="saveTeasersButton">Save</button>
+                         </div>
 
                          {{ form_end(form) }}
 

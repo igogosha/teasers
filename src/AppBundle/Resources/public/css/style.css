@@ -7565,6 +7565,7 @@ textarea.form-control {
 	line-height: 15px;
 	font-size: 14px;
 	padding: 10px;
+	padding-left: 2em !important;
 	font-family: monospace;
 	margin: 0;
 	display: block;
@@ -7578,7 +7579,6 @@ textarea.form-control {
 	font-family: monospace;
 	position: absolute;
 	width: 20px;
-	left: -20px;
 	bottom: 0;
 	top: 26px;
 	text-align: right;
