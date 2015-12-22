@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Stat
  *
  * @ORM\Table(name="stat")
- * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity
  */
 class Stat
@@ -25,23 +24,19 @@ class Stat
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Places")
-     * @ORM\JoinColumn(name="place_id", referencedColumnName="id")
+     * @ORM\Column(name="place_id", type="integer")
      */
     private $place;
 
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Rubrics")
-     * @ORM\JoinColumn(name="rubric_id", referencedColumnName="id")
+     * @ORM\Column(name="rubric_id", type="integer")
      */
     private $rubric;
 
     /**
-     * @var integer
-     *
-     * @ORM\OneToOne(targetEntity="BlockSettings")
+     * @ORM\ManyToOne(targetEntity="BlockSettings", inversedBy="stats")
      * @ORM\JoinColumn(name="block_settings_id", referencedColumnName="id")
      */
     private $blockSettings;
@@ -63,7 +58,7 @@ class Stat
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="date")
      */
     private $createdAt;
 
@@ -78,50 +73,6 @@ class Stat
         return $this->id;
     }
 
-    /**
-     * Set place
-     *
-     * @return Stat
-     */
-    public function setPlace($place)
-    {
-        $this->place = $place;
-
-        return $this;
-    }
-
-    /**
-     * Get place
-     *
-     * @return integer 
-     */
-    public function getPlace()
-    {
-        return $this->place;
-    }
-
-    /**
-     * Set rubric
-     *
-     * @param integer $rubric
-     * @return Stat
-     */
-    public function setRubric($rubric)
-    {
-        $this->rubric = $rubric;
-
-        return $this;
-    }
-
-    /**
-     * Get rubric
-     *
-     * @return integer 
-     */
-    public function getRubric()
-    {
-        return $this->rubric;
-    }
 
     /**
      * Set blockSettings
@@ -192,6 +143,18 @@ class Stat
         return $this->clicks;
     }
 
+
+
+//    /**
+//     * @ORM\PrePersist
+//     */
+//    public function setCreatedAtValue()
+//    {
+//        $this->createdAt = new \DateTime();
+//    }
+
+
+
     /**
      * Set createdAt
      *
@@ -216,12 +179,48 @@ class Stat
     }
 
     /**
-     * @ORM\PrePersist
+     * Set place
+     *
+     * @param integer $place
+     * @return Stat
      */
-    public function setCreatedAtValue()
+    public function setPlace($place)
     {
-        $this->createdAt = new \DateTime();
+        $this->place = $place;
+
+        return $this;
     }
 
+    /**
+     * Get place
+     *
+     * @return integer 
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
 
+    /**
+     * Set rubric
+     *
+     * @param integer $rubric
+     * @return Stat
+     */
+    public function setRubric($rubric)
+    {
+        $this->rubric = $rubric;
+
+        return $this;
+    }
+
+    /**
+     * Get rubric
+     *
+     * @return integer 
+     */
+    public function getRubric()
+    {
+        return $this->rubric;
+    }
 }

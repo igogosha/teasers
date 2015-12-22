@@ -73,24 +73,26 @@ class DefaultController extends Controller
         } else {
             $orderArray = array(3,2,1);
         }
-
-
         $place = $em->getRepository("AppBundle:Places")->find($pid);
         $rubric = $em->getRepository("AppBundle:Rubrics")->find($rid);
         $block = $em->getRepository("AppBundle:BlockSettings")->find($bid);
 
+        $today = new \DateTime('now');
+
         $stat = $em->getRepository("AppBundle:Stat")->findOneBy(array(
             'place' => $pid,
             'rubric' => $rid,
-            'blockSettings' => $bid
+            'blockSettings' => $bid,
+            'createdAt' => $today
         ));
         if ( !$stat ) {
             $stat = new Stat();
-            $stat->setPlace($place);
-            $stat->setRubric($rubric);
+            $stat->setPlace($place->getId());
+            $stat->setRubric($rubric->getId());
             $stat->setBlockSettings($block);
             $stat->setClicks(0);
             $stat->setViews(1);
+            $stat->setCreatedAt($today);
         } else {
             $stat->setViews( $stat->getViews() + 1);
         }
@@ -112,28 +114,36 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/stats/{place_id}/{rubric_id}/{block_settings_id}/{url}", name="redirect_to_url")
+     * @Route("/stats/{place_id}/{rubric_id}/{block_settings_id}/", name="redirect_to_url")
      */
-    public function getAdsArrAction(Places $place_id, Rubrics $rubric_id, BlockSettings $block_settings_id, $url, Request $request)
+    public function getAdsArrAction(Places $place_id, Rubrics $rubric_id, BlockSettings $block_settings_id, Request $request)
     {
-
         // writing statistics;
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
+
+        $now = new \DateTime('now');
 
         $stat = $em->getRepository("AppBundle:Stat")->findOneBy(array(
             'place' => $place_id,
             'rubric' => $rubric_id,
-            'blockSettings' => $block_settings_id
+            'blockSettings' => $block_settings_id,
+            'createdAt' => $now
         ));
-        if ( $stat ) {
-            $stat->setPlace($place_id);
-            $stat->setRubric($rubric_id);
-            $stat->setBlockSettings($block_settings_id);
-            $stat->setClicks( $stat->getClicks() + 1 );
 
-            $em->persist($stat);
-            $em->flush();
+        if ( !$stat ) {
+            $stat = new Stat();
+            $stat->setPlace($place_id->getId());
+            $stat->setRubric($rubric_id->getId());
+            $stat->setBlockSettings($block_settings_id);
+            $stat->setCreatedAt($now);
+            $stat->setViews(1);
         }
+        $stat->setClicks( $stat->getClicks() + 1 );
+
+        $em->persist($stat);
+        $em->flush();
+
+        $url = $request->query->get('url');
 
         return $this->redirect($url);
     }

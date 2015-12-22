@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Rubrics;
@@ -283,6 +284,16 @@ class BlockSettings
      * @ORM\Column(name="more_txt_font_hover_style", type="string", length=255, columnDefinition="enum('underline', 'bold', 'italic')")
      */
     private $moreTxtFontHoverStyle;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Stat", mappedBy="blockSettings")
+     */
+    private $stats;
+
+    public function __construct()
+    {
+        $this->stats = new ArrayCollection();
+    }
 
 
     /**
@@ -1130,4 +1141,37 @@ class BlockSettings
      * @param \DateTime $createdAt
      * @return Places
      */
+
+    /**
+     * Add stats
+     *
+     * @param \AppBundle\Entity\Stat $stats
+     * @return BlockSettings
+     */
+    public function addStat(\AppBundle\Entity\Stat $stats)
+    {
+        $this->stats[] = $stats;
+
+        return $this;
+    }
+
+    /**
+     * Remove stats
+     *
+     * @param \AppBundle\Entity\Stat $stats
+     */
+    public function removeStat(\AppBundle\Entity\Stat $stats)
+    {
+        $this->stats->removeElement($stats);
+    }
+
+    /**
+     * Get stats
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStats()
+    {
+        return $this->stats;
+    }
 }
