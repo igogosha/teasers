@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+use AppBundle\Entity\User;
+
 /**
  * BlockSettingsRepository
  *
@@ -12,4 +14,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class BlockSettingsRepository extends EntityRepository
 {
+    public function getStatsForUser(User $user)
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b')
+            ->where('b.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()->getArrayResult();
+    }
 }
