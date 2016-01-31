@@ -24,6 +24,7 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    translator: { fallback: en }
 
 # Twig Configuration
 twig:
@@ -80,3 +81,11 @@ fos_user:
     user_class: AppBundle\Entity\User
     registration:
         confirmation: { enabled: true }
+    registration:
+        confirmation:
+            from_email:
+                address:        no-reply@tzrs.co
+                sender_name:    tzrs.co
+            enabled: true
+    service:
+        mailer: fos_user.mailer.twig_swift

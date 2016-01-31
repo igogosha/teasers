@@ -17,7 +17,7 @@
                 </button>
                 <a class="navbar-brand" href="#">
                     {#<img width="119" height="22" alt="" data-src-retina="assets/img/logo_2x.png" data-src="assets/img/logo.png" src="assets/img/logo.png">#}
-                    <h3 class="text-white">tzrs</h3>
+                    <h3 class="text-white">tzrs.co</h3>
                 </a>
             </div>
             <div class="navbar-collapse collapse">
@@ -54,7 +54,8 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="grid simple ">
+               {% block auth %}
+                <div class="grid simple animated fadeInUp">
                     <div class="grid-title no-border">
 
                     </div>
@@ -72,9 +73,8 @@
 
                     </div>
 
-                    <script type="text/javascript" src="http://www.teasers.lc/app_dev.php/get-teasers.js?r=1&p=1&g=1&b=1"></script>
-
                 </div>
+                {% endblock auth %}
             </div>
         </div>
 

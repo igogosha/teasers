@@ -16,7 +16,7 @@ html{
 	height:100%;
 }
 body { 
-  background-color:#1B1E24 ;
+  background:#1B1E24 url("../img/bg.png");
 }
 
 
@@ -7598,4 +7598,9 @@ input[type="color"] {
 
 .list-group-item {
 	border-bottom: thin dotted #ddd !important;
+}
+
+#remember_me,
+label[for="remember_me"] {
+	display:none;
 }

@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\BlockSettings;
 use AppBundle\Entity\Places;
 use AppBundle\Entity\Rubrics;
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,7 +25,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('default/index.html.twig');
+       return $this->render('default/index.html.twig');
     }
 
 

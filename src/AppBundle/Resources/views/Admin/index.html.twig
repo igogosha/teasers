@@ -10,13 +10,16 @@
                     <li class="dropdown"> <a id="main-menu-toggle" href="#main-menu"  class="" > <div class="iconset top-menu-toggle-white"></div> </a> </li>
                 </ul>
                 <!-- BEGIN LOGO -->
-                <a href="index.html"><img src="{{ asset('bundles/app/img/logo.png') }}" class="logo" alt=""  data-src="{{ asset('bundles/app/img/logo.png') }}" data-src-retina="{{ asset('bundles/app/img/logo2x.png') }}" width="106" height="21"/></a>
+                <a href="{{ path('admin_home') }}">
+                    {#<img src="{{ asset('bundles/app/img/logo.png') }}" class="logo" alt=""  data-src="{{ asset('bundles/app/img/logo.png') }}" data-src-retina="{{ asset('bundles/app/img/logo2x.png') }}" width="106" height="21"/>#}
+                    <span style="font-size: 3em; color: #fff;">tzrs.co</span>
+                </a>
                 <!-- END LOGO -->
-                <ul class="nav pull-right notifcation-center">
-                    <li class="dropdown" id="header_task_bar"> <a href="index.html" class="dropdown-toggle active" data-toggle=""> <div class="iconset top-home"></div> </a> </li>
-                    <li class="dropdown" id="header_inbox_bar" > <a href="email.html" class="dropdown-toggle" > <div class="iconset top-messages"></div>  <span class="badge" id="msgs-badge">2</span> </a></li>
-                    <li class="dropdown" id="portrait-chat-toggler" style="display:none"> <a href="#sidr" class="chat-menu-toggle"> <div class="iconset top-chat-white "></div> </a> </li>
-                </ul>
+                {#<ul class="nav pull-right notifcation-center">#}
+                    {#<li class="dropdown" id="header_task_bar"> <a href="index.html" class="dropdown-toggle active" data-toggle=""> <div class="iconset top-home"></div> </a> </li>#}
+                    {#<li class="dropdown" id="header_inbox_bar" > <a href="email.html" class="dropdown-toggle" > <div class="iconset top-messages"></div>  <span class="badge" id="msgs-badge">2</span> </a></li>#}
+                    {#<li class="dropdown" id="portrait-chat-toggler" style="display:none"> <a href="#sidr" class="chat-menu-toggle"> <div class="iconset top-chat-white "></div> </a> </li>#}
+                {#</ul>#}
             </div>
             <!-- END RESPONSIVE MENU TOGGLER -->
             <div class="header-quick-nav" >
@@ -69,7 +72,7 @@
                                 <div class="fa fa-user fa-2x "></div>
                             </a>
                             <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
-                                <li><a href=""> My Account</a>
+                                {#<li><a href=""> My Account</a>#}
                                 </li>
                                 {#<li><a href="calender.html">My Calendar</a>#}
                                 {#</li>#}
@@ -108,12 +111,9 @@
         <div class="page-sidebar" id="main-menu">
             <!-- BEGIN MINI-PROFILE -->
             <div class="user-info-wrapper">
-                <div class="profile-wrapper">
-                    <img src="{{ asset('bundles/app/img/profiles/avatar.jpg') }}"  alt="" data-src="{{ asset('bundles/app/img/profiles/avatar.jpg') }}" data-src-retina="{{ asset('bundles/app/img/profiles/avatar2x.jpg') }}" width="69" height="69" />
-                </div>
 
                 <div class="user-info">
-                    <div class="greeting">Welcome</div>
+                    <div class="greeting">Welcome,</div>
                     <div class="username">{{ app.user.username }}</div>
                 </div>
             </div>
