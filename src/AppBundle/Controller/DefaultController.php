@@ -149,5 +149,19 @@ class DefaultController extends Controller
         return $this->redirect($url);
     }
 
+    /**
+     * @Route("/html/{id}", name="teaser_html")
+     */
+    public function htmlAction($id, Request $request)
+    {
+        if ( $request->isXmlHttpRequest() ) {
+            $data = $request->request->all()['appbundle_blocksettings'];
+
+            $html = $this->renderView('AppBundle:Default:html/teaser_'.$data['blockId'].'.html.twig', $data);
+
+            return new JsonResponse(array('success'=> true, 'content' => $html));
+        }
+        return $this->render('AppBundle:Default:html/teaser_'.$id.'.html.twig', array('renderButton' => true));
+    }
 
 }

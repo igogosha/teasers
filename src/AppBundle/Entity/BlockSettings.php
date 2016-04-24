@@ -50,6 +50,13 @@ class BlockSettings
     /**
      * @var integer
      *
+     * @ORM\Column(name="block_id", type="integer")
+     */
+    private $blockId;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="rows", type="integer")
      */
     private $rows;
@@ -1173,5 +1180,28 @@ class BlockSettings
     public function getStats()
     {
         return $this->stats;
+    }
+
+    /**
+     * Set blockId
+     *
+     * @param integer $blockId
+     * @return BlockSettings
+     */
+    public function setBlockId($blockId)
+    {
+        $this->blockId = $blockId;
+
+        return $this;
+    }
+
+    /**
+     * Get blockId
+     *
+     * @return integer 
+     */
+    public function getBlockId()
+    {
+        return $this->blockId;
     }
 }

@@ -1,0 +1,90 @@
+<div style="
+        padding:{% if padding is defined %}{{ padding }}{% else %}0{% endif %}px;
+        position: relative;
+        background: {% if background is defined %}{{ background }}{% else %}#ffffff{% endif %};
+        text-align:right;
+        {% if pictureSize is defined %}
+                width: {{ pictureSize * 2 }}px;
+        {% endif %}
+    ">
+
+    <img src="{{ asset('bundles/app/img/teaserExample.jpg') }}" style="
+            width:{% if pictureSize is defined %}{{ pictureSize }}{% else %}200{% endif %}px;
+            height:{% if pictureSize is defined %}{{ pictureSize }}{% else %}200{% endif %}px;
+            border-radius:{% if pictureBorderRadius is defined %}{{ pictureBorderRadius }}{% else %}0{% endif %}%;
+            {% if pictureBorderSize is defined %}
+                border:{{ pictureBorderSize }}px solid
+                    {% if pictureBorderColor is defined %}{{ pictureBorderColor }}{% else %}transparent{% endif %}
+                ;
+            {% endif %}
+            {% if pictureShadowSize is defined and pictureShadowSize != 0 %}
+                -webkit-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px 5px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+                -moz-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px 5px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+                box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px 5px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+            {% endif %}
+            float: right;
+        " />
+
+    <p style="
+    {% if headerFontColor is defined %}
+            color:{{ headerFontColor }};
+    {% endif %}
+        {% if headerFontSize is defined %}
+                font-size: {{ headerFontSize }}px;
+        {% endif %}
+        {% if headerFontFamily is defined %}
+                font-family: {{ headerFontFamily }};
+        {% endif %}
+        {% if headerFontStyle is defined %}
+            {% if headerFontStyle == 'underline' %}
+                    text-decoration: {{ headerFontStyle }};
+            {% elseif headerFontStyle == 'bold' %}
+                    font-weight: bold;
+            {% else %}
+                    font-style: italic;
+            {% endif %}
+        {% endif %}
+            margin:0;
+            position: relative;
+    ">Заголовок</p>
+
+    {% if moreType is defined and moreType != 'default' %}
+        {% if moreType == 'txt' %}
+            <p style="
+                    margin:0;
+                    padding: 0;
+            {% if moreTxtFontColor is defined %}
+                    color:{{ moreTxtFontColor }};
+            {% endif %}
+            {% if moreTxtFontSize is defined %}
+                    font-size: {{ moreTxtFontSize }}px;
+            {% endif %}
+            {% if moreTxtFont is defined %}
+                    font-family: {{ moreTxtFont }};
+            {% endif %}
+            {% if moreTxtFontStyle is defined %}
+                {% if moreTxtFontStyle == 'underline' %}
+                        text-decoration: {{ moreTxtFontStyle }};
+                {% elseif moreTxtFontStyle == 'bold' %}
+                        font-weight: bold;
+                {% else %}
+                        font-style: italic;
+                {% endif %}
+            {% endif %}
+                    position: relative;
+                    right:0;
+                    bottom:0;
+                    ">{% if moreTxt is defined %}{{ moreTxt }}{% else %}Читать далее{% endif %}</p>
+        {% else %}
+            <button style="
+                position: relative;
+            ">Читать далее</button>
+        {% endif %}
+    {% elseif renderButton is defined %}
+        <button style="
+            position: relative;
+        ">Читать далее</button>
+    {% endif %}
+
+    <div style="clear:both"></div>
+</div>

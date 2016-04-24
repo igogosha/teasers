@@ -177,4 +177,50 @@ class Stat
     {
         return $this->createdAt;
     }
+
+    /**
+     * Set place
+     *
+     * @param integer $place
+     * @return Stat
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return integer 
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * Set rubric
+     *
+     * @param integer $rubric
+     * @return Stat
+     */
+    public function setRubric($rubric)
+    {
+        $this->rubric = $rubric;
+
+        return $this;
+    }
+
+    /**
+     * Get rubric
+     *
+     * @return integer 
+     */
+    public function getRubric()
+    {
+        return $this->rubric;
+    }
 }

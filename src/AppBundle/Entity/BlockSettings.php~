@@ -50,6 +50,13 @@ class BlockSettings
     /**
      * @var integer
      *
+     * @ORM\Column(name="block_id", type="integer")
+     */
+    private $blockId;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="rows", type="integer")
      */
     private $rows;

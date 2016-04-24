@@ -1347,7 +1347,8 @@ span.iconset{
     left:235px;
     display:none;
     text-indent:-9999px;
-	z-index:101;   
+	z-index:101;
+	display: none;
 }
 .scrollup:hover{
 	background-position:-30px 0px; 
@@ -7603,4 +7604,26 @@ input[type="color"] {
 #remember_me,
 label[for="remember_me"] {
 	display:none;
+}
+
+.teaserExample {
+	position: fixed;
+	top: 20em;
+	left: 1em;
+	background: #ffffff;
+	border: thin solid #dddddd;
+	padding: 0.5em;
+	z-index: 999;
+	display:none;
+}
+.exampleItem {
+	background: #ffffff;
+	padding: 1em;
+	border: thin solid #ff0000;
+}
+.exampleItem:hover {
+	background: #009900;
+}
+.exampleItem.active {
+	background: #00ff00;
 }

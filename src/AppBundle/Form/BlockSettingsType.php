@@ -25,6 +25,7 @@ class BlockSettingsType extends AbstractType
                     'placeholder' => 'Название блока'
                 )
             ))
+            ->add('blockId', 'hidden')
             ->add('rows', 'text', array(
                 'label' => 'Количество строк',
                 'attr' => array(
@@ -51,17 +52,14 @@ class BlockSettingsType extends AbstractType
                     'value' => ''
                 )
             ))
-            ->add('textPosition', 'choice', array(
-                'label' => 'Положение текста',
-                'choices'   => array('top' => 'Сверху', 'bottom' => 'Снизу', 'left' => 'Слева', 'right' => 'Справа')
-            ))
+
             ->add('background', 'text', array(
                 'attr' => array(
                     'class' => 'colorPicker'
                 )
             ))
             ->add('padding', 'number', array(
-                'label' => 'Расстояние от текста до краев',
+                'label' => 'Расстояние от контента до краев',
                 'attr' => array(
                     'class' => 'slider_input',
                     'data-slider-min' => 0,
@@ -138,22 +136,6 @@ class BlockSettingsType extends AbstractType
                     'class' => 'colorPicker'
                 )
             ))
-            ->add('pictureAlignHor', 'choice', array(
-                'label' => 'Горизонтально',
-                'choices' => array(
-                    'left' => 'Слева',
-                    'center' => 'По центру',
-                    'right' => 'Справа',
-                )
-            ))
-            ->add('pictureAlignVer', 'choice', array(
-                'label' => 'Вертикально',
-                'choices' => array(
-                    'top' => 'Сверху',
-                    'middle' => 'По центру',
-                    'bottom' => 'Снизу',
-                )
-            ))
 
             ->add('headerFontFamily', 'choice', array(
                 'label' => 'Шрифт для заголовка',
@@ -183,43 +165,29 @@ class BlockSettingsType extends AbstractType
                     'class' => 'colorPicker'
                 )
             ))
-            ->add('headerAlignHor', 'choice', array(
-                'label' => 'Горизонтально',
-                'choices' => array(
-                    'left' => 'Слева',
-                    'center' => 'По центру',
-                    'right' => 'Справа',
-                )
-            ))
-            ->add('headerAlignVer', 'choice', array(
-                'label' => 'Вертикально',
-                'choices' => array(
-                    'top' => 'Сверху',
-                    'middle' => 'По центру',
-                    'bottom' => 'Снизу',
-                )
-            ))
             ->add('headerFontStyle', 'choice', array(
                 'label' => 'Стиль заголовка',
                 'choices' => array(
+                    'default' => 'Выберите стиль',
                     'underline' => 'Подчеркнутый',
                     'bold' => 'Жирный',
                     'italic' => 'Курсив',
                 )
             ))
-            ->add('headerFontHoverColor', 'hidden', array(
-                'attr' => array(
-                    'class' => 'colorPicker'
-                )
-            ))
-            ->add('headerFontHoverStyle', 'choice', array(
-                'label' => 'Стиль активного заголовка',
-                'choices' => array(
-                    'underline' => 'Подчеркнутый',
-                    'bold' => 'Жирный',
-                    'italic' => 'Курсив',
-                )
-            ))
+//            ->add('headerFontHoverColor', 'hidden', array(
+//                'attr' => array(
+//                    'class' => 'colorPicker'
+//                )
+//            ))
+//            ->add('headerFontHoverStyle', 'choice', array(
+//                'label' => 'Стиль активного заголовка',
+//                'choices' => array(
+//                    'default' => 'Выберите стиль',
+//                    'underline' => 'Подчеркнутый',
+//                    'bold' => 'Жирный',
+//                    'italic' => 'Курсив',
+//                )
+//            ))
 
             ->add('moreActive', 'checkbox', array(
                 'label' => 'Неактивна',
@@ -249,42 +217,12 @@ class BlockSettingsType extends AbstractType
                 )
             ))
             ->add('moreImage', 'file', array(
+                'required' => false,
                 'attr' => array(
                     'class' => 'ifBtn'
                 )
             ))
-            ->add('morePosition', 'choice', array(
-                'label' => 'Положение',
-                'choices'   => array(
-                    'up' => 'Сверху',
-                    'down' => 'Снизу',
-                    'img_up' => 'Под картинкой',
-                    'img_down' => 'Над картинкой',
-                    'left_up' => 'Слева-сверху',
-                    'left_down' => 'Слева-снизу',
-                    'right_up' => 'Справа-сверху',
-                    'right_down' => 'Справа-снизу',
-                ),
-                'attr' => array(
-                    'style' => 'display:none'
-                )
-            ))
-            ->add('moreBtnAlignHor', 'choice', array(
-                'label' => 'Горизонтально',
-                'choices' => array(
-                    'left' => 'Слева',
-                    'center' => 'По центру',
-                    'right' => 'Справа',
-                )
-            ))
-            ->add('moreBtnAlignVer', 'choice', array(
-                'label' => 'Вертикально',
-                'choices' => array(
-                    'top' => 'Сверху',
-                    'middle' => 'По центру',
-                    'bottom' => 'Снизу',
-                )
-            ))
+
             ->add('moreTxtFont', 'choice', array(
                 'label' => 'Шрифт для заголовка',
                 'choices' => array(
@@ -319,6 +257,7 @@ class BlockSettingsType extends AbstractType
             ->add('moreTxtFontStyle', 'choice', array(
                 'label' => 'Стиль текста',
                 'choices' => array(
+                    'default' => 'Выберите стиль',
                     'underline' => 'Подчеркнутый',
                     'bold' => 'Жирный',
                     'italic' => 'Курсив',
@@ -327,26 +266,26 @@ class BlockSettingsType extends AbstractType
                     'class' => 'form-control ifText'
                 )
             ))
-            ->add('moreTxtFontHoverColor', 'hidden', array(
-                'attr' => array(
-                    'class' => 'colorPicker ifText'
-                )
-            ))
-            ->add('moreTxtFontHoverStyle', 'choice', array(
-                'label' => 'Стиль активного текста',
-                'choices' => array(
-                    'underline' => 'Подчеркнутый',
-                    'bold' => 'Жирный',
-                    'italic' => 'Курсив',
-                ),
-                'attr' => array(
-                    'class' => 'form-control ifText'
-                )
-            ))
+//            ->add('moreTxtFontHoverColor', 'hidden', array(
+//                'attr' => array(
+//                    'class' => 'colorPicker ifText'
+//                )
+//            ))
+//            ->add('moreTxtFontHoverStyle', 'choice', array(
+//                'label' => 'Стиль активного текста',
+//                'choices' => array(
+//                    'underline' => 'Подчеркнутый',
+//                    'bold' => 'Жирный',
+//                    'italic' => 'Курсив',
+//                ),
+//                'attr' => array(
+//                    'class' => 'form-control ifText'
+//                )
+//            ))
             ->add('button', 'submit', array(
                 'label' => 'Добавить',
                 'attr' => array(
-                    'class' => 'btn btn-default col-lg-12',
+                    'class' => 'btn btn-default col-lg-4 pull-left',
                 )
             ))
         ;

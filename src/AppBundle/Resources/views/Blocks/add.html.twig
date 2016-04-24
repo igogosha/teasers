@@ -2,7 +2,26 @@
 
  {% block mainAdminContent %}
      <div class="page-title" xmlns="http://www.w3.org/1999/html">
-         <h3>{{ "Add block" | trans }}</h3>
+         <h3>
+             {{ "Choose desired layout" | trans }}
+             <small>and then customize colors and sizes</small>
+         </h3>
+     </div>
+
+     <div class="row">
+         {% for i in 1..4 %}
+             <div class="col-lg-3 exampleItem" data-id="{{ i }}">
+                {{ render(controller('AppBundle:Default:html', {id: i})) }}
+             </div>
+         {% endfor %}
+     </div>
+
+     <div class="row">
+         {% for i in 5..8 %}
+             <div class="col-lg-6 exampleItem" data-id="{{ i }}">
+                {{ render(controller('AppBundle:Default:html', {id: i})) }}
+             </div>
+         {% endfor %}
      </div>
 
      <div class="row">
@@ -14,6 +33,10 @@
 
                          {% set urlSave = path('admin_places_save_block') %}
                          {{ form_start(form, {action: urlSave}) }}
+
+                         {{ form_errors(form.blockId) }}
+                         {{ form_widget(form.blockId) }}
+
                          <fieldset>
                              <legend>Основное</legend>
 
@@ -51,11 +74,11 @@
                                      </div>
                                  </div>
 
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.textPosition) }}
-                                     {{ form_errors(form.textPosition) }}
-                                     {{ form_widget(form.textPosition) }}
-                                 </div>
+                                 {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">#}
+                                     {#{{ form_label(form.textPosition) }}#}
+                                     {#{{ form_errors(form.textPosition) }}#}
+                                     {#{{ form_widget(form.textPosition) }}#}
+                                 {#</div>#}
 
                                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                      {{ form_label(form.background) }}
@@ -78,16 +101,16 @@
                                      </div>
                                  </div>
 
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.pictureAlignHor) }}
-                                     {{ form_errors(form.pictureAlignHor) }}
-                                     {{ form_widget(form.pictureAlignHor) }}
-                                 </div>
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.pictureAlignVer) }}
-                                     {{ form_errors(form.pictureAlignVer) }}
-                                     {{ form_widget(form.pictureAlignVer) }}
-                                 </div>
+                                 {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">#}
+                                     {#{{ form_label(form.pictureAlignHor) }}#}
+                                     {#{{ form_errors(form.pictureAlignHor) }}#}
+                                     {#{{ form_widget(form.pictureAlignHor) }}#}
+                                 {#</div>#}
+                                 {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">#}
+                                     {#{{ form_label(form.pictureAlignVer) }}#}
+                                     {#{{ form_errors(form.pictureAlignVer) }}#}
+                                     {#{{ form_widget(form.pictureAlignVer) }}#}
+                                 {#</div>#}
 
                              </div>
                              <div class="clearfix"></div>
@@ -164,17 +187,17 @@
                              </div>
                              <div class="clearfix"></div>
                              <div class="col-lg-12">
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.headerAlignHor) }}
-                                     {{ form_errors(form.headerAlignHor) }}
-                                     {{ form_widget(form.headerAlignHor) }}
-                                 </div>
+                                 {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">#}
+                                     {#{{ form_label(form.headerAlignHor) }}#}
+                                     {#{{ form_errors(form.headerAlignHor) }}#}
+                                     {#{{ form_widget(form.headerAlignHor) }}#}
+                                 {#</div>#}
 
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.headerAlignVer) }}
-                                     {{ form_errors(form.headerAlignVer) }}
-                                     {{ form_widget(form.headerAlignVer) }}
-                                 </div>
+                                 {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">#}
+                                     {#{{ form_label(form.headerAlignVer) }}#}
+                                     {#{{ form_errors(form.headerAlignVer) }}#}
+                                     {#{{ form_widget(form.headerAlignVer) }}#}
+                                 {#</div>#}
 
                                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                      {{ form_label(form.headerFontStyle) }}
@@ -186,17 +209,17 @@
 
                              <div class="clearfix"></div>
                              <div class="col-lg-12">
-                                 <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
-                                     {{ form_label(form.headerFontHoverColor) }}
-                                     {{ form_errors(form.headerFontHoverColor) }}
-                                     {{ form_widget(form.headerFontHoverColor) }}
-                                 </div>
+                                 {#<div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">#}
+                                     {#{{ form_label(form.headerFontHoverColor) }}#}
+                                     {#{{ form_errors(form.headerFontHoverColor) }}#}
+                                     {#{{ form_widget(form.headerFontHoverColor) }}#}
+                                 {#</div>#}
 
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                     {{ form_label(form.headerFontHoverStyle) }}
-                                     {{ form_errors(form.headerFontHoverStyle) }}
-                                     {{ form_widget(form.headerFontHoverStyle) }}
-                                 </div>
+                                 {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">#}
+                                     {#{{ form_label(form.headerFontHoverStyle) }}#}
+                                     {#{{ form_errors(form.headerFontHoverStyle) }}#}
+                                     {#{{ form_widget(form.headerFontHoverStyle) }}#}
+                                 {#</div>#}
                              </div>
 
 
@@ -243,27 +266,27 @@
                                          {{ form_widget(form.moreImage) }}
                                      </div>
 
-                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text">
-                                         {{ form_label(form.morePosition) }}
-                                         {{ form_errors(form.morePosition) }}
-                                         {{ form_widget(form.morePosition) }}
-                                     </div>
+                                     {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text">#}
+                                         {#{{ form_label(form.morePosition) }}#}
+                                         {#{{ form_errors(form.morePosition) }}#}
+                                         {#{{ form_widget(form.morePosition) }}#}
+                                     {#</div>#}
 
-                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text">
-                                         {{ form_label(form.moreBtnAlignHor) }}
-                                         {{ form_errors(form.moreBtnAlignHor) }}
-                                         {{ form_widget(form.moreBtnAlignHor) }}
-                                     </div>
+                                     {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text">#}
+                                         {#{{ form_label(form.moreBtnAlignHor) }}#}
+                                         {#{{ form_errors(form.moreBtnAlignHor) }}#}
+                                         {#{{ form_widget(form.moreBtnAlignHor) }}#}
+                                     {#</div>#}
 
                                  </div>
 
                                  <div class="clearfix"></div>
                                  <div class="col-lg-12">
-                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 button">
-                                         {{ form_label(form.moreBtnAlignVer) }}
-                                         {{ form_errors(form.moreBtnAlignVer) }}
-                                         {{ form_widget(form.moreBtnAlignVer) }}
-                                     </div>
+                                     {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 button">#}
+                                         {#{{ form_label(form.moreBtnAlignVer) }}#}
+                                         {#{{ form_errors(form.moreBtnAlignVer) }}#}
+                                         {#{{ form_widget(form.moreBtnAlignVer) }}#}
+                                     {#</div>#}
 
                                      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text">
                                          {{ form_label(form.moreTxtFont) }}
@@ -292,34 +315,39 @@
                                          {{ form_errors(form.moreTxtFontStyle) }}
                                          {{ form_widget(form.moreTxtFontStyle) }}
                                      </div>
-                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text">
-                                         {{ form_label(form.moreTxtFontHoverColor) }}
-                                         {{ form_errors(form.moreTxtFontHoverColor) }}
-                                         {{ form_widget(form.moreTxtFontHoverColor) }}
-                                     </div>
+                                     {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text">#}
+                                         {#{{ form_label(form.moreTxtFontHoverColor) }}#}
+                                         {#{{ form_errors(form.moreTxtFontHoverColor) }}#}
+                                         {#{{ form_widget(form.moreTxtFontHoverColor) }}#}
+                                     {#</div>#}
 
                                  </div>
                                  <div class="clearfix"></div>
                                  <div class="col-lg-12">
 
-                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text">
-                                         {{ form_label(form.moreTxtFontHoverStyle) }}
-                                         {{ form_errors(form.moreTxtFontHoverStyle) }}
-                                         {{ form_widget(form.moreTxtFontHoverStyle) }}
-                                     </div>
+                                     {#<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text">#}
+                                         {#{{ form_label(form.moreTxtFontHoverStyle) }}#}
+                                         {#{{ form_errors(form.moreTxtFontHoverStyle) }}#}
+                                         {#{{ form_widget(form.moreTxtFontHoverStyle) }}#}
+                                     {#</div>#}
 
                                  </div>
                                  <div class="clearfix"></div>
                              </div>
+                             <a class="btn btn-danger col-lg-2 pull-right" href="{{ path('admin_places') }}">Отменить</a>
                              {{ form_widget(form) }}
 
                          </fieldset>
                          {{ form_end(form) }}
+
                      </div>
                  </div>
              </div>
          </div>
      </div>
+
+     <div class="teaserExample"></div>
+
  {% endblock %}
 
 {% block stylesheets %}
@@ -342,6 +370,9 @@
                 var val = ev.value;
                 $(this).parent().parent().find('.current_value').text(val);
                 $(this).attr('value', val);
+                setTimeout(function(){
+                    updateExample();
+                }, 1000);
             });
             $('.slider_input').each(function(){
                 var val = $(this).data('slider-value');
@@ -366,12 +397,22 @@
                 } else {
                     $('label[for="appbundle_blocksettings_moreActive"]').attr('class', 'text-error').text('Неактивна');
                     $('#appbundle_blocksettings_moreActive').val(0);
-                    $('.moreType').slideUp();
+                    $('.moreType').hide();
+                    $('#appbundle_blocksettings_moreType').find('option[value="default"]').attr('selected', 'selected');
+                    $('.button').hide();
+                    $('.text').hide();
                 }
+                updateExample();
             }, true);
 
             $('.colorPicker').each(function(){
-                $(this).before('<input type="color" value="#57a7ef" id="'+$(this).attr('id')+'" name="'+$(this).attr('name')+'">');
+
+                var color = $(this).attr('value');
+                if ( $(this).attr('id') == 'appbundle_blocksettings_background' ){
+                    color = '#ffffff';
+                }
+
+                $(this).before('<input type="color" value="'+color+'" id="'+$(this).attr('id')+'" name="'+$(this).attr('name')+'">');
                 $(this).remove();
             });
             $('input[type="color"]').on('change', function(){
@@ -394,6 +435,36 @@
                     $('.text').hide();
                 }
             });
+
+            $('.exampleItem').on('click', function(){
+                var id = $(this).data('id')-0;
+
+                $('.exampleItem').each(function(){
+                    $(this).removeClass('active');
+                });
+
+                $(this).addClass('active');
+
+                $('#appbundle_blocksettings_blockId').attr('value', id);
+                updateExample();
+            });
+
+            var updateExampleViewPath = '{{ path("teaser_html", {id:0}) }}';
+            var form = $('form[name="appbundle_blocksettings"]');
+
+            function updateExample(){
+                $.post(updateExampleViewPath, form.serialize(), function(r){
+                    if (r.success ) {
+                        $('.teaserExample').html(r.content);
+                        $('.teaserExample').show();
+                    }
+                });
+            }
+
+            form.on('change', function(){
+                updateExample();
+            });
+
 
         });
     </script>
