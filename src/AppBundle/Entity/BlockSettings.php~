@@ -134,21 +134,21 @@ class BlockSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="picture_align_hor", type="string", length=255, columnDefinition="enum('left', 'center', 'right')")
+     * @ORM\Column(name="picture_align_hor", type="string", length=255, columnDefinition="enum('left', 'center', 'right')", nullable=true)
      */
     private $pictureAlignHor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="picture_align_ver", type="string", length=255, columnDefinition="enum('top', 'middle', 'bottom')")
+     * @ORM\Column(name="picture_align_ver", type="string", length=255, columnDefinition="enum('top', 'middle', 'bottom')", nullable=true)
      */
     private $pictureAlignVer;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="header_font_family", type="string", length=255, columnDefinition="enum('Arial', 'Times New Roman', 'Verdana', 'serif', 'Tahoma')")
+     * @ORM\Column(name="header_font_family", type="string", length=255, columnDefinition="enum('Arial', 'Times New Roman', 'Verdana', 'Serif', 'Tahoma')")
      */
     private $headerFontFamily;
 
@@ -169,14 +169,14 @@ class BlockSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="header_align_hor", type="string", length=255, columnDefinition="enum('left', 'center', 'right')")
+     * @ORM\Column(name="header_align_hor", type="string", length=255, columnDefinition="enum('left', 'center', 'right')", nullable=true)
      */
     private $headerAlignHor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="header_align_ver", type="string", length=255, columnDefinition="enum('top', 'middle', 'bottom')")
+     * @ORM\Column(name="header_align_ver", type="string", length=255, columnDefinition="enum('top', 'middle', 'bottom')", nullable=true)
      */
     private $headerAlignVer;
 
@@ -197,7 +197,7 @@ class BlockSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="header_font_hover_style", type="string", length=255, columnDefinition="enum('underline', 'bold', 'italic')")
+     * @ORM\Column(name="header_font_hover_style", type="string", length=255, columnDefinition="enum('underline', 'bold', 'italic')", nullable=true)
      */
     private $headerFontHoverStyle;
 
@@ -232,21 +232,21 @@ class BlockSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="more_position", type="string", length=255, columnDefinition="enum('up', 'down', 'img_up', 'img_down', 'left_up', 'left_down', 'right_up', 'right_down')")
+     * @ORM\Column(name="more_position", type="string", length=255, columnDefinition="enum('up', 'down', 'img_up', 'img_down', 'left_up', 'left_down', 'right_up', 'right_down')", nullable=true)
      */
     private $morePosition;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="more_btn_align_hor", type="string", length=255, columnDefinition="enum('left', 'center', 'right')")
+     * @ORM\Column(name="more_btn_align_hor", type="string", length=255, columnDefinition="enum('left', 'center', 'right')", nullable=true)
      */
     private $moreBtnAlignHor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="more_btn_align_ver", type="string", length=255, columnDefinition="enum('top', 'middle', 'bottom')")
+     * @ORM\Column(name="more_btn_align_ver", type="string", length=255, columnDefinition="enum('top', 'middle', 'bottom')", nullable=true)
      */
     private $moreBtnAlignVer;
 
@@ -281,14 +281,14 @@ class BlockSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="more_txt_font_hover_color", type="string", length=255)
+     * @ORM\Column(name="more_txt_font_hover_color", type="string", length=255, nullable=true)
      */
     private $moreTxtFontHoverColor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="more_txt_font_hover_style", type="string", length=255, columnDefinition="enum('underline', 'bold', 'italic')")
+     * @ORM\Column(name="more_txt_font_hover_style", type="string", length=255, columnDefinition="enum('underline', 'bold', 'italic')", nullable=true)
      */
     private $moreTxtFontHoverStyle;
 
@@ -1180,5 +1180,28 @@ class BlockSettings
     public function getStats()
     {
         return $this->stats;
+    }
+
+    /**
+     * Set blockId
+     *
+     * @param integer $blockId
+     * @return BlockSettings
+     */
+    public function setBlockId($blockId)
+    {
+        $this->blockId = $blockId;
+
+        return $this;
+    }
+
+    /**
+     * Get blockId
+     *
+     * @return integer 
+     */
+    public function getBlockId()
+    {
+        return $this->blockId;
     }
 }

@@ -211,6 +211,7 @@ class BlockSettingsType extends AbstractType
                 )
             ))
             ->add('moreTxt', 'text', array(
+                'required' => false,
                 'label' => 'Текст',
                 'attr' => array(
                     'class' => 'form-control ifText'

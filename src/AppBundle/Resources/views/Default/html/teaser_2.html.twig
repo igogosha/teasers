@@ -14,10 +14,10 @@
                     {% if pictureBorderColor is defined %}{{ pictureBorderColor }}{% else %}transparent{% endif %}
                 ;
         {% endif %}
-        {% if pictureShadowSize is defined %}
-            -webkit-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px 5px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
-            -moz-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px 5px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
-            box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px 5px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+        {% if pictureShadowSize is defined and pictureShadowSize != 0 %}
+            -webkit-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+            -moz-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+            box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
         {% endif %}
         " />
 
@@ -71,7 +71,7 @@
                     text-decoration: {{ headerFontStyle }};
             {% elseif headerFontStyle == 'bold' %}
                     font-weight: bold;
-            {% else %}
+            {% elseif headerFontStyle == 'italic' %}
                     font-style: italic;
             {% endif %}
         {% endif %}

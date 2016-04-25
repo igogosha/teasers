@@ -20,7 +20,7 @@
                     text-decoration: {{ headerFontStyle }};
             {% elseif headerFontStyle == 'bold' %}
                     font-weight: bold;
-            {% else %}
+            {% elseif headerFontStyle == 'italic' %}
                     font-style: italic;
             {% endif %}
         {% endif %}
