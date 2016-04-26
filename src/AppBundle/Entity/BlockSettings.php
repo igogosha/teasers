@@ -190,7 +190,7 @@ class BlockSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="header_font_hover_color", type="string", length=255)
+     * @ORM\Column(name="header_font_hover_color", type="string", length=255, nullable=true)
      */
     private $headerFontHoverColor;
 
@@ -225,7 +225,7 @@ class BlockSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="more_image", type="string", length=255)
+     * @ORM\Column(name="more_image", type="string", length=255, nullable=true)
      */
     private $moreImage;
 

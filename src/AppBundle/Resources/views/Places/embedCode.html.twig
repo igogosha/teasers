@@ -1,4 +1,11 @@
+<p>Copy & Paste this code only once right before the closing <code>&#60;/head&#62;</code> tag</p>
+<textarea style="width: 100%; min-height: 100px">
+<script type="text/javascript" src="{{ url('getTeasers') }}"></script>
+</textarea>
+
+<div class="clear clearfix"></div>
+<br />
 <p>Copy & Paste this code where you want your ad block appear on page</p>
 <textarea style="width: 100%; min-height: 100px">
-<script type="text/javascript" src="{{ url('getTeasers') }}?r={{ rid }}&p={{ pid }}&g={{ gid }}&b={{ bid }}"></script>
+<div id="tzrs_r{{ rid }}p{{ pid }}g{{ gid }}b{{ bid }}"></div>
 </textarea>
