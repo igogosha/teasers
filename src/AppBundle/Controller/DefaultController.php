@@ -16,6 +16,7 @@ use AppBundle\Entity\Stat;
 use AppBundle\Entity\StatDaily;
 use AppBundle\Entity\StatWeekly;
 use AppBundle\Entity\StatMonthly;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
 class DefaultController extends Controller
@@ -34,46 +35,49 @@ class DefaultController extends Controller
      */
     public function createTeaserBlockAction(Request $request)
     {
+        return $this->render('AppBundle:Default:teaserBlock.js.twig');
+    }
 
-//        $rid = $request->query->get('r');
-//        $gid = $request->query->get('g');
-//        $pid = $request->query->get('p');
-//        $bid = $request->query->get('b');
-//
-//        $em = $this->getDoctrine()->getEntityManager();
-//
-//        $settings = $em->getRepository('AppBundle:BlockSettings')
-//            ->find($bid);
-//        $limit = $settings->getRows() * $settings->getCols();
-//
-//        $teasers = $em->getRepository('AppBundle:Teasers')
-//            ->findBy(array(
-//                'groups' => $gid
-//            ), array(), $limit);
-//
-//        $orderArray = array();
-//        $textPosition = $settings->getTextPosition();
-//        //$imagePosition = $settings->getTextPosition();
-//        $morePosition = $settings->getMorePosition();
-//
-//        $moreLast = array('down', 'right_down','right_up','img_down');
-//        $moreSecond = array('img_up', 'left_up','left_down');
-//        $titleUp = array('up', 'left');
-//        if ( in_array($morePosition, $moreLast) ) {
-//            if ( $textPosition == 'up' ) {
-//                $orderArray = array(1,2,3);
-//            } else {
-//                $orderArray = array(2,1,3);
-//            }
-//        } elseif ( in_array($moreSecond, $moreLast) ) {
-//            if ( in_array($textPosition, $titleUp) ) {
-//                $orderArray = array(1,3,2);
-//            } else {
-//                $orderArray = array(2,3,1);
-//            }
-//        } else {
-//            $orderArray = array(3,2,1);
-//        }
+    /**
+     * @Route("/get-teasers.html", name="getTeasersHtml")
+     */
+    public function createTeaserBlockByIdsAction(Request $request)
+    {
+        // preparing response object
+        $response = new Response(
+            '',
+            Response::HTTP_OK,
+            array('content-type' => 'text/html')
+        );
+
+        if ( !$request->query->has('ad') ) {
+            $response->setContent('no id');
+            return $response;
+        }
+
+        $elements = explode('_', $request->query->get('ad'));
+        if ( count($elements) < 5 ) {
+            $response->setContent('wrong link. not enough arguments');
+            return $response;
+        }
+
+        $rid = $elements[1];
+        $gid = $elements[2];
+        $pid = $elements[3];
+        $bid = $elements[4];
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $settings = $em->getRepository('AppBundle:BlockSettings')
+            ->find($bid);
+        $limit = $settings->getRows() * $settings->getCols();
+
+        $teasers = $em->getRepository('AppBundle:Teasers')
+            ->findBy(array(
+                'groups' => $gid
+            ), array(), $limit);
+
+
 //        $place = $em->getRepository("AppBundle:Places")->find($pid);
 //        $rubric = $em->getRepository("AppBundle:Rubrics")->find($rid);
 //        $block = $em->getRepository("AppBundle:BlockSettings")->find($bid);
@@ -101,21 +105,21 @@ class DefaultController extends Controller
 //        $em->flush();
 
 
-        return $this->render('AppBundle:Default:teaserBlock.js.twig', array(
-//            'rid' => $rid,
-//            'gid' => $gid,
-//            'pid' => $pid,
-//            'bid' => $bid,
-//            'teasers' => $teasers,
-//            'settings' => $settings,
-//            'orderArray' => $orderArray
+        $content = $this->renderView('AppBundle:Default:teaserBlock.html.twig', array(
+            'rid' => $rid,
+            'gid' => $gid,
+            'pid' => $pid,
+            'bid' => $bid,
+            'teasers' => $teasers,
+            'settings' => $settings
         ));
+        $response->setContent($content);
+
+        return $response;
     }
 
-
-
     /**
-     * @Route("/stats/{place_id}/{rubric_id}/{block_settings_id}/", name="redirect_to_url")
+     * @Route("/stats/{teasers_id}/{block_settings_id}/", name="redirect_to_url")
      */
     public function getAdsArrAction(Places $place_id, Rubrics $rubric_id, BlockSettings $block_settings_id, Request $request)
     {

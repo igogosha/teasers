@@ -3,23 +3,31 @@
     text-align:center;
     position: relative;
     background: {% if background is defined %}{{ background }}{% else %}#ffffff{% endif %};
-    ">
-
-    <img src="{{ asset('bundles/app/img/teaserExample.jpg') }}" style="
-        width:{% if pictureSize is defined %}{{ pictureSize }}{% else %}200{% endif %}px;
-        height:{% if pictureSize is defined %}{{ pictureSize }}{% else %}200{% endif %}px;
-        border-radius:{% if pictureBorderRadius is defined %}{{ pictureBorderRadius }}{% else %}0{% endif %}%;
+    " {% if teaser is defined and teaser.link is not null %}
+        {% set link = {{ path('redirect_to_url', {url:teaser.link}) }} %}
+        onclick="document.location.href = '{{ link }}'"
+        {% endif %}
+        >
+    {% if teaser is defined and teaser.image is not null %}
+        {% set imageUrl = asset('uploads/teasers/'~teaser.user.id~'/'~teaser.image) %}
+    {% else %}
+        {% set imageUrl = asset('bundles/app/img/teaserExample.jpg') %}
+    {% endif %}
+    <img src="{{ imageUrl }}" style="
+            width:{% if pictureSize is defined %}{{ pictureSize }}{% else %}200{% endif %}px;
+            height:{% if pictureSize is defined %}{{ pictureSize }}{% else %}200{% endif %}px;
+            border-radius:{% if pictureBorderRadius is defined %}{{ pictureBorderRadius }}{% else %}0{% endif %}%;
         {% if pictureBorderSize is defined %}
                 border:{{ pictureBorderSize }}px solid
                     {% if pictureBorderColor is defined %}{{ pictureBorderColor }}{% else %}transparent{% endif %}
                 ;
         {% endif %}
         {% if pictureShadowSize is defined and pictureShadowSize != 0 %}
-            -webkit-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
-            -moz-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
-            box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+                -webkit-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+                -moz-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+                box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
         {% endif %}
-        " />
+            " />
 
     {% if moreType is defined and moreType != 'default' %}
         {% if moreType == 'txt' %}
@@ -78,6 +86,12 @@
             margin:0;
             text-align:center;
             position: relative;
-    ">Заголовок</p>
+    ">
+        {% if teaser is defined and teaser.title is not null %}
+            {{ teaser.title }}
+        {% else %}
+            Заголовок
+        {% endif %}
+    </p>
 
 </div>

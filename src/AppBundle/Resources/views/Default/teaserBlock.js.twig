@@ -1,52 +1,35 @@
-{#var html = "<div style='background-color: {{ settings.background }};'>";#}
+document.addEventListener("DOMContentLoaded", function(event) {
+    var eles = [];
+    var divs = document.getElementsByTagName("div");
 
-{#{% for teaser in teasers %}#}
-{#html += "<div onclick='window.open(\"{{ url('redirect_to_url', {place_id: pid, rubric_id: rid, block_settings_id: bid}) }}?url={{ teaser.link }}\", \"_blank\")' style='cursor:pointer;float:left;padding:{{ settings.padding }};'>";#}
-
-{#{% for key, order in orderArray %}#}
-{#{% set pos = loop.index %}#}
-{#{% if order == 1 %}#}
-    {#{{ include("AppBundle:Default:_title_template.js.twig", {position: pos}) }}#}
-{#{% elseif order == 2 %}#}
-    {#{{ include("AppBundle:Default:_image_template.js.twig", {position: pos}) }}#}
-{#{% else %}#}
-{#{% if settings.moreActive %}#}
-    {#{{ include("AppBundle:Default:_more_template.js.twig", {position: pos}) }}#}
-{#{% endif %}#}
-{#{% endif %}#}
-{#{% endfor %}#}
-
-{#html += "<div style='clear:both;'></div>";#}
-{#html += "</div>";#}
-{#{% if loop.index is divisible by(settings.cols) %}#}
-{#html += "<div style='clear:both;'></div>";#}
-{#{% endif %}#}
-{#{% endfor %}#}
-
-{#html += "<div style='clear:both;'></div>";#}
-{#html += "</div>";#}
-
-{#document.write(html);#}
-
-{#var matches = match(/<div id="[^tzrs_*]"><\/div>/);#}
-function findElementWithIdLike(prefix) {
-    return findChildWithIdLike(document.body, prefix);
-};
-
-function findChildWithIdLike(node, prefix) {
-    if (node && node.id && node.id.indexOf(prefix) == 0) {
-        //match found
-        return node;
-    }
-
-    //no match, check child nodes
-    for (var index = 0; index < node.childNodes.length; index++) {
-        var child = node.childNodes[index];
-        var childResult = findChildWithIdLike(child, prefix);
-        if (childResult) {
-            return childResult;
+    for(var i = 0; i < divs.length; i++) {
+        if(divs[i].id.indexOf('tzrs_') == 0) {
+            eles.push(divs[i]);
         }
     }
-};
 
-alert(findElementWithIdLike("tzrs_").id);
+    for(var i = 0; i < eles.length; i++) {
+
+        var divId = eles[i].id;
+
+        var request = new XMLHttpRequest();
+        request.open('GET', '{{ path("getTeasersHtml") }}?ad='+divId, true);
+
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+                document.getElementById(divId).innerHTML = request.responseText;
+            } else {
+                var content = document.createTextNode('tzrs.co internal error');
+                document.getElementById(divId).appendChild(content);
+            }
+        };
+
+        request.onerror = function() {
+            var content = document.createTextNode('tzrs.co connection error');
+            document.getElementById(divId).appendChild(content);
+        };
+
+        request.send();
+    }
+
+});
