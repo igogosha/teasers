@@ -62,8 +62,8 @@ class DefaultController extends Controller
         }
 
         $rid = $elements[1];
-        $gid = $elements[2];
-        $pid = $elements[3];
+        $pid = $elements[2];
+        $gid = $elements[3];
         $bid = $elements[4];
 
         $em = $this->getDoctrine()->getEntityManager();
@@ -74,7 +74,8 @@ class DefaultController extends Controller
 
         $teasers = $em->getRepository('AppBundle:Teasers')
             ->findBy(array(
-                'groups' => $gid
+                'groups' => $gid,
+                'rubrics' => $rid
             ), array(), $limit);
 
 
@@ -119,9 +120,9 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/stats/{teasers_id}/{block_settings_id}/", name="redirect_to_url")
+     * @Route("/stats/{place}/{rubric}/{block_settings}/", name="redirect_to_url")
      */
-    public function getAdsArrAction(Places $place_id, Rubrics $rubric_id, BlockSettings $block_settings_id, Request $request)
+    public function getAdsArrAction(Places $place, Rubrics $rubric, BlockSettings $block_settings, Request $request)
     {
         // writing statistics;
         $em = $this->getDoctrine()->getManager();
@@ -129,17 +130,17 @@ class DefaultController extends Controller
         $now = new \DateTime('now');
 
         $stat = $em->getRepository("AppBundle:Stat")->findOneBy(array(
-            'place' => $place_id,
-            'rubric' => $rubric_id,
-            'blockSettings' => $block_settings_id,
+            'place' => $place,
+            'rubric' => $rubric,
+            'blockSettings' => $block_settings,
             'createdAt' => $now
         ));
 
         if ( !$stat ) {
             $stat = new Stat();
-            $stat->setPlace($place_id->getId());
-            $stat->setRubric($rubric_id->getId());
-            $stat->setBlockSettings($block_settings_id);
+            $stat->setPlace($place->getId());
+            $stat->setRubric($rubric->getId());
+            $stat->setBlockSettings($block_settings);
             $stat->setCreatedAt($now);
             $stat->setViews(1);
         }

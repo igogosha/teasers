@@ -3,7 +3,12 @@
         text-align:center;
         position: relative;
         background: {% if background is defined %}{{ background }}{% else %}#ffffff{% endif %};
-        ">
+        float: left;
+        cursor:pointer;
+        " {% if teaser is defined and teaser.link is not null %}
+            onclick="document.location.href = '{{ path('redirect_to_url', {place: pid,rubric:rid,block_settings:settings.id}) }}?url={{ teaser.link }}'"
+        {% endif %}
+        >
 
     <p style="
     {% if headerFontColor is defined %}
@@ -27,9 +32,20 @@
             margin:0;
             text-align:center;
             position: relative;
-    ">Заголовок</p>
+    ">
+        {% if teaser is defined and teaser.title is not null %}
+            {{ teaser.title }}
+        {% else %}
+            Заголовок
+        {% endif %}
+    </p>
 
-    <img src="{{ asset('bundles/app/img/teaserExample.jpg') }}" style="
+    {% if teaser is defined and teaser.image is not null %}
+        {% set imageUrl = asset('uploads/teasers/'~teaser.user.id~'/'~teaser.image) %}
+    {% else %}
+        {% set imageUrl = asset('bundles/app/img/teaserExample.jpg') %}
+    {% endif %}
+    <img src="{{ imageUrl }}" style="
             width:{% if pictureSize is defined %}{{ pictureSize }}{% else %}200{% endif %}px;
             height:{% if pictureSize is defined %}{{ pictureSize }}{% else %}200{% endif %}px;
             border-radius:{% if pictureBorderRadius is defined %}{{ pictureBorderRadius }}{% else %}0{% endif %}%;
@@ -39,11 +55,11 @@
             ;
     {% endif %}
         {% if pictureShadowSize is defined and pictureShadowSize != 0 %}
-                -webkit-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px 5px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
-                -moz-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px 5px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
-                box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px 5px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+                -webkit-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+                -moz-box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
+                box-shadow: {{ pictureShadowSize }}px {{ pictureShadowSize }}px {{ pictureShadowSize + 2 }}px 0 {% if pictureShadowColor is defined %}{{ pictureShadowColor }}{% else %}transparent{% endif %};
         {% endif %}
-            " />
+        " />
 
     {% if moreType is defined and moreType != 'default' %}
         {% if moreType == 'txt' %}

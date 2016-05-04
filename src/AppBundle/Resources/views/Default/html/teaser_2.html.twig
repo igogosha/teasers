@@ -3,9 +3,10 @@
     text-align:center;
     position: relative;
     background: {% if background is defined %}{{ background }}{% else %}#ffffff{% endif %};
+    float: left;
+    cursor:pointer;
     " {% if teaser is defined and teaser.link is not null %}
-        {% set link = {{ path('redirect_to_url', {url:teaser.link}) }} %}
-        onclick="document.location.href = '{{ link }}'"
+        onclick="document.location.href = '{{ path('redirect_to_url', {place: pid,rubric:rid,block_settings:settings.id}) }}?url={{ teaser.link }}'"
         {% endif %}
         >
     {% if teaser is defined and teaser.image is not null %}
