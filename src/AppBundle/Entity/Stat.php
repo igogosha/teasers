@@ -36,6 +36,12 @@ class Stat
     private $rubric;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Teasers", inversedBy="stats")
+     * @ORM\JoinColumn(name="teasers_id", referencedColumnName="id")
+     */
+    private $teasers;
+
+    /**
      * @ORM\ManyToOne(targetEntity="BlockSettings", inversedBy="stats")
      * @ORM\JoinColumn(name="block_settings_id", referencedColumnName="id")
      */
@@ -222,5 +228,28 @@ class Stat
     public function getRubric()
     {
         return $this->rubric;
+    }
+
+    /**
+     * Set teasers
+     *
+     * @param \AppBundle\Entity\Teasers $teasers
+     * @return Stat
+     */
+    public function setTeasers(\AppBundle\Entity\Teasers $teasers = null)
+    {
+        $this->teasers = $teasers;
+
+        return $this;
+    }
+
+    /**
+     * Get teasers
+     *
+     * @return \AppBundle\Entity\Teasers 
+     */
+    public function getTeasers()
+    {
+        return $this->teasers;
     }
 }

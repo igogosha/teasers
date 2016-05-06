@@ -72,6 +72,11 @@ class Teasers
      */
     private $link;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Stat", mappedBy="teasers")
+     */
+    private $stats;
+
 
     /**
      * Get id

@@ -36,6 +36,12 @@ class Stat
     private $rubric;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Teasers", inversedBy="stats")
+     * @ORM\JoinColumn(name="teasers_id", referencedColumnName="id")
+     */
+    private $teasers;
+
+    /**
      * @ORM\ManyToOne(targetEntity="BlockSettings", inversedBy="stats")
      * @ORM\JoinColumn(name="block_settings_id", referencedColumnName="id")
      */

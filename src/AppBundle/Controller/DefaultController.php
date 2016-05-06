@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\BlockSettings;
 use AppBundle\Entity\Places;
 use AppBundle\Entity\Rubrics;
+use AppBundle\Entity\Teasers;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -78,32 +79,36 @@ class DefaultController extends Controller
                 'rubrics' => $rid
             ), array(), $limit);
 
+        $place = $em->getRepository("AppBundle:Places")->find($pid);
+        $rubric = $em->getRepository("AppBundle:Rubrics")->find($rid);
+        $block = $em->getRepository("AppBundle:BlockSettings")->find($bid);
+        $today = new \DateTime('now');
 
-//        $place = $em->getRepository("AppBundle:Places")->find($pid);
-//        $rubric = $em->getRepository("AppBundle:Rubrics")->find($rid);
-//        $block = $em->getRepository("AppBundle:BlockSettings")->find($bid);
-//
-//        $today = new \DateTime('now');
-//
-//        $stat = $em->getRepository("AppBundle:Stat")->findOneBy(array(
-//            'place' => $pid,
-//            'rubric' => $rid,
-//            'blockSettings' => $bid,
-//            'createdAt' => $today
-//        ));
-//        if ( !$stat ) {
-//            $stat = new Stat();
-//            $stat->setPlace($place->getId());
-//            $stat->setRubric($rubric->getId());
-//            $stat->setBlockSettings($block);
-//            $stat->setClicks(0);
-//            $stat->setViews(1);
-//            $stat->setCreatedAt($today);
-//        } else {
-//            $stat->setViews( $stat->getViews() + 1);
-//        }
-//        $em->persist($stat);
-//        $em->flush();
+        foreach( $teasers as $teaser ) {
+            $stat = $em->getRepository("AppBundle:Stat")->findOneBy(array(
+                'place' => $place,
+                'rubric' => $rubric,
+                'blockSettings' => $settings,
+                'teasers' => $teaser,
+                'createdAt' => $today
+            ));
+
+            if ( !$stat ) {
+                $stat = new Stat();
+                $stat->setPlace($place->getId());
+                $stat->setRubric($rubric->getId());
+                $stat->setTeasers($teaser);
+                $stat->setBlockSettings($settings);
+                $stat->setCreatedAt($today);
+                $stat->setViews(0);
+                $stat->setClicks(0);
+            }
+            $stat->setViews( $stat->getViews() + 1 );
+
+            $em->persist($stat);
+            $em->flush();
+        }
+
 
 
         $content = $this->renderView('AppBundle:Default:teaserBlock.html.twig', array(
@@ -120,10 +125,11 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/stats/{place}/{rubric}/{block_settings}/", name="redirect_to_url")
+     * @Route("/stats/{place}/{rubric}/{block_settings}/{teaser}", name="redirect_to_url")
      */
-    public function getAdsArrAction(Places $place, Rubrics $rubric, BlockSettings $block_settings, Request $request)
+    public function getAdsArrAction(Places $place, Rubrics $rubric, BlockSettings $block_settings, Teasers $teaser, Request $request)
     {
+
         // writing statistics;
         $em = $this->getDoctrine()->getManager();
 
@@ -133,13 +139,14 @@ class DefaultController extends Controller
             'place' => $place,
             'rubric' => $rubric,
             'blockSettings' => $block_settings,
-            'createdAt' => $now
+            'teasers' => $teaser
         ));
 
         if ( !$stat ) {
             $stat = new Stat();
             $stat->setPlace($place->getId());
             $stat->setRubric($rubric->getId());
+            $stat->setTeasers($teaser);
             $stat->setBlockSettings($block_settings);
             $stat->setCreatedAt($now);
             $stat->setViews(1);
@@ -149,7 +156,7 @@ class DefaultController extends Controller
         $em->persist($stat);
         $em->flush();
 
-        $url = $request->query->get('url');
+        $url = $teaser->getLink();
 
         return $this->redirect($url);
     }

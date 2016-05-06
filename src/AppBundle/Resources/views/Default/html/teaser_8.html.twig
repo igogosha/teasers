@@ -11,7 +11,7 @@
         float: left;
         cursor:pointer;
         " {% if teaser is defined and teaser.link is not null %}
-            onclick="document.location.href = '{{ path('redirect_to_url', {place: pid,rubric:rid,block_settings:settings.id}) }}?url={{ teaser.link }}'"
+            onclick="document.location.href = '{{ url('redirect_to_url', {place: pid,rubric:rid,block_settings:settings.id, teaser:teaser.id}) }}'"
         {% endif %}
         >
 

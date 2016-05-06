@@ -72,6 +72,11 @@ class Teasers
      */
     private $link;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Stat", mappedBy="teasers")
+     */
+    private $stats;
+
 
     /**
      * Get id
@@ -241,5 +246,45 @@ class Teasers
     public function getRubrics()
     {
         return $this->rubrics;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stats = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stats
+     *
+     * @param \AppBundle\Entity\Stat $stats
+     * @return Teasers
+     */
+    public function addStat(\AppBundle\Entity\Stat $stats)
+    {
+        $this->stats[] = $stats;
+
+        return $this;
+    }
+
+    /**
+     * Remove stats
+     *
+     * @param \AppBundle\Entity\Stat $stats
+     */
+    public function removeStat(\AppBundle\Entity\Stat $stats)
+    {
+        $this->stats->removeElement($stats);
+    }
+
+    /**
+     * Get stats
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStats()
+    {
+        return $this->stats;
     }
 }
