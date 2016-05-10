@@ -263,7 +263,7 @@ class AdminController extends Controller
 
 
         $target_dir = $this->get('kernel')->getRootDir()
-            . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "web"
+            . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "www"
             . ($viewPath = DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "teasers" . DIRECTORY_SEPARATOR . $this->getUser()->getId() . DIRECTORY_SEPARATOR);
 
         $type = explode('.', $origName);

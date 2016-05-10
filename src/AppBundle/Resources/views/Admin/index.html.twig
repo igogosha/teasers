@@ -143,14 +143,14 @@
                     <a href="{{ path('stats_main') }}"> <i class="fa fa-bar-chart-o"></i> <span class="title">{{ "Статистика" | trans }}</span> </a>
                 </li>
 
-                <li class=""> <a href="javascript:;"> <i class="fa fa-flask"></i> <span class="title">{{ "Эксперименты" | trans }}</span> <span class="arrow "></span> </a>
-                    <ul class="sub-menu">
-                        <li> <a href="typography.html"><i class="fa fa-list-ul"></i>{{ "Все" | trans }}</a> </li>
-                        <li> <a href="messages_notifications.html"><i class="fa fa-check"></i>{{ "Завершенные" | trans }}</a> </li>
-                        <li> <a href="messages_notifications.html"><i class="fa fa-pause"></i>{{ "Не начатые" | trans }}</a> </li>
-                        <li> <a href="messages_notifications.html"><i class="fa fa-arrow-right"></i>{{ "Текущий" | trans }}</a> </li>
-                    </ul>
-                </li>
+                {#<li class=""> <a href="javascript:;"> <i class="fa fa-flask"></i> <span class="title">{{ "Эксперименты" | trans }}</span> <span class="arrow "></span> </a>#}
+                    {#<ul class="sub-menu">#}
+                        {#<li> <a href="typography.html"><i class="fa fa-list-ul"></i>{{ "Все" | trans }}</a> </li>#}
+                        {#<li> <a href="messages_notifications.html"><i class="fa fa-check"></i>{{ "Завершенные" | trans }}</a> </li>#}
+                        {#<li> <a href="messages_notifications.html"><i class="fa fa-pause"></i>{{ "Не начатые" | trans }}</a> </li>#}
+                        {#<li> <a href="messages_notifications.html"><i class="fa fa-arrow-right"></i>{{ "Текущий" | trans }}</a> </li>#}
+                    {#</ul>#}
+                {#</li>#}
                 <li class="{% if app.request.get('_route') == 'admin_settings' %}active{% endif %}">
                     <a href="{{ path("admin_settings") }}"> <i class="fa fa-cogs"></i> <span class="title">{{ "Настройки" | trans }}</span> </a>
                 </li>
