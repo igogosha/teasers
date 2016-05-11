@@ -68,7 +68,7 @@ class TeasersController extends Controller
     public function createAction()
     {
         $teasers = new Teasers();
-        $form = $this->createForm(new TeasersType(), $teasers, array(
+        $form = $this->createForm(new TeasersType($this->getUser(), $this->getDoctrine()->getManager()), $teasers, array(
             'action' => $this->generateUrl('homepage'),
             'method' => 'Post',
         ));
@@ -83,8 +83,6 @@ class TeasersController extends Controller
      */
     public function editAction($id)
     {
-        //$teasers = new Teasers();
-
         $em = $this->getDoctrine()->getEntityManager();
         $teasers = $em->getRepository('AppBundle:Teasers')
             ->findOneBy(array(

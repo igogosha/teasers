@@ -33,6 +33,14 @@
                              {{ form_widget(form.rubrics) }}
                          </div>
 
+                         <div class="form-group col-lg-12">
+                             <div class="panel">
+                                 Total images uploaded: <span id="imagesUploaded">0</span>.
+
+                                 <div class="alert alert-warning">Number of titles and links should be the same an number of uploaded images</div>
+                             </div>
+                         </div>
+
                          <div class="form-group col-lg-12" style="position:relative">
                              {{ form_label(form.title) }}
                              {{ form_errors(form.title) }}
@@ -73,12 +81,27 @@
         $(document).ready(function() {
             $('#appbundle_teasers_title').before('<div class="line-nums"><span>1</span></div>');
             $('#appbundle_teasers_link').before('<div class="line-nums"><span>1</span></div>');
-            $('#appbundle_teasers_title').parent()
-                    .before('<div class="form-group"><input type="file" name="pictures[]" multiple class="btn btn-success btn-cons uploadImages"/><div id="img_previews" class="col-lg-12"></div><div class="form-group"><div class="clearfix"></div>');
+            $('#appbundle_teasers_rubrics').parent()
+                    .after('<div class="form-group"><input type="file" name="pictures[]" multiple class="btn btn-success btn-cons uploadImages"/><div id="img_previews" class="col-lg-12"></div><div class="form-group"><div class="clearfix"></div>');
 
             $('.uploadImages').fileupload({
                 dataType: 'json',
                 autoUpload: true,
+                add: function (e, data) {
+                    var goUpload = true;
+                    var uploadFile = data.files[0];
+                    if (!(/\.(gif|jpg|jpeg|png)$/i).test(uploadFile.name)) {
+                        goUpload = false;
+                    }
+                    if (uploadFile.size > 2000000) { // 2mb
+                        goUpload = false;
+                    }
+                    if (goUpload == true) {
+                        data.submit();
+                    } else {
+                        $('#img_previews').html('<h2 class="alert alert-danger">Only .gif, .jpg, .jpeg, .png are allowed. Max size per image is 2MB.</h2>');
+                    }
+                },
                 url: '{{ path('upload_files') }}',
                 progress: function (e, data) {
                     var all = $('.uploadImages').fileupload('progress');
@@ -90,6 +113,8 @@
                             'width' : progress + "%"
                         }, 50);
                     }
+
+                    $('#imagesUploaded').text( $('input[name="teaser_image[]"]').length );
                 },
                 done: function (e, data) {
                     $('#img_previews').append(data.result.thumb);

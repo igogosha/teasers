@@ -107,7 +107,7 @@
     </script>
 
     <script type="text/template" id="addBlockToPlaceTemplate">
-        <div id="addBlockToPlaceDiv">
+        <div id="addBlockToPlaceDiv" style="padding: 0.3em 0;">
 
             <div class="panel-danger error" style="display: none">
                 Нужно что-то выбрать!
@@ -117,12 +117,12 @@
             <input type="hidden" class="rid" value="{1}" />
             <input type="hidden" class="gid" value="{2}" />
             {% if blocks %}
-            {% for block in blocks if blocks %}
-                <div class="radio radio-primary radio-circle">
-                    <input name="block" type="radio" value="{{ block.id }}" id="{{ block.id }}">
-                    <label for="{{ block.id }}">{{ block.blockName }}</label>
-                </div>
-            {% endfor %}
+                <select name="block" class="form-control" style="margin:0.5em auto;">
+                    <option selected value="nothingSelected" id="nothingSelected">Select block</option>
+                    {% for block in blocks %}
+                        <option value="{{ block.id }}" id="{{ block.id }}">{{ block.blockName }}</option>
+                    {% endfor %}
+            </select>
             <div class="clearfix clear"></div>
             <button class="btn btn-primary col-lg-12" id="addBlockButton">{{ "Save" | trans }}</button>
             {% else %}
@@ -184,12 +184,14 @@
             });
             $(document).on('click', '.modal-body #addBlockButton', function() {
 
-                var blockId = $(this).parent().find('input[name="block"]:checked').val();
+                var blockId = $(this).parent().find('select[name="block"]').find(":selected").val();
                 var placeId = $(this).parent().find('.placeid').val();
                 var rId = $(this).parent().find('.rid').val();
                 var gId = $(this).parent().find('.gid').val();
 
-                if ( typeof blockId == 'undefined' || typeof placeId == 'undefined' ) {
+//                console.log(blockId);
+
+                if ( typeof blockId == 'undefined' || typeof placeId == 'undefined' || blockId == 'nothingSelected' ) {
                     $(this).parent().find('.error').slideDown().delay(2000).slideUp();
                     return false;
                 }

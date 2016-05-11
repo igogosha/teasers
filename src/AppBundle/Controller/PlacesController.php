@@ -156,7 +156,8 @@ class PlacesController extends Controller
                         $em->flush();
                     }
                 }
-                $response['msg'] = 'success';
+                $response['success'] = true;
+                $response['redirect_link'] = $this->generateUrl('admin_places');
             }
 
         } else {

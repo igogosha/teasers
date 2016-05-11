@@ -88,4 +88,20 @@ fos_user:
                 sender_name:    tzrs.co
             enabled: true
     service:
-        mailer: fos_user.mailer.twig_swift
+        mailer: fos_user.mailer.default
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+
+    filter_sets:
+        cache: ~
+        thumb_50_50:
+            quality: 85
+            filters:
+                thumbnail: { size: [50, 50], mode: outbound }
+        thumb_100_100:
+            quality: 85
+            filters:
+                thumbnail: { size: [100, 100], mode: outbound }

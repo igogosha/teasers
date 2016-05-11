@@ -24,7 +24,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/settings", name="admin_settings")
+     * @Route("/admin/rubrics", name="admin_rubrics")
      */
     public function settingsAction()
     {
@@ -277,8 +277,9 @@ class AdminController extends Controller
             $data['msg'] = "success";
             $data['thumb'] = $this->renderView('AppBundle:Teasers:preview.html.twig', array(
                 'user_id' => $this->getUser()->getId(),
-                'image_src' => $newFile
+                'image_src' => $newFile,
             ));
+
         } else {
             $data['msg'] = "There was a problem uploading the file";
         }

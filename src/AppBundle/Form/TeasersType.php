@@ -2,12 +2,26 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\User;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TeasersType extends AbstractType
 {
+
+    private $user;
+    private $em;
+
+    function __construct(User $user, EntityManager $em)
+    {
+        $this->user = $user;
+        $this->em = $em;
+    }
+
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -16,19 +30,19 @@ class TeasersType extends AbstractType
     {
         $builder
             ->add('user', 'hidden')
-//            ->add('name', 'entity', array(
-//                'class' => 'AppBundle:TeasersSettings',
-//                'property' => 'name',
-//            ))
-            ->add('rubrics')
+            ->add('rubrics', 'entity', array(
+                    'class' => 'AppBundle:Rubrics',
+//                    'query_builder' => function(EntityRepository $er) {
+//                        return $er->createQueryBuilder('r')
+//                            ->where('r.user > :user')
+//                            ->setParameter('user', $this->user->getId())
+//                            ;
+//
+//                    },
+//                    'property' => 'name',
+                    'choices' => $this->getRubricsForUser()
+                ))
             ->add('createdAt', 'hidden')
-//            ->add('image', 'file', array(
-//                'label' => 'upload',
-//                'attr' => array(
-//                    'multiple' => true,
-//                    'class' => 'btn btn-success btn-cons uploadImages'
-//                )
-//            ))
             ->add('title', 'textarea', array(
                 'attr' => array(
                     'class' => 'form-control groupsDetails',
@@ -43,7 +57,12 @@ class TeasersType extends AbstractType
             ))
         ;
     }
-    
+
+    private function getRubricsForUser() {
+        return $this->em->getRepository('AppBundle:Rubrics')
+            ->findBy(array('user'=> $this->user));
+    }
+
     /**
      * @param OptionsResolverInterface $resolver
      */

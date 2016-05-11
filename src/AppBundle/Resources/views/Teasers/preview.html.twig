@@ -5,7 +5,7 @@
     <img
         data-name="{{ image_src }}"
         class="img img-thumbnail"
-        src="{{ asset('uploads/teasers/') ~ user_id ~ '/' ~ image_src}}"
+        src="{{ (asset('uploads/teasers/') ~ user_id ~ '/' ~ image_src) | imagine_filter('thumb_100_100')  }}"
         >
     <input type="hidden" name="teaser_image[]" value="{{ image_src }}" />
 </div>

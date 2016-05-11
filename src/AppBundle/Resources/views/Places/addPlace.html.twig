@@ -117,12 +117,22 @@
                 if ( rubrics.length > 0 ) {
                     var action = $('form[name="appbundle_rubrics"]').attr('action');
                     $.post( action, {name:name, rubrics: rubrics}, function(r){
-                        console.log(r.msg);
+                        if ( r.success  ) {
+                            window.location.href = r.redirect_link;
+                        }
                     },'json');
                 } else {
                     makeAlert("Введите имя площадки и выберите рубрики, которые будут отображаться");
                 }
 
+            });
+
+            $('form[name="appbundle_rubrics"]').on('keyup keypress', function(e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    e.preventDefault();
+                    return false;
+                }
             });
 
         });

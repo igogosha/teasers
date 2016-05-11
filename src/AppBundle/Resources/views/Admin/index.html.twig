@@ -124,24 +124,31 @@
             <p class="menu-title"></p>
             <ul>
                 <li class="start"> <a href="{{ path('admin_home') }}"> <i class="icon-custom-home"></i> <span class="title">{{ "Главная" | trans }}</span> </a> </li>
+                <li class="{% if app.request.get('_route') == 'admin_rubrics' %}active{% endif %}">
+                    <a href="{{ path("admin_rubrics") }}"> <i class="fa fa-cogs"></i> <span class="title">{{ "1. Рубрика" | trans }}</span> </a>
+                </li>
                 <li class="{% if (app.request.get('_route') == 'teasers') or (app.request.get('_route') == 'admin_create_group') %}active open{% endif %}">
-                    <a href="javascript:;"> <i class="fa fa-square"></i> <span class="title">{{ "Тизеры" | trans }}</span> <span class="arrow "></span> </a>
+                    <a href="javascript:;"> <i class="fa fa-square"></i> <span class="title">{{ "2. Группы тизеров" | trans }}</span> <span class="arrow "></span> </a>
                     <ul class="sub-menu">
                         <li class="{% if app.request.get('_route') == 'teasers' %}active{% endif %}"> <a href="{{ path('teasers') }}"><i class="fa fa-list-ul"></i>{{ "Cписок групп" | trans }}</a> </li>
                         <li class="{% if app.request.get('_route') == 'admin_create_group' %}active{% endif %}"> <a href="{{ path('admin_create_group') }}"><i class="fa fa-plus"></i>{{ "Добавить группу" | trans }}</a> </li>
                     </ul>
                 </li>
+
+                <li class="{% if app.request.get('_route') == 'admin_places_add_block' %}active{% endif %}">
+                    <a href="{{ path("admin_places_add_block") }}"> <i class="fa fa-cogs"></i> <span class="title">{{ "3. Внешний вид" | trans }}</span> </a>
+                </li>
+
                 <li  class="{% if (app.request.get('_route') == 'admin_places') or (app.request.get('_route') == 'admin_places_add') or (app.request.get('_route') == 'admin_places_add_block') %}active open{% endif %}">
-                    <a href="javascript:;"> <i class="fa fa-desktop"></i> <span class="title">{{ "Площадки" | trans }}</span> <span class="arrow "></span> </a>
+                    <a href="javascript:;"> <i class="fa fa-desktop"></i> <span class="title">{{ "4 .Площадки" | trans }}</span> <span class="arrow "></span> </a>
                     <ul class="sub-menu">
                         <li class="{% if app.request.get('_route') == 'admin_places' %}active{% endif %}"> <a href="{{ path('admin_places') }}"><i class="fa fa-list-ul"></i>{{ "Cписок площадок" | trans }}</a> </li>
                         <li class="{% if app.request.get('_route') == 'admin_places_add' %}active{% endif %}"> <a href="{{ path('admin_places_add') }}"><i class="fa fa-plus"></i>{{ "Добавить площадку" | trans }}</a> </li>
-                        <li class="{% if app.request.get('_route') == 'admin_places_add_block' %}active{% endif %}"> <a href="{{ path('admin_places_add_block') }}"><i class="fa fa-th-large"></i>{{ "Добавить блок" | trans }}</a> </li>
                     </ul>
                 </li>
-                <li class="">
-                    <a href="{{ path('stats_main') }}"> <i class="fa fa-bar-chart-o"></i> <span class="title">{{ "Статистика" | trans }}</span> </a>
-                </li>
+                {#<li class="">#}
+                    {#<a href="{{ path('stats_main') }}"> <i class="fa fa-bar-chart-o"></i> <span class="title">{{ "Статистика" | trans }}</span> </a>#}
+                {#</li>#}
 
                 {#<li class=""> <a href="javascript:;"> <i class="fa fa-flask"></i> <span class="title">{{ "Эксперименты" | trans }}</span> <span class="arrow "></span> </a>#}
                     {#<ul class="sub-menu">#}
@@ -151,9 +158,7 @@
                         {#<li> <a href="messages_notifications.html"><i class="fa fa-arrow-right"></i>{{ "Текущий" | trans }}</a> </li>#}
                     {#</ul>#}
                 {#</li>#}
-                <li class="{% if app.request.get('_route') == 'admin_settings' %}active{% endif %}">
-                    <a href="{{ path("admin_settings") }}"> <i class="fa fa-cogs"></i> <span class="title">{{ "Настройки" | trans }}</span> </a>
-                </li>
+
 
             </ul>
             {#<a href="#" class="scrollup">Scroll</a>#}
