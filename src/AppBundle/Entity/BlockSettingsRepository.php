@@ -16,10 +16,9 @@ class BlockSettingsRepository extends EntityRepository
 {
     public function getStatsForUser(User $user)
     {
-        return $this->createQueryBuilder('b')
-            ->select('b')
-            ->where('b.user = :user')
-            ->setParameter('user', $user)
-            ->getQuery()->getArrayResult();
+        $q = $this->getEntityManager()
+            ->createQuery('SELECT b.id FROM AppBundle:BlockSettings b INDEX BY b.id WHERE b.user = ' . $user->getId());
+
+        return $q->getArrayResult();
     }
 }

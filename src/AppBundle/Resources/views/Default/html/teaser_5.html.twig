@@ -4,19 +4,23 @@
     background: {% if background is defined %}{{ background }}{% else %}#ffffff{% endif %};
     text-align:left;
     {% if pictureSize is defined %}
-        width: {{ pictureSize * 2 }}px;
+        {% if settings is defined and settings.cols == 1 %}
+            width:100%;
+        {% else %}
+            width: {{ pictureSize * 2 }}px;
+        {% endif %}
     {% else %}
             width: 400px;
     {% endif %}
     float: left;
     cursor:pointer;
     " {% if teaser is defined and teaser.link is not null %}
-        onclick="document.location.href = '{{ url('redirect_to_url', {place: pid,rubric:rid,block_settings:settings.id, teaser:teaser.id}) }}'"
+        onclick="document.openTzrsWindow('{{ url('redirect_to_url', {place: pid,rubric:rid,block_settings:settings.id, teaser:teaser.id}) }}')"
     {% endif %}
         >
 
     {% if teaser is defined and teaser.image is not null %}
-        {% set imageUrl = asset('uploads/teasers/'~teaser.user.id~'/'~teaser.image) %}
+        {% set imageUrl = domain ~ asset('uploads/teasers/'~teaser.user.id~'/'~teaser.image) %}
     {% else %}
         {% set imageUrl = asset('bundles/app/img/teaserExample.jpg') %}
     {% endif %}

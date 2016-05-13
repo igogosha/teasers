@@ -5,8 +5,11 @@
         background: {% if background is defined %}{{ background }}{% else %}#ffffff{% endif %};
         float: left;
         cursor:pointer;
+        {% if settings is defined and settings.cols == 1 %}
+                width:100%;
+        {% endif %}
         " {% if teaser is defined and teaser.link is not null %}
-    onclick="document.location.href = '{{ url('redirect_to_url', {place: pid,rubric:rid,block_settings:settings.id, teaser:teaser.id}) }}'"
+    onclick="document.openTzrsWindow('{{ url('redirect_to_url', {place: pid,rubric:rid,block_settings:settings.id, teaser:teaser.id}) }}')"
 {% endif %}
         >
 
@@ -46,7 +49,7 @@
     {% endif %}
 
     {% if teaser is defined and teaser.image is not null %}
-        {% set imageUrl = asset('uploads/teasers/'~teaser.user.id~'/'~teaser.image) %}
+        {% set imageUrl = domain ~ asset('uploads/teasers/'~teaser.user.id~'/'~teaser.image) %}
     {% else %}
         {% set imageUrl = asset('bundles/app/img/teaserExample.jpg') %}
     {% endif %}

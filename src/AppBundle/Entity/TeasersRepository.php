@@ -12,4 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class TeasersRepository extends EntityRepository
 {
+
+    public function getRandomWithLimit(Groups $group, Rubrics $rubric, $limit = 1) {
+
+        $q = $this->createQueryBuilder('t')
+            ->select('t')
+            ->addSelect('RAND() as HIDDEN rand')
+            ->where('t.groups = :group')
+            ->andWhere('t.rubrics = :rubric')
+
+            ->setParameter('group', $group)
+            ->setParameter('rubric', $rubric)
+
+            ->addOrderBy('rand')
+            ->setMaxResults($limit)
+        ;
+
+        return $q->getQuery()->getResult();
+    }
+
 }

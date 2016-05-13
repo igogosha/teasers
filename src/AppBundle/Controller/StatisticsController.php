@@ -25,12 +25,14 @@ class StatisticsController extends Controller
      */
     public function indexAction()
     {
-
         $em = $this->getDoctrine()->getManager();
+        $blocks = $em->getRepository('AppBundle:BlockSettings')->getStatsForUser($this->getUser());
 
-        $blocks = $em->getRepository('AppBundle:BlockSettings')->findBy(array(
-            'user' => $this->getUser()
-        ));
+        $stats = $em->getRepository('AppBundle:Stat')->getStatForBlocks(array_keys($blocks));
+
+        echo '<pre>';
+        print_r($stats);
+        exit;
 
         return array(
             'blocks' => $blocks

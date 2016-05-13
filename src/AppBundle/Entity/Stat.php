@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Stat
  *
  * @ORM\Table(name="stat")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\StatRepository")
  */
 class Stat
 {

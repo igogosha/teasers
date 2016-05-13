@@ -48,7 +48,8 @@ class DefaultController extends Controller
         $response = new Response(
             '',
             Response::HTTP_OK,
-            array('content-type' => 'text/html')
+            array('content-type' => 'text/html',
+                'Access-Control-Allow-Origin' => '*')
         );
 
         if ( !$request->query->has('ad') ) {
@@ -73,16 +74,18 @@ class DefaultController extends Controller
             ->find($bid);
         $limit = $settings->getRows() * $settings->getCols();
 
-        $teasers = $em->getRepository('AppBundle:Teasers')
-            ->findBy(array(
-                'groups' => $gid,
-                'rubrics' => $rid
-            ), array(), $limit);
-
         $place = $em->getRepository("AppBundle:Places")->find($pid);
         $rubric = $em->getRepository("AppBundle:Rubrics")->find($rid);
         $block = $em->getRepository("AppBundle:BlockSettings")->find($bid);
+        $group = $em->getRepository("AppBundle:Groups")->find($gid);
         $today = new \DateTime('now');
+
+
+        $teasers = $em->getRepository('AppBundle:Teasers')
+            ->getRandomWithLimit($group, $rubric, $limit);
+
+//        $response->setContent($teasers);
+//        return $response;
 
         foreach( $teasers as $teaser ) {
             $stat = $em->getRepository("AppBundle:Stat")->findOneBy(array(
@@ -108,8 +111,6 @@ class DefaultController extends Controller
             $em->persist($stat);
             $em->flush();
         }
-
-
 
         $content = $this->renderView('AppBundle:Default:teaserBlock.html.twig', array(
             'rid' => $rid,

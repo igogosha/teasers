@@ -30,6 +30,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        domain: http://www.tzrs.co
 
 # Assetic Configuration
 assetic:
@@ -66,6 +68,9 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        dql:
+            numeric_functions:
+                Rand: AppBundle\DQL\RandFunction
 
 # Swiftmailer Configuration
 swiftmailer:
