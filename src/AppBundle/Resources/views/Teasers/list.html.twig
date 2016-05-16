@@ -26,8 +26,8 @@
 
                                  {#{{ dump(group) }}#}
 
-                                     <tr class="bg-purple" style="color:#fff;">
-                                         <td colspan="5"><h3>{{ group.group_name }}</h3></td>
+                                     <tr class="bg-green" style="color:#fff;">
+                                         <td colspan="5"><h4>{{ group.group_name }}</h4></td>
                                      </tr>
 
                                      <tr>
@@ -52,6 +52,9 @@
                                          <td>{{ group.rubric_name }}</td>
                                          <td>30%</td>
                                          <td>142</td>
+                                     </tr>
+                                     <tr class="">
+                                         <td colspan="5"></td>
                                      </tr>
                              {% endfor %}
                              </table>

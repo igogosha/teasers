@@ -96,9 +96,10 @@ fos_user:
         mailer: fos_user.mailer.default
 
 liip_imagine:
-    resolvers:
-       default:
-          web_path: ~
+    loaders:
+        default:
+            filesystem:
+                data_root: "%kernel.root_dir%/../www"
 
     filter_sets:
         cache: ~

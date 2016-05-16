@@ -299,7 +299,7 @@ class AdminController extends Controller
         if ( $request->isXmlHttpRequest() ) {
 
             $target_dir = $this->get('kernel')->getRootDir()
-                . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "web"
+                . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "www"
                 . ($viewPath = DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "teasers" . DIRECTORY_SEPARATOR . $this->getUser()->getId() . DIRECTORY_SEPARATOR);
             $name = $request->request->get('name');
             if ( $name ) {
