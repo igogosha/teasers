@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class GroupsRepository extends EntityRepository
 {
+    public function byUserIndexedByGroupIds(User $user)
+    {
+        $q = $this->getEntityManager()
+            ->createQuery("SELECT g FROM AppBundle:Groups g INDEX BY g.user WHERE g.user = " . $user);
+
+        return $q->getArrayResult();
+    }
 }

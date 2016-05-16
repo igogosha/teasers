@@ -15,22 +15,16 @@
                              <table class="table table-bordered">
                                  <thead>
                                      <tr>
-                                         <th>Группы</th>
-                                         <th>Ссылки</th>
-                                         <th>Рубрика</th>
+                                         <th>Group</th>
+                                         <th>Actions</th>
+                                         <th>Rubric</th>
                                          <th>CTR</th>
-                                         <th>Показов</th>
+                                         <th>Views</th>
                                      </tr>
                                  </thead>
                              {% for group in groups %}
-
-                                 {#{{ dump(group) }}#}
-
-                                     <tr class="bg-green" style="color:#fff;">
-                                         <td colspan="5"><h4>{{ group.group_name }}</h4></td>
-                                     </tr>
-
-                                     <tr>
+                                      <tr>
+                                         <td>{{ group.title }}</td>
                                          <td>
                                              <div data-toggle="buttons-radio" class="btn-group btn-group-sm">
                                                  <button title="редактировать" class="btn btn-primary disabled"><i class="fa fa-pencil"></i></button>
@@ -42,19 +36,9 @@
                                                  </button>
                                              </div>
                                          </td>
-                                         <td>
-                                             {% if group.links is defined %}
-                                                 {% for link in group.links %}
-                                                    <span title="{{ link }}">{{ link }}</span><br>
-                                                 {% endfor %}
-                                             {% endif %}
-                                         </td>
-                                         <td>{{ group.rubric_name }}</td>
+                                         <td>{{ group.rubrics.name }}</td>
                                          <td>30%</td>
                                          <td>142</td>
-                                     </tr>
-                                     <tr class="">
-                                         <td colspan="5"></td>
                                      </tr>
                              {% endfor %}
                              </table>
