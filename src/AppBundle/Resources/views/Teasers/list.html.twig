@@ -26,20 +26,58 @@
                                       <tr>
                                          <td>{{ group.title }}</td>
                                          <td>
-                                             <div data-toggle="buttons-radio" class="btn-group btn-group-sm">
-                                                 <button title="редактировать" class="btn btn-primary disabled"><i class="fa fa-pencil"></i></button>
-                                                 <button title="показать/скрыть" class="btn btn-warning disabled">
+                                             <div class="">
+                                                 <button title="редактировать" class="btn btn-mini btn-primary disabled"><i class="fa fa-pencil"></i></button>
+                                                 <button title="показать/скрыть" class="btn btn-mini btn-warning disabled">
                                                      <i class="fa fa-eye"></i>
                                                      {% if group['teasers'] is defined %}
                                                          {{ group['teasers'] | length }}
                                                      {% endif %}
                                                  </button>
+                                                 <button data-group="{{ group.id }}" title="show teasers" class="btn btn-mini btn-success pull-right showTeasers"><i class="fa fa-arrow-down"></i></button>
                                              </div>
                                          </td>
                                          <td>{{ group.rubrics.name }}</td>
-                                         <td>30%</td>
-                                         <td>142</td>
+                                         <td><span class="total_ctr_{{ group.id }}">0</span>%</td>
+                                         <td><span class="total_views_{{ group.id }}">-</span></td>
                                      </tr>
+
+                                     {% if teasers[group.id] is defined %}
+                                         <tr id="teasers_{{ group.id }}" style="display: none">
+                                             <td colspan="5" class="text-yellow">
+                                                  <table class="table table-bordered groupStatistics" data-group="{{ group.id }}">
+                                                      <thead>
+                                                         <tr>
+                                                             <th>Image</th>
+                                                             <th>Title</th>
+                                                             <th>Link</th>
+                                                             <th>CTR</th>
+                                                             <th>Views</th>
+                                                         </tr>
+                                                     </thead>
+                                                     {% for teaser in teasers[group.id] %}
+                                                         <tr  class="bg-yellow">
+                                                            <td class="text-white">
+                                                                <img src="{{ asset('uploads/teasers/'~teaser.id~'/'~teaser.image) | imagine_filter('thumb_50_50') }}" />
+                                                            </td>
+                                                            <td class="text-white">{{ teaser.title }}</td>
+                                                            <td class="text-white">{{ teaser.link }}</td>
+
+                                                             {% set views = 0 %}
+                                                             {% set clicks = 0 %}
+                                                             {% for stat in teaser.stats %}
+                                                                 {% set views = views + stat.views %}
+                                                                 {% set clicks = clicks + stat.clicks %}
+                                                             {% endfor %}
+                                                            <td class="text-white ctr_{{ group.id }}">{% if views > 0 %}{{ (clicks / views * 100) | round(0, 'floor') }}{% else %}0{% endif %}%</td>
+                                                            <td class="text-white views_{{ group.id }}">{{ views }}</td>
+                                                         </tr>
+                                                     {% endfor %}
+                                                 </table>
+                                             </td>
+                                         </tr>
+                                     {% endif %}
+
                              {% endfor %}
                              </table>
 
@@ -59,10 +97,36 @@
     {#<script src="{{ asset('/bundles/app/js/textarea.js') }}"></script>#}
     {#<script src="{{ asset('/bundles/app/js/tabs_accordian.js') }}"></script>#}
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.panel-group').collapse({
                 toggle: false
-            })
+            });
+
+
+            $('.showTeasers').click(function(){
+                var id = $(this).data('group');
+
+                $('tr#teasers_'+id).toggle();
+            });
+
+
+            $('table.groupStatistics').each(function(){
+                var total_ctr = 0;
+                var total_views = 0;
+                var id = $(this).data('group');
+
+                $(this).find('td.ctr_'+id).each(function(){
+                    total_ctr += parseInt($(this).text());
+                });
+
+                $(this).find('td.views_'+id).each(function(){
+                    total_views += parseInt($(this).text());
+                });
+
+                $('.total_ctr_'+id).text(total_ctr);
+                $('.total_views_'+id).text(total_views);
+
+            });
         });
     </script>
 {% endblock %}

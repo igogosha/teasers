@@ -31,4 +31,14 @@ class TeasersRepository extends EntityRepository
         return $q->getQuery()->getResult();
     }
 
+    public function idsByGroups($groupIds = array())
+    {
+        $q = $this->createQueryBuilder('t')
+            ->select('t')
+            ->andWhere('t.groups IN (:ids)')
+            ->setParameter('ids', $groupIds);
+
+        return $q->getQuery()->getResult();
+    }
+
 }

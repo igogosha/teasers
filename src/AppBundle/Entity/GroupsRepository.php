@@ -15,8 +15,10 @@ class GroupsRepository extends EntityRepository
     public function byUserIndexedByGroupIds(User $user)
     {
         $q = $this->getEntityManager()
-            ->createQuery("SELECT g FROM AppBundle:Groups g INDEX BY g.user WHERE g.user = " . $user);
+            ->createQuery("SELECT g FROM AppBundle:Groups g LEFT JOIN g.user u INDEX BY g.id WHERE g.user = :user");
 
-        return $q->getArrayResult();
+        $q->setParameter('user', $user);
+
+        return $q->getResult();
     }
 }

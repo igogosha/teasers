@@ -26,38 +26,16 @@ class TeasersController extends Controller
         $groups = $em->getRepository("AppBundle:Groups")
             ->byUserIndexedByGroupIds($this->getUser());
 
-        echo '<pre>';
-        print_r($groups);
-        exit;
+        $allTeasers = $em->getRepository("AppBundle:Teasers")->idsByGroups(array_keys($groups));
 
-
-        $teasers = $em->getRepository("AppBundle:Teasers")->idsByGroups();
-
-//        $teasersArray = array();
-//        foreach( $groups as $group ) {
-//            $teasersArray[$group->getId()] = array(
-//                'group_name' => $group->getTitle(),
-//                'rubric_name' => $group->getRubrics()->getName()
-//            );
-//        }
-//
-//        foreach( $teasers as $teaser ) {
-//            $teasersArray[$teaser->getGroups()->getId()]['teasers'][] = array(
-//                'id' => $teaser->getId(),
-//                'title' => $teaser->getTitle(),
-//                'link' => $teaser->getLink()
-//            );
-//            $teasersArray[$teaser->getGroups()->getId()]['links'][] = $teaser->getLink();
-//            $teasersArray[$teaser->getGroups()->getId()]['ctr'] = 'ctr';
-//            $teasersArray[$teaser->getGroups()->getId()]['views'] = 'views';
-//        }
-
-//        echo '<pre>';
-//        print_r($teasersArray);
-//        exit;
+        $teasers = [];
+        foreach( $allTeasers as $teaser ) {
+            $teasers[$teaser->getGroups()->getId()][] = $teaser;
+        }
 
         return $this->render('AppBundle:Teasers:list.html.twig', array(
-            'groups' => $groups
+            'groups' => $groups,
+            'teasers' => $teasers
         ));
     }
 
