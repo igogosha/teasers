@@ -191,11 +191,6 @@ class PlacesController extends Controller
             $resp['content'] = $template;
             $resp['msg'] = 'success';
 
-
-//            echo '<pre>';
-//            print_r($data);
-//            exit;
-
         } else {
             $resp['msg'] = 'not ajax';
         }

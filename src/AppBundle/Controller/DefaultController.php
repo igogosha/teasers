@@ -80,12 +80,8 @@ class DefaultController extends Controller
         $group = $em->getRepository("AppBundle:Groups")->find($gid);
         $today = new \DateTime('now');
 
-
         $teasers = $em->getRepository('AppBundle:Teasers')
-            ->getRandomWithLimit($group, $rubric, $limit);
-
-//        $response->setContent($teasers);
-//        return $response;
+            ->getRandomWithLimit($group, $limit);
 
         foreach( $teasers as $teaser ) {
             $stat = $em->getRepository("AppBundle:Stat")->findOneBy(array(

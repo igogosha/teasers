@@ -18,8 +18,9 @@
                                          <th>Group</th>
                                          <th>Actions</th>
                                          <th>Rubric</th>
-                                         <th>CTR</th>
+                                         <th>Clicks</th>
                                          <th>Views</th>
+                                         <th>CTR</th>
                                      </tr>
                                  </thead>
                              {% for group in groups %}
@@ -38,21 +39,23 @@
                                              </div>
                                          </td>
                                          <td>{{ group.rubrics.name }}</td>
-                                         <td><span class="total_ctr_{{ group.id }}">0</span>%</td>
+                                         <td><span class="total_clicks_{{ group.id }}">0</span></td>
                                          <td><span class="total_views_{{ group.id }}">-</span></td>
+                                         <td><span class="total_ctr_{{ group.id }}">0</span>%</td>
                                      </tr>
 
                                      {% if teasers[group.id] is defined %}
                                          <tr id="teasers_{{ group.id }}" style="display: none">
-                                             <td colspan="5" class="text-yellow">
-                                                  <table class="table table-bordered groupStatistics" data-group="{{ group.id }}">
+                                             <td colspan="6" class="text-yellow">
+                                                  <table id="datatable_{{ group.id }}" class="table table-bordered groupStatistics" data-group="{{ group.id }}">
                                                       <thead>
                                                          <tr>
                                                              <th>Image</th>
                                                              <th>Title</th>
                                                              <th>Link</th>
-                                                             <th>CTR</th>
+                                                             <th>Clicks</th>
                                                              <th>Views</th>
+                                                             <th>CTR</th>
                                                          </tr>
                                                      </thead>
                                                      {% for teaser in teasers[group.id] %}
@@ -69,8 +72,9 @@
                                                                  {% set views = views + stat.views %}
                                                                  {% set clicks = clicks + stat.clicks %}
                                                              {% endfor %}
-                                                            <td class="text-white ctr_{{ group.id }}">{% if views > 0 %}{{ (clicks / views * 100) | round(0, 'floor') }}{% else %}0{% endif %}%</td>
+                                                            <td class="text-white clicks_{{ group.id }}">{{ clicks }}</td>
                                                             <td class="text-white views_{{ group.id }}">{{ views }}</td>
+                                                             <td class="text-white ctr_{{ group.id }}">{% if views > 0 %}{{ (clicks / views * 100) | round(0, 'floor') }}{% else %}0{% endif %}%</td>
                                                          </tr>
                                                      {% endfor %}
                                                  </table>
@@ -89,9 +93,17 @@
      </div>
  {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/app/plugins/jquery-datatable/css/jquery.dataTables.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/app/plugins/jquery-datatable/css/jquery.dataTables_themeroller.css') }}">
+
+{% endblock stylesheets %}
+
 {% block javascripts %}
     {{ parent() }}
-    {#<script src="{{ asset('/bundles/app/js/fileupload/jquery.ui.widget.js') }}"></script>#}
+    <script src="{{ asset('/bundles/app/plugins/jquery-datatable/js/jquery.dataTables.min.js') }}"></script>
     {#<script src="{{ asset('/bundles/app/js/fileupload/jquery.iframe-transport.js') }}"></script>#}
     {#<script src="{{ asset('/bundles/app/js/fileupload/jquery.fileupload.js') }}"></script>#}
     {#<script src="{{ asset('/bundles/app/js/textarea.js') }}"></script>#}
@@ -107,25 +119,37 @@
                 var id = $(this).data('group');
 
                 $('tr#teasers_'+id).toggle();
+
             });
 
 
             $('table.groupStatistics').each(function(){
-                var total_ctr = 0;
                 var total_views = 0;
+                var total_clicks = 0;
                 var id = $(this).data('group');
-
-                $(this).find('td.ctr_'+id).each(function(){
-                    total_ctr += parseInt($(this).text());
-                });
 
                 $(this).find('td.views_'+id).each(function(){
                     total_views += parseInt($(this).text());
                 });
 
-                $('.total_ctr_'+id).text(total_ctr);
-                $('.total_views_'+id).text(total_views);
+                $(this).find('td.clicks_'+id).each(function(){
+                    total_clicks += parseInt($(this).text());
+                });
 
+                var total_ctr = total_views > 0 ? Math.floor(total_clicks / total_views * 100) : 0;
+                $('.total_ctr_'+id).text( total_ctr );
+                $('.total_views_'+id).text(total_views);
+                $('.total_clicks_'+id).text(total_clicks);
+
+                $('table#datatable_'+id).dataTable({
+                    "bPaginate": false,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": false,
+                    "bAutoWidth": true,
+                    "aaSorting": [[ 5, "desc" ]],
+                    "bSearch": false
+                });
             });
         });
     </script>
