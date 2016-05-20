@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Form\TeasersType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -135,4 +136,22 @@ class TeasersController extends Controller
     }
 
 
+    /**
+     * @Route("admin/teasers/on-off/{id}", name="group-on-off")
+     */
+    public function onOffTeasersAction(Groups $group)
+    {
+        if ( !$group ) {
+            throw new NotFoundHttpException('No group found by id');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $group->setVisible(!$group->getVisible());
+        $em->persist($group);
+
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('teasers'));
+    }
 }

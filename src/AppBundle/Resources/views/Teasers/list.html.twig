@@ -28,13 +28,10 @@
                                          <td>{{ group.title }}</td>
                                          <td>
                                              <div class="">
-                                                 <button title="редактировать" class="btn btn-mini btn-primary disabled"><i class="fa fa-pencil"></i></button>
-                                                 <button title="показать/скрыть" class="btn btn-mini btn-warning disabled">
-                                                     <i class="fa fa-eye"></i>
-                                                     {% if group['teasers'] is defined %}
-                                                         {{ group['teasers'] | length }}
-                                                     {% endif %}
-                                                 </button>
+                                                 {#<button title="редактировать" class="btn btn-mini btn-primary disabled"><i class="fa fa-pencil"></i></button>#}
+                                                 <a href="{{ path('group-on-off', {id: group.id}) }}" title="{% if group.visible %}ON. Click to turn OFF{% else %}OFF. Click to turn ON{% endif %}" class="btn btn-mini {% if group.visible %}btn-primary{% else %}btn-danger{% endif %}">
+                                                     <i class="fa {% if group.visible %}fa-eye{% else %}fa-eye-slash{% endif %}"></i>
+                                                 </a>
                                                  <button data-group="{{ group.id }}" title="show teasers" class="btn btn-mini btn-success pull-right showTeasers"><i class="fa fa-arrow-down"></i></button>
                                              </div>
                                          </td>
@@ -61,7 +58,7 @@
                                                      {% for teaser in teasers[group.id] %}
                                                          <tr  class="bg-yellow">
                                                             <td class="text-white">
-                                                                <img src="{{ asset('uploads/teasers/'~teaser.id~'/'~teaser.image) | imagine_filter('thumb_50_50') }}" />
+                                                                <img src="{{ asset('uploads/teasers/'~app.user.id~'/'~teaser.image) | imagine_filter('thumb_50_50') }}" />
                                                             </td>
                                                             <td class="text-white">{{ teaser.title }}</td>
                                                             <td class="text-white">{{ teaser.link }}</td>

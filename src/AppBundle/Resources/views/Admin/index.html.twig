@@ -135,8 +135,12 @@
                     </ul>
                 </li>
 
-                <li class="{% if app.request.get('_route') == 'admin_places_add_block' %}active{% endif %}">
-                    <a href="{{ path("admin_places_add_block") }}"> <i class="fa fa-cogs"></i> <span class="title">{{ "3. Внешний вид" | trans }}</span> </a>
+                <li class="{% if app.request.get('_route') == 'admin_places_add_block' or app.request.get('_route') == 'admin_places_block_list' %}active{% endif %}">
+                    <a href="javascript:;"> <i class="fa fa-square"></i> <span class="title">{{ "3. Внешний вид" | trans }}</span> <span class="arrow "></span> </a>
+                    <ul class="sub-menu">
+                        <li> <a href="{{ path('admin_places_block_list') }}"><i class="fa fa-list-ul"></i>{{ "Мои блоки" | trans }}</a> </li>
+                        <li> <a href="{{ path('admin_places_add_block') }}"><i class="fa fa-plus"></i>{{ "Добавить новый" | trans }}</a> </li>
+                    </ul>
                 </li>
 
                 <li  class="{% if (app.request.get('_route') == 'admin_places') or (app.request.get('_route') == 'admin_places_add') or (app.request.get('_route') == 'admin_places_add_block') %}active open{% endif %}">

@@ -52,6 +52,12 @@ class Groups
      */
     private $title;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="visible", type="boolean", options={"default" = true})
+     */
+    private $visible;
 
     /**
      * Get id
@@ -158,5 +164,28 @@ class Groups
     public function __toString()
     {
         return $this->title;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     * @return Groups
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean 
+     */
+    public function getVisible()
+    {
+        return $this->visible;
     }
 }

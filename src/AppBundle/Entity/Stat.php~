@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Stat
  *
  * @ORM\Table(name="stat")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\StatRepository")
  */
 class Stat
 {
@@ -228,5 +228,28 @@ class Stat
     public function getRubric()
     {
         return $this->rubric;
+    }
+
+    /**
+     * Set teasers
+     *
+     * @param \AppBundle\Entity\Teasers $teasers
+     * @return Stat
+     */
+    public function setTeasers(\AppBundle\Entity\Teasers $teasers = null)
+    {
+        $this->teasers = $teasers;
+
+        return $this;
+    }
+
+    /**
+     * Get teasers
+     *
+     * @return \AppBundle\Entity\Teasers 
+     */
+    public function getTeasers()
+    {
+        return $this->teasers;
     }
 }

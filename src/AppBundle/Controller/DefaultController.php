@@ -34,7 +34,7 @@ class DefaultController extends Controller
     /**
      * @Route("/get-teasers.js", name="getTeasers")
      */
-    public function createTeaserBlockAction(Request $request)
+    public function createTeaserBlockAction()
     {
         return $this->render('AppBundle:Default:teaserBlock.js.twig');
     }
@@ -79,6 +79,12 @@ class DefaultController extends Controller
         $block = $em->getRepository("AppBundle:BlockSettings")->find($bid);
         $group = $em->getRepository("AppBundle:Groups")->find($gid);
         $today = new \DateTime('now');
+
+        // return empty response if group is not visible
+        if ( !$group->getVisible() ) {
+            $response->setContent('');
+            return $response;
+        }
 
         $teasers = $em->getRepository('AppBundle:Teasers')
             ->getRandomWithLimit($group, $limit);

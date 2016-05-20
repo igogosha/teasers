@@ -8,35 +8,35 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     }
 
-    var time = 500;
-    for(var i = 0; i < eles.length; i++) {
-        time += 500;
+    eles.forEach(function(div, index){
         setTimeout(function(){
-            var divId = eles[i].id;
+            document.makeTzrsRequest(div.id);
+        }, index*500);
 
-            var request = new XMLHttpRequest();
-            request.open('GET', 'http://www.tzrs.co{{ path("getTeasersHtml") }}?ad='+divId, true);
-
-            request.onload = function() {
-                if (request.status >= 200 && request.status < 400) {
-                    document.getElementById(divId).innerHTML = request.responseText;
-                } else {
-                    var content = document.createTextNode('tzrs.co internal error');
-                    console.log(content);
-                }
-            };
-
-            request.onerror = function() {
-                var content = document.createTextNode('tzrs.co connection error');
-                console.log(content);
-            };
-
-            request.send();
-        }, time);
-
-    }
+    });
 
 });
+
+document.makeTzrsRequest = function(divId) {
+    var request = new XMLHttpRequest();
+    request.open('GET', 'http://www.tzrs.co{{ path("getTeasersHtml") }}?ad='+divId, true);
+
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            document.getElementById(divId).innerHTML = request.responseText;
+        } else {
+            var content = document.createTextNode('tzrs.co internal error');
+            console.log(content);
+        }
+    };
+
+    request.onerror = function() {
+        var content = document.createTextNode('tzrs.co connection error');
+        console.log(content);
+    };
+
+    request.send();
+}
 
 document.openTzrsWindow = function(url) {
     var win = window.open(url, '_blank');
