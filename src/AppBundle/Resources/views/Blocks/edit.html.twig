@@ -373,20 +373,32 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
+            var updateExampleViewPath = '{{ path("teaser_html", {id:0}) }}';
+            var form = $('form[name="appbundle_blocksettings"]');
+
             $('div.exampleItem').each(function(){
                 if ( $(this).data('id') == {{ block.id }} ) {
                     $(this).addClass('active');
                 }
             });
-            updateExample();
 
-            $('.slider_input').slider().on('slide', function(ev) {
-                var val = ev.value;
-                $(this).parent().parent().find('.current_value').text(val);
-                $(this).attr('value', val);
-                setTimeout(function(){
-                    updateExample();
-                }, 1000);
+            $('.slider_input').each(function(){
+                var value = $(this).val();
+
+                $(this).slider('setValue', value)
+                .on('slide', function(ev) {
+                    var val = ev.value;
+                    $(this).parent().parent().find('.current_value').text(val);
+                    $(this).attr('value', val);
+                    setTimeout(function(){
+                        updateExample();
+                    }, 1000);
+                })
+                ;
+
+//                var val = $(this).data('slider-value');
+                $(this).parent().parent().find('.current_value').text(value);
+                $(this).attr('value', value);
             });
             $('.slider_input').each(function(){
                 var val = $(this).data('slider-value');
@@ -463,9 +475,6 @@
                 updateExample();
             });
 
-            var updateExampleViewPath = '{{ path("teaser_html", {id:0}) }}';
-            var form = $('form[name="appbundle_blocksettings"]');
-
             function updateExample(){
                 $.post(updateExampleViewPath, form.serialize(), function(r){
                     if (r.success ) {
@@ -478,6 +487,8 @@
             form.on('change', function(){
                 updateExample();
             });
+
+            updateExample();
 
 
 

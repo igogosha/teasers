@@ -59,7 +59,7 @@ class BlockController extends Controller
             throw new NotFoundHttpException('Oooooops! This block does not exist or does not belong to you ;)');
         }
 
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new BlockSettingsType(), $blockSettings, array(
             'action' => $this->generateUrl('admin_places_save_block'),
