@@ -373,9 +373,6 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var updateExampleViewPath = '{{ path("teaser_html", {id:0}) }}';
-            var form = $('form[name="appbundle_blocksettings"]');
-
             $('div.exampleItem').each(function(){
                 if ( $(this).data('id') == {{ block.id }} ) {
                     $(this).addClass('active');
@@ -383,17 +380,17 @@
             });
 
             $('.slider_input').each(function(){
-                var value = $(this).val();
+                var value = $(this).attr('value')-0;
 
                 $(this).slider('setValue', value)
-                .on('slide', function(ev) {
-                    var val = ev.value;
-                    $(this).parent().parent().find('.current_value').text(val);
-                    $(this).attr('value', val);
-                    setTimeout(function(){
-                        updateExample();
-                    }, 1000);
-                })
+                    .on('slide', function(ev) {
+                        var val = ev.value;
+                        $(this).parent().parent().find('.current_value').text(val);
+                        $(this).attr('value', val);
+                        setTimeout(function(){
+                            updateExample();
+                        }, 1000);
+                    })
                 ;
 
 //                var val = $(this).data('slider-value');
@@ -476,7 +473,9 @@
             });
 
             function updateExample(){
-                $.post(updateExampleViewPath, form.serialize(), function(r){
+                var url = updateExampleViewPath.replace(/0/g, $('#appbundle_blocksettings_blockId').val() );
+
+                $.post(url, form.serialize(), function(r){
                     if (r.success ) {
                         $('.teaserExample').html(r.content);
                         $('.teaserExample').show();
@@ -484,13 +483,11 @@
                 });
             }
 
+            var updateExampleViewPath = '{{ path("teaser_html", {id:0}) }}';
+            var form = $('form[name="appbundle_blocksettings"]');
             form.on('change', function(){
                 updateExample();
             });
-
-            updateExample();
-
-
 
             $('#appbundle_blocksettings_moreImage').fileupload({
                 dataType: 'json',
@@ -512,6 +509,7 @@
                 }
             });
 
+            setTimeout(updateExample(), 1000);
         });
     </script>
 {% endblock %}

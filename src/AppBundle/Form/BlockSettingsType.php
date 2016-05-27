@@ -36,7 +36,6 @@ class BlockSettingsType extends AbstractType
                     'data-slider-value' => 1,
                     'data-slider-orientation' => 'horizontal',
                     'data-slider-selection' => 'after',
-                    'value' => ''
                 )
             ))
             ->add('cols', 'text', array(
@@ -49,7 +48,6 @@ class BlockSettingsType extends AbstractType
                     'data-slider-value' => 2,
                     'data-slider-orientation' => 'horizontal',
                     'data-slider-selection' => 'after',
-                    'value' => ''
                 )
             ))
 
@@ -68,7 +66,6 @@ class BlockSettingsType extends AbstractType
                     'data-slider-value' => 1,
                     'data-slider-orientation' => 'horizontal',
                     'data-slider-selection' => 'after',
-                    'value' => ''
                 )
             ))
 
@@ -82,7 +79,6 @@ class BlockSettingsType extends AbstractType
                     'data-slider-value' => 100,
                     'data-slider-orientation' => 'horizontal',
                     'data-slider-selection' => 'after',
-                    'value' => ''
                 )
             ))
             ->add('pictureBorderRadius', 'text', array(
@@ -95,7 +91,6 @@ class BlockSettingsType extends AbstractType
                     'data-slider-value' => 1,
                     'data-slider-orientation' => 'horizontal',
                     'data-slider-selection' => 'after',
-                    'value' => ''
                 )
             ))
             ->add('pictureShadowSize', 'text', array(
@@ -108,7 +103,6 @@ class BlockSettingsType extends AbstractType
                     'data-slider-value' => 1,
                     'data-slider-orientation' => 'horizontal',
                     'data-slider-selection' => 'after',
-                    'value' => ''
                 )
             ))
             ->add('pictureShadowColor', 'hidden', array(
@@ -127,7 +121,6 @@ class BlockSettingsType extends AbstractType
                     'data-slider-value' => 1,
                     'data-slider-orientation' => 'horizontal',
                     'data-slider-selection' => 'after',
-                    'value' => ''
                 )
             ))
             ->add('pictureBorderColor', 'hidden', array(
@@ -157,7 +150,6 @@ class BlockSettingsType extends AbstractType
                     'data-slider-value' => 16,
                     'data-slider-orientation' => 'horizontal',
                     'data-slider-selection' => 'after',
-                    'value' => ''
                 )
             ))
             ->add('headerFontColor', 'hidden', array(
@@ -247,7 +239,6 @@ class BlockSettingsType extends AbstractType
                     'data-slider-value' => 16,
                     'data-slider-orientation' => 'horizontal',
                     'data-slider-selection' => 'after',
-                    'value' => ''
                 )
             ))
             ->add('moreTxtFontColor', 'hidden', array(
