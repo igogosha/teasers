@@ -31,8 +31,7 @@
                  <div class="grid-body no-border"> <br>
                      <div class="row">
 
-                         {% set urlSave = path('admin_places_save_block') %}
-                         {{ form_start(form, {action: urlSave}) }}
+                         {{ form_start(form) }}
 
                          {{ form_errors(form.blockId) }}
                          {{ form_widget(form.blockId) }}
@@ -337,6 +336,7 @@
                                  </div>
                                  <div class="clearfix"></div>
                              </div>
+                             {{ form_widget(form.button, {label: 'Save'}) }}
                              <a class="btn btn-danger col-lg-2 pull-right" href="{{ path('admin_places') }}">Отменить</a>
                              {{ form_widget(form) }}
 
@@ -374,7 +374,7 @@
         $(document).ready(function(){
 
             $('div.exampleItem').each(function(){
-                if ( $(this).data('id') == {{ block.id }} ) {
+                if ( $(this).data('id') == $('#appbundle_blocksettings_blockId').val() ) {
                     $(this).addClass('active');
                 }
             });
@@ -393,19 +393,17 @@
                     })
                 ;
 
-//                var val = $(this).data('slider-value');
                 $(this).parent().parent().find('.current_value').text(value);
                 $(this).attr('value', value);
-            });
-            $('.slider_input').each(function(){
-                var val = $(this).data('slider-value');
-                $(this).parent().parent().find('.current_value').text(val);
-                $(this).attr('value', val);
+
+                setTimeout(function(){
+                    updateExample();
+                }, 1000);
             });
 
-            var Switch = require('ios7-switch')
-                    , checkbox = document.querySelector('.ios')
-                    , mySwitch = new Switch(checkbox);
+            var Switch = require('ios7-switch');
+            var checkbox = document.querySelector('.ios');
+            var mySwitch = new Switch(checkbox);
             mySwitch.el.addEventListener('click', function(e){
                 e.preventDefault();
                 mySwitch.toggle();
@@ -427,6 +425,26 @@
                 }
                 updateExample();
             }, true);
+
+            setTimeout(function(){
+                var moreActive = $('#appbundle_blocksettings_moreActive').attr('value')-0;
+
+                if ( moreActive == 1 ) {
+                    mySwitch.el.click();
+                    $('div.ios-switch').addClass('on');
+
+
+                    var moreType = $('#appbundle_blocksettings_moreType').find(":selected").val();
+                    if ( moreType == 'txt' ) {
+                        $('.moreBlock').find('.text').show();
+                        $('.moreBlock').find('.button').hide();
+                    } else if ( moreType == 'btn' ) {
+                        $('.moreBlock').find('.text').hide();
+                        $('.moreBlock').find('.button').show();
+                    }
+                }
+            }, 500);
+
 
             $('.colorPicker').each(function(){
 

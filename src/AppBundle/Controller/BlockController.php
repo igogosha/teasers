@@ -49,7 +49,7 @@ class BlockController extends Controller
     /**
      * @Route("/admin/block/edit/{id}", name="admin_places_edit_block")
      */
-    public function editAction(BlockSettings $blockSettings)
+    public function editAction(BlockSettings $blockSettings, Request $request)
     {
         if ( !$blockSettings ) {
             throw new NotFoundHttpException('No block found by id');
@@ -59,12 +59,16 @@ class BlockController extends Controller
             throw new NotFoundHttpException('Oooooops! This block does not exist or does not belong to you ;)');
         }
 
-        //$em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new BlockSettingsType(), $blockSettings);
 
-        $form = $this->createForm(new BlockSettingsType(), $blockSettings, array(
-            'action' => $this->generateUrl('admin_places_save_block'),
-            'method' => 'POST',
-        ));
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($blockSettings);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_places_block_list');
+        }
 
         return $this->render('AppBundle:Blocks:edit.html.twig', array(
             'form' => $form->createView(),

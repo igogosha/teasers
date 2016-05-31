@@ -188,7 +188,6 @@ class BlockSettingsType extends AbstractType
                 ),
                 'attr' => array(
                     'class' => 'ios',
-                    'value' => 0
                 )
             ))
             ->add('moreType', 'choice', array(

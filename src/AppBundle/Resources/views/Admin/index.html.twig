@@ -143,7 +143,7 @@
                     </ul>
                 </li>
 
-                <li  class="{% if (app.request.get('_route') == 'admin_places') or (app.request.get('_route') == 'admin_places_add') or (app.request.get('_route') == 'admin_places_add_block') %}active open{% endif %}">
+                <li  class="{% if (app.request.get('_route') == 'admin_places') or (app.request.get('_route') == 'admin_places_add') %}active open{% endif %}">
                     <a href="javascript:;"> <i class="fa fa-desktop"></i> <span class="title">{{ "4 .Площадки" | trans }}</span> <span class="arrow "></span> </a>
                     <ul class="sub-menu">
                         <li class="{% if app.request.get('_route') == 'admin_places' %}active{% endif %}"> <a href="{{ path('admin_places') }}"><i class="fa fa-list-ul"></i>{{ "Cписок площадок" | trans }}</a> </li>
@@ -155,9 +155,9 @@
                     <div class="panel panel-default"></div>
                 </li>
 
-                <li class="">
-                    <a href="{{ path('stats_main') }}"> <i class="fa fa-bar-chart-o"></i> <span class="title">{{ "Статистика" | trans }}</span> </a>
-                </li>
+                {#<li class="">#}
+                    {#<a href="{{ path('stats_main') }}"> <i class="fa fa-bar-chart-o"></i> <span class="title">{{ "Статистика" | trans }}</span> </a>#}
+                {#</li>#}
 
                 {#<li class=""> <a href="javascript:;"> <i class="fa fa-flask"></i> <span class="title">{{ "Эксперименты" | trans }}</span> <span class="arrow "></span> </a>#}
                     {#<ul class="sub-menu">#}
