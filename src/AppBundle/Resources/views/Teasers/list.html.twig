@@ -71,7 +71,7 @@
                                                              {% endfor %}
                                                             <td class="text-white clicks_{{ group.id }}">{{ clicks }}</td>
                                                             <td class="text-white views_{{ group.id }}">{{ views }}</td>
-                                                             <td class="text-white ctr_{{ group.id }}">{% if views > 0 %}{{ (clicks / views * 100) | round(0, 'floor') }}{% else %}0{% endif %}%</td>
+                                                             <td class="text-white ctr_{{ group.id }}">{% if views > 0 %}{{ (clicks / views * 100) | round(2, 'ceil') }}{% else %}0{% endif %}%</td>
                                                          </tr>
                                                      {% endfor %}
                                                  </table>
@@ -133,7 +133,7 @@
                     total_clicks += parseInt($(this).text());
                 });
 
-                var total_ctr = total_views > 0 ? Math.floor(total_clicks / total_views * 100) : 0;
+                var total_ctr = total_views > 0 ? (total_clicks / total_views * 100).toFixed(2) : 0;
                 $('.total_ctr_'+id).text( total_ctr );
                 $('.total_views_'+id).text(total_views);
                 $('.total_clicks_'+id).text(total_clicks);

@@ -7,6 +7,8 @@
     cursor:pointer;
     {% if settings is defined and settings.cols == 1 %}
         width:100%;
+    {% else %}
+
     {% endif %}
     " {% if teaser is defined and teaser.link is not null %}
         onclick="document.openTzrsWindow('{{ url('redirect_to_url', {place: pid,rubric:rid,block_settings:settings.id, teaser:teaser.id}) }}')"
