@@ -21,4 +21,14 @@ class GroupsRepository extends EntityRepository
 
         return $q->getResult();
     }
+
+    public function countForUser(User $user)
+    {
+        $q = $this->createQueryBuilder('t')
+            ->select('COUNT(t)')
+            ->where('t.user = :user')
+            ->setParameter('user', $user);
+
+        return $q->getQuery()->getSingleScalarResult();
+    }
 }

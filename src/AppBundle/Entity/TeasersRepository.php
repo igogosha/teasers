@@ -39,4 +39,34 @@ class TeasersRepository extends EntityRepository
         return $q->getQuery()->getResult();
     }
 
+    public function countForUser(User $user)
+    {
+        $q = $this->createQueryBuilder('t')
+            ->select('COUNT(t)')
+            ->where('t.user = :user')
+            ->setParameter('user', $user);
+
+        return $q->getQuery()->getSingleScalarResult();
+    }
+
+    public function idsForUser(User $user)
+    {
+        $q = $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->where('t.user = :user')
+            ->setParameter('user', $user);
+
+        return $q->getQuery()->getArrayResult();
+    }
+
+    public function topTeasers(User $user)
+    {
+        $q = $this->createQueryBuilder('t')
+            ->select('t')
+            ->where('t.user = :user')
+            ->setParameter('user', $user);
+
+        return $q->getQuery()->getSingleScalarResult();
+    }
+
 }

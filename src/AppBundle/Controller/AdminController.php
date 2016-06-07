@@ -20,7 +20,18 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('AppBundle:Admin:index.html.twig');
+        $stats = [];
+
+        $em = $this->getDoctrine()->getManager();
+        $stats['teasers'] = $em->getRepository('AppBundle:Teasers')->countForUser($this->getUser());
+
+        $stats['groups'] = $em->getRepository('AppBundle:Groups')->countForUser($this->getUser());
+        $stats['blocks'] = $em->getRepository('AppBundle:BlockSettings')->countForUser($this->getUser());
+        $stats['places'] = $em->getRepository('AppBundle:Places')->countForUser($this->getUser());
+
+        return $this->render('AppBundle:Admin:index.html.twig', [
+            'stats' => $stats,
+        ]);
     }
 
     /**

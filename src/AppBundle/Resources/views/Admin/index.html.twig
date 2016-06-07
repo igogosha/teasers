@@ -199,8 +199,61 @@
             <div class="content">
                 {% block mainAdminContent %}
                     <div class="page-title">
-                        <h3>DASHBOARD</h3>
+                        <h3>Кратко о ваших тизерах</h3>
                     </div>
+
+                    <div class="row spacing-bottom 2col">
+                        <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
+                            <div class="tiles blue added-margin">
+                                <div class="tiles-body">
+                                    <div class="tiles-title">
+                                        Всего тизеров
+                                    </div>
+                                    <div class="heading">
+                                        {{ stats.teasers }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
+                            <div class="tiles green added-margin">
+                                <div class="tiles-body">
+                                    <div class="tiles-title">
+                                        Всего групп тизеров
+                                    </div>
+                                    <div class="heading">
+                                        {{ stats.groups }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
+                            <div class="tiles red added-margin">
+                                <div class="tiles-body">
+                                    <div class="tiles-title">
+                                        Всего блоков
+                                    </div>
+                                    <div class="heading">
+                                        {{ stats.blocks }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
+                            <div class="tiles purple added-margin">
+                                <div class="tiles-body">
+                                    <div class="tiles-title">
+                                        Всего площадок
+                                    </div>
+                                    <div class="heading">
+                                        {{ stats.places }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 {% endblock %}
             </div>
         </div>

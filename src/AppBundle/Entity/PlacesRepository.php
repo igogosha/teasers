@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlacesRepository extends EntityRepository
 {
+    public function countForUser(User $user)
+    {
+        $q = $this->createQueryBuilder('t')
+            ->select('COUNT(t)')
+            ->where('t.user = :user')
+            ->setParameter('user', $user);
+
+        return $q->getQuery()->getSingleScalarResult();
+    }
 }
