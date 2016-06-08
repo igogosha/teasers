@@ -12,7 +12,7 @@
                  <div class="grid-body no-border"> <br>
                      <div class="row">
 
-                             <table class="table table-bordered">
+                             <table class="table">
                                  <thead>
                                      <tr>
                                          <th>Group</th>
@@ -44,7 +44,7 @@
                                      {% if teasers[group.id] is defined %}
                                          <tr id="teasers_{{ group.id }}" style="display: none">
                                              <td colspan="6" class="text-yellow">
-                                                  <table id="datatable_{{ group.id }}" class="table table-bordered groupStatistics" data-group="{{ group.id }}">
+                                                  <table id="datatable_{{ group.id }}" class="table groupStatistics" data-group="{{ group.id }}">
                                                       <thead>
                                                          <tr>
                                                              <th>Image</th>
@@ -56,12 +56,12 @@
                                                          </tr>
                                                      </thead>
                                                      {% for teaser in teasers[group.id] %}
-                                                         <tr  class="bg-yellow">
+                                                         <tr class="{% if teaser.visible %}bg-yellow{% else %}bg-red{% endif %} teaserModal" style="cursor: pointer;" data-id="{{ teaser.id }}">
                                                             <td class="text-white">
                                                                 <img src="{{ asset('uploads/teasers/'~app.user.id~'/'~teaser.image) | imagine_filter('thumb_50_50') }}" />
                                                             </td>
-                                                            <td class="text-white">{{ teaser.title }}</td>
-                                                            <td class="text-white">{{ teaser.link }}</td>
+                                                            <td class="text-white title">{{ teaser.title }}</td>
+                                                            <td class="text-white link">{{ teaser.link }}</td>
 
                                                              {% set views = 0 %}
                                                              {% set clicks = 0 %}
@@ -148,6 +148,49 @@
                     "bSearch": false
                 });
             });
+
+            var getTeaserSingleFormPath = "{{ path('admin_get_teaser_form', {id: 0}) }}";
+            $('tr.teaserModal').click(function(){
+                $('.updateSingleTeaser').off('click');
+                var myModal = $('#myAlert');
+                var teaserId = $(this).data('id');
+
+                var url = getTeaserSingleFormPath.replace(/0/g, teaserId);
+                $.post(url, function(r){
+                    if (r.success ) {
+                        myModal.find('.myModalBody').html(r.form);
+                        myModal.modal('show');
+
+                        $('.updateSingleTeaser').on('click', function(e){
+                            var form = $(this).closest('form');
+
+                            $.post(form.attr('action'), form.serialize(), function(r){
+                                if (r.success ) {
+
+                                    var tr = $('tr[data-id='+teaserId+']');
+
+                                    if ( r.visible ) {
+                                        tr.removeClass('bg-red').addClass('bg-yellow');
+                                    } else {
+                                        tr.removeClass('bg-yellow').addClass('bg-red');
+                                    }
+
+                                    tr.find('.title').text(r.title);
+                                    tr.find('.link').text(r.link);
+
+                                    myModal.find('.myModalBody').empty();
+                                    myModal.modal('hide');
+                                }
+                            });
+
+                        });
+
+                    }
+                });
+            });
+
+
+
         });
     </script>
 {% endblock %}

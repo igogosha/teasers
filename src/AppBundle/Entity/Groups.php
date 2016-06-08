@@ -78,6 +78,7 @@ class Groups
     public function setUser($user)
     {
         $this->user = $user;
+        $this->visible = true;
 
         return $this;
     }

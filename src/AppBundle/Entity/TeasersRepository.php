@@ -19,8 +19,10 @@ class TeasersRepository extends EntityRepository
             ->select('t')
             ->addSelect('RAND() as HIDDEN rand')
             ->where('t.groups = :group')
+            ->andWhere('t.visible = :visible')
 
             ->setParameter('group', $group)
+            ->setParameter('visible', true)
 
             ->addOrderBy('rand')
             ->setMaxResults($limit)

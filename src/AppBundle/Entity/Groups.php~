@@ -78,6 +78,7 @@ class Groups
     public function setUser($user)
     {
         $this->user = $user;
+        $this->visible = true;
 
         return $this;
     }
@@ -164,5 +165,28 @@ class Groups
     public function __toString()
     {
         return $this->title;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     * @return Groups
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean 
+     */
+    public function getVisible()
+    {
+        return $this->visible;
     }
 }

@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Groups;
 use AppBundle\Entity\Teasers;
 use AppBundle\Entity\TeasersSettings;
+use AppBundle\Form\SingleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Form\TeasersType;
@@ -57,7 +58,7 @@ class TeasersController extends Controller
     }
 
     /**
-     * @Route("admin/teasers/edit/{id}", name="admin_edit_group")
+     * @Route("admin/teasers/edit/{id}", name="admin_edit_teaser")
      */
     public function editAction($id)
     {
@@ -77,6 +78,49 @@ class TeasersController extends Controller
         return $this->render('AppBundle:Teasers:create.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+
+    /**
+     * @Route("admin/teasers/get-teaser-form/{id}", name="admin_get_teaser_form")
+     */
+    public function getSingleFormAction(Request $request, Teasers $teaser)
+    {
+        if ( $request->isXmlHttpRequest() ) {
+            if ( !$teaser ) {
+                return new JsonResponse(array('error'=>2));
+            }
+
+            $form = $this->createForm(new SingleType(), $teaser, array(
+                'action' => $this->generateUrl('admin_get_teaser_form', array('id' => $teaser->getId())),
+                'method' => 'POST'
+            ));
+
+            $form->handleRequest($request);
+
+            if ( $form->isSubmitted() && $form->isValid() ) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($teaser);
+
+                $em->flush();
+                return new JsonResponse(array(
+                    'success'=>true,
+                    'title' => $teaser->getTitle(),
+                    'link' => $teaser->getLink(),
+                    'visible' => $teaser->getVisible()
+                ));
+            }
+
+            return new JsonResponse(array(
+                'success' => true,
+                'form' => $this->renderView('AppBundle:Teasers:singleTeaserFrom.html.twig', array(
+                    'form' => $form->createView(),
+                    'teaser' => $teaser
+                    )
+                )
+            ));
+        }
+        else
+            return new JsonResponse(array('error' => 3));
     }
 
     /**

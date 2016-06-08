@@ -77,6 +77,21 @@ class Teasers
      */
     private $stats;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="visible", type="boolean", options={"default" = true})
+     */
+    private $visible;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stats = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->visible = true;
+    }
 
     /**
      * Get id
@@ -247,13 +262,7 @@ class Teasers
     {
         return $this->rubrics;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->stats = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
 
     /**
      * Add stats

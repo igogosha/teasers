@@ -32,14 +32,6 @@ class TeasersType extends AbstractType
             ->add('user', 'hidden')
             ->add('rubrics', 'entity', array(
                     'class' => 'AppBundle:Rubrics',
-//                    'query_builder' => function(EntityRepository $er) {
-//                        return $er->createQueryBuilder('r')
-//                            ->where('r.user > :user')
-//                            ->setParameter('user', $this->user->getId())
-//                            ;
-//
-//                    },
-//                    'property' => 'name',
                     'choices' => $this->getRubricsForUser()
                 ))
             ->add('createdAt', 'hidden')

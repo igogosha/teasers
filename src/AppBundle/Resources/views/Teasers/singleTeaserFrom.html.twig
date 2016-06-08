@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+
+    {{ form_label(form.title) }}
+    {{ form_widget(form.title, {attr:{'class': 'form-control'}}) }}
+    <br>
+
+    {{ form_label(form.link) }}
+    {{ form_widget(form.link, {attr:{'class': 'form-control'}}) }}
+    <br>
+
+    {{ form_label(form.visible) }}
+    {{ form_widget(form.visible, {attr:{'class': 'form-control'}}) }}
+    <br>
+
+    <button type="button" data-id="{{ teaser.id }}" class="btn btn-success form-control updateSingleTeaser">Save</button>
+{{ form_end(form) }}
