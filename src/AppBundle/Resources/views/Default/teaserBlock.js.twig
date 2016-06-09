@@ -8,12 +8,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     }
 
-    eles.forEach(function(div, index){
-        setTimeout(function(){
+    setTimeout(function(){
+        eles.forEach(function(div, index){
             document.makeTzrsRequest(div.id);
-        }, index*500);
-
-    });
+        });
+    }, 2000);
 
 });
 
