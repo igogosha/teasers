@@ -120,34 +120,43 @@
             });
 
 
-            $('table.groupStatistics').each(function(){
-                var total_views = 0;
-                var total_clicks = 0;
-                var id = $(this).data('group');
+            function calculateScores(firstTime) {
+                $('table.groupStatistics').each(function(){
+                    var total_views = 0;
+                    var total_clicks = 0;
+                    var id = $(this).data('group');
 
-                $(this).find('td.views_'+id).each(function(){
-                    total_views += parseInt($(this).text());
+                    $(this).find('td.views_'+id).each(function(){
+                        if ( !$(this).parent().hasClass('bg-red') ) {
+                            total_views += parseInt($(this).text());
+                        }
+                    });
+
+                    $(this).find('td.clicks_'+id).each(function(){
+                        if ( !$(this).parent().hasClass('bg-red') ) {
+                            total_clicks += parseInt($(this).text());
+                        }
+                    });
+
+                    var total_ctr = total_views > 0 ? (total_clicks / total_views * 100).toFixed(2) : 0;
+                    $('.total_ctr_'+id).text( total_ctr );
+                    $('.total_views_'+id).text(total_views);
+                    $('.total_clicks_'+id).text(total_clicks);
+
+                    if ( firstTime ) {
+                        $('table#datatable_' + id).dataTable({
+                            "bPaginate": false,
+                            "bLengthChange": false,
+                            "bFilter": true,
+                            "bInfo": false,
+                            "bAutoWidth": true,
+                            "aaSorting": [[5, "desc"]],
+                            "bSearch": false
+                        });
+                    }
                 });
-
-                $(this).find('td.clicks_'+id).each(function(){
-                    total_clicks += parseInt($(this).text());
-                });
-
-                var total_ctr = total_views > 0 ? (total_clicks / total_views * 100).toFixed(2) : 0;
-                $('.total_ctr_'+id).text( total_ctr );
-                $('.total_views_'+id).text(total_views);
-                $('.total_clicks_'+id).text(total_clicks);
-
-                $('table#datatable_'+id).dataTable({
-                    "bPaginate": false,
-                    "bLengthChange": false,
-                    "bFilter": true,
-                    "bInfo": false,
-                    "bAutoWidth": true,
-                    "aaSorting": [[ 5, "desc" ]],
-                    "bSearch": false
-                });
-            });
+            }
+            calculateScores(true);
 
             var getTeaserSingleFormPath = "{{ path('admin_get_teaser_form', {id: 0}) }}";
             $('tr.teaserModal').click(function(){
@@ -180,6 +189,7 @@
 
                                     myModal.find('.myModalBody').empty();
                                     myModal.modal('hide');
+                                    calculateScores(false);
                                 }
                             });
 
