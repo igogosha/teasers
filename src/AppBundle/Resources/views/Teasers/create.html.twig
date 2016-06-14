@@ -68,19 +68,28 @@
      </div>
  {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('/bundles/app/js/linenumbers/jquery.numberedtextarea.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock stylesheets %}
+
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('/bundles/app/js/fileupload/jquery.ui.widget.js') }}"></script>
     <script src="{{ asset('/bundles/app/js/fileupload/jquery.iframe-transport.js') }}"></script>
     <script src="{{ asset('/bundles/app/js/fileupload/jquery.fileupload.js') }}"></script>
     <script src="{{ asset('/bundles/app/js/textarea.js') }}"></script>
+    <script src="{{ asset('/bundles/app/js/linenumbers/jquery.numberedtextarea.js') }}"></script>
     <script type="text/javascript">
 
         var delete_file = "{{ path('delete_files') }}";
 
         $(document).ready(function() {
-            $('#appbundle_teasers_title').before('<div class="line-nums"><span>1</span></div>');
-            $('#appbundle_teasers_link').before('<div class="line-nums"><span>1</span></div>');
+
+            $('#appbundle_teasers_title').numberedtextarea();
+            $('#appbundle_teasers_link').numberedtextarea();
+
             $('#appbundle_teasers_rubrics').parent()
                     .after('<div class="form-group"><input type="file" name="pictures[]" multiple class="btn btn-success btn-cons uploadImages"/><div id="img_previews" class="col-lg-12"></div><div class="form-group"><div class="clearfix"></div>');
 
@@ -175,46 +184,8 @@
                         window.location.replace("{{ path('teasers') }}");
                     }, 'json');
                 }
-            });
+            })
 
-
-            /*
-             * This hook adds autosizing functionality
-             * to your textarea
-             */
-            BehaveHooks.add(['keydown'], function(data){
-                var numLines = data.lines.total,
-                        fontSize = parseInt( getComputedStyle(data.editor.element)['font-size'] ),
-                        padding = parseInt( getComputedStyle(data.editor.element)['padding'] );
-                data.editor.element.style.height = (((numLines*fontSize)+padding))+'px';
-            });
-
-            /*
-             * This hook adds Line Number Functionality
-             */
-            BehaveHooks.add(['keydown'], function(data){
-                var numLines = data.lines.total,
-                        house = document.getElementsByClassName('line-nums')[0],
-                        house1 = document.getElementsByClassName('line-nums')[1],
-                        html = '',
-                        i;
-                for(i=0; i<numLines; i++){
-                    html += '<div>'+(i+1)+'</div>';
-                }
-                house.innerHTML = html;
-                house1.innerHTML = html;
-            });
-
-            var editor = new Behave({
-                textarea: 		document.getElementById('appbundle_teasers_title'),
-                replaceTab: 	true,
-                softTabs: 		true,
-                tabSize: 		4,
-                autoOpen: 		true,
-                overwrite: 		true,
-                autoStrip: 		true,
-                autoIndent: 	true
-            });
         });
     </script>
 {% endblock %}
