@@ -9,9 +9,12 @@
          <div class="col-md-12">
              <div class="grid simple">
 
+                 <p class="alert alert-danger pull-right">
+                     Clicks, Views and CTR are all counted only for last week!
+                 </p>
+
                  <div class="grid-body no-border"> <br>
                      <div class="row">
-
                              <table class="table">
                                  <thead>
                                      <tr>
@@ -66,8 +69,10 @@
                                                              {% set views = 0 %}
                                                              {% set clicks = 0 %}
                                                              {% for stat in teaser.stats %}
-                                                                 {% set views = views + stat.views %}
-                                                                 {% set clicks = clicks + stat.clicks %}
+                                                                 {% if stat.createdAt|date('Y-m-d') > "now"|date_modify("-1 week")|date("Y-m-d") %}
+                                                                     {% set views = views + stat.views %}
+                                                                     {% set clicks = clicks + stat.clicks %}
+                                                                 {% endif %}
                                                              {% endfor %}
                                                             <td class="text-white clicks_{{ group.id }}">{{ clicks }}</td>
                                                             <td class="text-white views_{{ group.id }}">{{ views }}</td>
