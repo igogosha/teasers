@@ -107,8 +107,9 @@ class DefaultController extends Controller
                 $stat->setCreatedAt($today);
                 $stat->setViews(0);
                 $stat->setClicks(0);
+            } else {
+                $stat->setViews($stat->getViews() + 1);
             }
-            $stat->setViews( $stat->getViews() + 1 );
 
             $em->persist($stat);
             $em->flush();
@@ -142,9 +143,10 @@ class DefaultController extends Controller
             'place' => $place,
             'rubric' => $rubric,
             'blockSettings' => $block_settings,
-            'teasers' => $teaser
+            'teasers' => $teaser,
+            'createdAt' => new \DateTime("now")
         ));
-
+        /** @var Stat $stat */
         if ( !$stat ) {
             $stat = new Stat();
             $stat->setPlace($place->getId());
@@ -153,9 +155,9 @@ class DefaultController extends Controller
             $stat->setBlockSettings($block_settings);
             $stat->setCreatedAt($now);
             $stat->setViews(1);
+        } else {
+            $stat->setClicks($stat->getClicks() + 1);
         }
-        $stat->setClicks( $stat->getClicks() + 1 );
-
         $em->persist($stat);
         $em->flush();
 
