@@ -7,3 +7,24 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+#    session.handler.pdo:
+#        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+#        public:    false
+#        arguments:
+#            - 'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%'
+#            - { db_username: '%database_user%', db_password: '%database_password%' }
+
+    fos_user.doctrine_registry:
+        alias: doctrine
+#
+#    session.memcached:
+#        class: Memcached
+#        arguments:
+#            persistent_id: %session_memcached_prefix%
+#        calls:
+#            - [ addServer, [ %session_memcached_host%, %session_memcached_port% ]]
+#
+#    session.handler.memcached:
+#        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
+#        arguments: [@session.memcached, { prefix: %session_memcached_prefix%, expiretime: %session_memcached_expire% }]
