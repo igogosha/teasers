@@ -9,6 +9,8 @@ use AppBundle\Entity\Teasers;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +29,26 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+
+        $crawler = new Crawler();
+
+        $xmlDir = $this->get('kernel')->getRootDir() . '/../web' . $this->container->get('templating.helper.assets')->getUrl('/uploads/xmls/');
+
+        $finder = new Finder();
+        foreach($finder->files()->in($xmlDir) as $file) {
+            $xml = simplexml_load_string($file->getContents());
+
+            foreach( $xml->children() as $child ) {
+
+                echo '<pre>';
+                foreach($child as $key => $value) {
+                    print_r($key);
+                    print_r($value);
+                }
+            }
+        }
+        exit;
+
         $em = $this->getDoctrine()->getManager();
 
         $someUser = $em->getRepository("AppBundle:User")->find(1);
