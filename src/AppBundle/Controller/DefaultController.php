@@ -7,6 +7,7 @@ use AppBundle\Entity\Places;
 use AppBundle\Entity\Rubrics;
 use AppBundle\Entity\Teasers;
 use AppBundle\Entity\User;
+use DOMDocument;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
@@ -30,22 +31,30 @@ class DefaultController extends Controller
     public function indexAction()
     {
 
-        $crawler = new Crawler();
+
 
         $xmlDir = $this->get('kernel')->getRootDir() . '/../web' . $this->container->get('templating.helper.assets')->getUrl('/uploads/xmls/');
 
         $finder = new Finder();
+        echo '<pre>';
         foreach($finder->files()->in($xmlDir) as $file) {
-            $xml = simplexml_load_string($file->getContents());
+            $crawler = new Crawler($file->getContents());
 
-            foreach( $xml->children() as $child ) {
+            $test = $crawler->filterXPath('//ns2:SportradarData/Sport');
 
-                echo '<pre>';
-                foreach($child as $key => $value) {
-                    print_r($key);
-                    print_r($value);
-                }
-            }
+            $test->filterXPath('//Category/Tournament/Teams')->each(function(Crawler $node){
+                print_r($node->filterXPath('//Team/Assists/Player')->first()->attr('playerName'));
+            });
+
+
+//            foreach( $xml->children() as $child ) {
+//
+//                echo '<pre>';
+//                foreach($child as $key => $value) {
+//                    print_r($key);
+//                    print_r($value);
+//                }
+//            }
         }
         exit;
 
